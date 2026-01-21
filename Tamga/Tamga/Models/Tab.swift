@@ -73,6 +73,7 @@ enum SyntaxLanguage: String, Codable, CaseIterable {
     case swift = "Swift"
     case python = "Python"
     case javascript = "JavaScript"
+    case php = "PHP"
     case json = "JSON"
     case html = "HTML"
     case css = "CSS"
@@ -92,6 +93,7 @@ enum SyntaxLanguage: String, Codable, CaseIterable {
         case .swift: return ["swift"]
         case .python: return ["py", "pyw"]
         case .javascript: return ["js", "jsx", "ts", "tsx"]
+        case .php: return ["php", "phtml", "php3", "php4", "php5", "phps"]
         case .json: return ["json"]
         case .html: return ["html", "htm"]
         case .css: return ["css", "scss", "sass", "less"]

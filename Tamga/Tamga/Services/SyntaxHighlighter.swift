@@ -107,6 +107,8 @@ class SyntaxHighlighter {
             return pythonPatterns
         case .javascript:
             return javascriptPatterns
+        case .php:
+            return phpPatterns
         case .json:
             return jsonPatterns
         case .html:
@@ -196,6 +198,40 @@ class SyntaxHighlighter {
 
             // Numbers
             (#"\b\d+\.?\d*\b"#, { $0.number }),
+        ]
+    }
+
+    // MARK: - PHP Patterns
+
+    private var phpPatterns: [(String, (Theme) -> NSColor)] {
+        [
+            // Comments
+            (#"//.*$"#, { $0.comment }),
+            (#"#.*$"#, { $0.comment }),
+            (#"/\*[\s\S]*?\*/"#, { $0.comment }),
+
+            // PHP tags
+            (#"<\?php|\?>|<\?=?"#, { $0.keyword }),
+
+            // Strings
+            (#"\"[^\"\\]*(?:\\.[^\"\\]*)*\""#, { $0.string }),
+            (#"'[^'\\]*(?:\\.[^'\\]*)*'"#, { $0.string }),
+            (#"<<<['\""]?(\w+)['\""]?[\s\S]*?\1"#, { $0.string }),
+
+            // Variables
+            (#"\$[a-zA-Z_][a-zA-Z0-9_]*"#, { $0.variable }),
+
+            // Keywords
+            (#"\b(abstract|and|array|as|break|callable|case|catch|class|clone|const|continue|declare|default|die|do|echo|else|elseif|empty|enddeclare|endfor|endforeach|endif|endswitch|endwhile|eval|exit|extends|final|finally|fn|for|foreach|function|global|goto|if|implements|include|include_once|instanceof|insteadof|interface|isset|list|match|namespace|new|or|print|private|protected|public|readonly|require|require_once|return|static|switch|throw|trait|try|unset|use|var|while|xor|yield|yield from|true|false|null|self|parent|__CLASS__|__DIR__|__FILE__|__FUNCTION__|__LINE__|__METHOD__|__NAMESPACE__|__TRAIT__)\b"#, { $0.keyword }),
+
+            // Types
+            (#"\b(int|float|bool|string|array|object|callable|iterable|void|mixed|never|null)\b"#, { $0.type }),
+
+            // Numbers
+            (#"\b\d+\.?\d*\b"#, { $0.number }),
+
+            // Functions
+            (#"\b[a-zA-Z_][a-zA-Z0-9_]*\s*\("#, { $0.function }),
         ]
     }
 
