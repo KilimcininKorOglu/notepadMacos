@@ -1,0 +1,112 @@
+import SwiftUI
+
+/// Individual tab item view
+struct TabItemView: View {
+    let tab: Tab
+    let isSelected: Bool
+    let onSelect: () -> Void
+    let onClose: () -> Void
+
+    @State private var isHovering = false
+
+    var body: some View {
+        HStack(spacing: 6) {
+            // File icon
+            Image(systemName: tab.filePath != nil ? "doc.text.fill" : "doc.text")
+                .font(.system(size: 12))
+                .foregroundColor(isSelected ? .accentColor : .secondary)
+
+            // Title
+            Text(displayTitle)
+                .font(.system(size: 12))
+                .lineLimit(1)
+                .foregroundColor(isSelected ? .primary : .secondary)
+
+            // Dirty indicator or close button
+            if isHovering || isSelected {
+                Button(action: onClose) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .frame(width: 16, height: 16)
+                .contentShape(Rectangle())
+            } else if tab.isDirty {
+                Circle()
+                    .fill(Color.accentColor)
+                    .frame(width: 8, height: 8)
+            } else {
+                Spacer()
+                    .frame(width: 16)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(
+            RoundedRectangle(cornerRadius: 6)
+                .fill(isSelected ? Color.accentColor.opacity(0.15) : (isHovering ? Color.gray.opacity(0.1) : Color.clear))
+        )
+        .onTapGesture(perform: onSelect)
+        .onHover { hovering in
+            isHovering = hovering
+        }
+        .contextMenu {
+            Button(String(localized: "close.tab")) {
+                onClose()
+            }
+
+            Button(String(localized: "close.other.tabs")) {
+                NotificationCenter.default.post(
+                    name: .closeOtherTabs,
+                    object: tab.id
+                )
+            }
+
+            Divider()
+
+            if let path = tab.filePath {
+                Button(String(localized: "show.in.finder")) {
+                    NSWorkspace.shared.selectFile(path.path, inFileViewerRootedAtPath: "")
+                }
+
+                Button(String(localized: "copy.path")) {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(path.path, forType: .string)
+                }
+            }
+        }
+    }
+
+    private var displayTitle: String {
+        if tab.isDirty {
+            return tab.title + " *"
+        }
+        return tab.title
+    }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    static let closeOtherTabs = Notification.Name("closeOtherTabs")
+}
+
+#Preview {
+    HStack {
+        TabItemView(
+            tab: Tab(title: "untitled.swift", isDirty: true),
+            isSelected: true,
+            onSelect: {},
+            onClose: {}
+        )
+
+        TabItemView(
+            tab: Tab(title: "main.swift", isDirty: false),
+            isSelected: false,
+            onSelect: {},
+            onClose: {}
+        )
+    }
+    .padding()
+}

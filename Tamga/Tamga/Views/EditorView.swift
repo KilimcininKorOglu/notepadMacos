@@ -1,0 +1,272 @@
+import SwiftUI
+import AppKit
+
+/// Main text editor view with line numbers and syntax highlighting
+struct EditorView: View {
+    @Binding var text: String
+    let language: SyntaxLanguage
+    let showLineNumbers: Bool
+    let isWordWrapEnabled: Bool
+    let fontSize: CGFloat
+    let fontName: String
+
+    @Environment(\.colorScheme) private var colorScheme
+    @State private var lineCount: Int = 1
+    @State private var scrollOffset: CGFloat = 0
+
+    var body: some View {
+        GeometryReader { geometry in
+            HStack(spacing: 0) {
+                if showLineNumbers {
+                    LineNumbersView(
+                        lineCount: lineCount,
+                        fontSize: fontSize,
+                        scrollOffset: scrollOffset
+                    )
+                    .frame(width: lineNumberWidth)
+
+                    Divider()
+                }
+
+                HighlightedTextEditor(
+                    text: $text,
+                    language: language,
+                    isDarkMode: colorScheme == .dark,
+                    fontSize: fontSize,
+                    fontName: fontName,
+                    isWordWrapEnabled: isWordWrapEnabled,
+                    onLineCountChange: { count in
+                        lineCount = count
+                    },
+                    onScrollChange: { offset in
+                        scrollOffset = offset
+                    }
+                )
+            }
+        }
+    }
+
+    private var lineNumberWidth: CGFloat {
+        let digits = String(lineCount).count
+        return CGFloat(max(digits, 3)) * 10 + 20
+    }
+}
+
+// MARK: - Line Numbers View
+
+struct LineNumbersView: View {
+    let lineCount: Int
+    let fontSize: CGFloat
+    let scrollOffset: CGFloat
+
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .trailing, spacing: 0) {
+                ForEach(1...max(lineCount, 1), id: \.self) { lineNumber in
+                    Text("\(lineNumber)")
+                        .font(.system(size: fontSize, design: .monospaced))
+                        .foregroundColor(.secondary)
+                        .frame(height: fontSize * 1.4)
+                }
+            }
+            .padding(.horizontal, 8)
+            .padding(.top, 8)
+            .offset(y: -scrollOffset)
+        }
+        .disabled(true)
+        .background(Color(nsColor: .controlBackgroundColor).opacity(0.5))
+    }
+}
+
+// MARK: - Highlighted Text Editor (NSViewRepresentable)
+
+struct HighlightedTextEditor: NSViewRepresentable {
+    @Binding var text: String
+    let language: SyntaxLanguage
+    let isDarkMode: Bool
+    let fontSize: CGFloat
+    let fontName: String
+    let isWordWrapEnabled: Bool
+    let onLineCountChange: (Int) -> Void
+    let onScrollChange: (CGFloat) -> Void
+
+    func makeNSView(context: Context) -> NSScrollView {
+        let scrollView = NSScrollView()
+        let textView = TamgaTextView()
+
+        textView.delegate = context.coordinator
+        textView.isEditable = true
+        textView.isSelectable = true
+        textView.allowsUndo = true
+        textView.isRichText = false
+        textView.usesFindBar = true
+        textView.isAutomaticQuoteSubstitutionEnabled = false
+        textView.isAutomaticDashSubstitutionEnabled = false
+        textView.isAutomaticTextReplacementEnabled = false
+        textView.isAutomaticSpellingCorrectionEnabled = false
+
+        textView.textContainerInset = NSSize(width: 8, height: 8)
+
+        let font = NSFont(name: fontName, size: fontSize) ?? NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
+        textView.font = font
+        textView.typingAttributes = [.font: font]
+
+        scrollView.documentView = textView
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = !isWordWrapEnabled
+        scrollView.autohidesScrollers = true
+
+        if isWordWrapEnabled {
+            textView.textContainer?.widthTracksTextView = true
+            textView.textContainer?.containerSize = NSSize(width: 0, height: CGFloat.greatestFiniteMagnitude)
+        } else {
+            textView.textContainer?.widthTracksTextView = false
+            textView.textContainer?.containerSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        }
+
+        context.coordinator.textView = textView
+        context.coordinator.scrollView = scrollView
+
+        // Observe scroll changes
+        NotificationCenter.default.addObserver(
+            context.coordinator,
+            selector: #selector(Coordinator.scrollViewDidScroll(_:)),
+            name: NSView.boundsDidChangeNotification,
+            object: scrollView.contentView
+        )
+        scrollView.contentView.postsBoundsChangedNotifications = true
+
+        return scrollView
+    }
+
+    func updateNSView(_ scrollView: NSScrollView, context: Context) {
+        guard let textView = scrollView.documentView as? NSTextView else { return }
+
+        // Update text if changed externally
+        if textView.string != text {
+            let selectedRanges = textView.selectedRanges
+            textView.string = text
+            textView.selectedRanges = selectedRanges
+        }
+
+        // Update font
+        let font = NSFont(name: fontName, size: fontSize) ?? NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
+        textView.font = font
+
+        // Update word wrap
+        if isWordWrapEnabled {
+            textView.textContainer?.widthTracksTextView = true
+            textView.textContainer?.containerSize = NSSize(
+                width: scrollView.contentView.bounds.width - 16,
+                height: CGFloat.greatestFiniteMagnitude
+            )
+            scrollView.hasHorizontalScroller = false
+        } else {
+            textView.textContainer?.widthTracksTextView = false
+            textView.textContainer?.containerSize = NSSize(
+                width: CGFloat.greatestFiniteMagnitude,
+                height: CGFloat.greatestFiniteMagnitude
+            )
+            scrollView.hasHorizontalScroller = true
+        }
+
+        // Apply syntax highlighting
+        context.coordinator.applySyntaxHighlighting(language: language, isDarkMode: isDarkMode)
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, NSTextViewDelegate {
+        var parent: HighlightedTextEditor
+        weak var textView: NSTextView?
+        weak var scrollView: NSScrollView?
+
+        private let highlighter = SyntaxHighlighter.shared
+        private var isUpdating = false
+
+        init(_ parent: HighlightedTextEditor) {
+            self.parent = parent
+        }
+
+        func textDidChange(_ notification: Notification) {
+            guard let textView = textView, !isUpdating else { return }
+            parent.text = textView.string
+            updateLineCount()
+            applySyntaxHighlighting(language: parent.language, isDarkMode: parent.isDarkMode)
+        }
+
+        func applySyntaxHighlighting(language: SyntaxLanguage, isDarkMode: Bool) {
+            guard let textView = textView, !textView.string.isEmpty else { return }
+
+            isUpdating = true
+            defer { isUpdating = false }
+
+            let text = textView.string
+            let selectedRanges = textView.selectedRanges
+            let scrollPosition = scrollView?.contentView.bounds.origin ?? .zero
+
+            let attributedString = highlighter.highlight(
+                text: text,
+                language: language,
+                isDarkMode: isDarkMode
+            )
+
+            textView.textStorage?.setAttributedString(attributedString)
+
+            // Restore selection and scroll
+            textView.selectedRanges = selectedRanges
+            scrollView?.contentView.scroll(to: scrollPosition)
+        }
+
+        func updateLineCount() {
+            guard let textView = textView else { return }
+            let text = textView.string
+            let lineCount = text.isEmpty ? 1 : text.components(separatedBy: .newlines).count
+            parent.onLineCountChange(lineCount)
+        }
+
+        @objc func scrollViewDidScroll(_ notification: Notification) {
+            guard let scrollView = scrollView else { return }
+            let offset = scrollView.contentView.bounds.origin.y
+            parent.onScrollChange(offset)
+        }
+    }
+}
+
+// MARK: - Custom Text View
+
+class TamgaTextView: NSTextView {
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        // Allow standard shortcuts
+        if event.modifierFlags.contains(.command) {
+            switch event.charactersIgnoringModifiers {
+            case "a": // Select All
+                selectAll(nil)
+                return true
+            case "z" where event.modifierFlags.contains(.shift): // Redo
+                undoManager?.redo()
+                return true
+            case "z": // Undo
+                undoManager?.undo()
+                return true
+            default:
+                break
+            }
+        }
+        return super.performKeyEquivalent(with: event)
+    }
+}
+
+#Preview {
+    EditorView(
+        text: .constant("func hello() {\n    print(\"Hello, World!\")\n}"),
+        language: .swift,
+        showLineNumbers: true,
+        isWordWrapEnabled: true,
+        fontSize: 14,
+        fontName: "SF Mono"
+    )
+    .frame(width: 600, height: 400)
+}
