@@ -287,9 +287,66 @@ struct HighlightedTextEditor: NSViewRepresentable {
 // MARK: - Custom Text View
 
 class TamgaTextView: NSTextView {
+    override init(frame frameRect: NSRect, textContainer container: NSTextContainer?) {
+        super.init(frame: frameRect, textContainer: container)
+        setupNotifications()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupNotifications()
+    }
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setupNotifications()
+    }
+
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDuplicateLine),
+            name: .duplicateLine,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleMoveLineUp),
+            name: .moveLineUp,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleMoveLineDown),
+            name: .moveLineDown,
+            object: nil
+        )
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func handleDuplicateLine() {
+        guard window?.firstResponder === self else { return }
+        duplicateCurrentLine()
+    }
+
+    @objc private func handleMoveLineUp() {
+        guard window?.firstResponder === self else { return }
+        moveCurrentLineUp()
+    }
+
+    @objc private func handleMoveLineDown() {
+        guard window?.firstResponder === self else { return }
+        moveCurrentLineDown()
+    }
+
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         // Allow standard shortcuts
         if event.modifierFlags.contains(.command) {
+            let hasOption = event.modifierFlags.contains(.option)
+
             switch event.charactersIgnoringModifiers {
             case "a": // Select All
                 selectAll(nil)
@@ -300,11 +357,132 @@ class TamgaTextView: NSTextView {
             case "z": // Undo
                 undoManager?.undo()
                 return true
+            case "d" where !hasOption: // Duplicate Line
+                duplicateCurrentLine()
+                return true
             default:
                 break
             }
         }
+
+        // Move line up/down with Option+Up/Down
+        if event.modifierFlags.contains(.option) {
+            switch event.keyCode {
+            case 126: // Up arrow
+                moveCurrentLineUp()
+                return true
+            case 125: // Down arrow
+                moveCurrentLineDown()
+                return true
+            default:
+                break
+            }
+        }
+
         return super.performKeyEquivalent(with: event)
+    }
+
+    private func duplicateCurrentLine() {
+        let text = string
+        let cursorPos = selectedRange().location
+        let lines = text.components(separatedBy: "\n")
+
+        // Find which line the cursor is on
+        var currentPos = 0
+        var lineIndex = 0
+        for (index, line) in lines.enumerated() {
+            let lineEnd = currentPos + line.count
+            if cursorPos <= lineEnd || index == lines.count - 1 {
+                lineIndex = index
+                break
+            }
+            currentPos = lineEnd + 1
+        }
+
+        // Duplicate the line
+        var newLines = lines
+        newLines.insert(lines[lineIndex], at: lineIndex + 1)
+
+        let newContent = newLines.joined(separator: "\n")
+
+        // Calculate new cursor position
+        var newCursorPos = 0
+        for i in 0...lineIndex {
+            newCursorPos += lines[i].count + 1
+        }
+
+        // Update text
+        string = newContent
+        setSelectedRange(NSRange(location: newCursorPos, length: 0))
+
+        // Notify delegate of change
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    private func moveCurrentLineUp() {
+        moveCurrentLine(direction: .up)
+    }
+
+    private func moveCurrentLineDown() {
+        moveCurrentLine(direction: .down)
+    }
+
+    private func moveCurrentLine(direction: MoveDirection) {
+        let text = string
+        let cursorPos = selectedRange().location
+        let lines = text.components(separatedBy: "\n")
+
+        // Find which line the cursor is on
+        var currentPos = 0
+        var lineIndex = 0
+        var cursorOffsetInLine = 0
+        for (index, line) in lines.enumerated() {
+            let lineEnd = currentPos + line.count
+            if cursorPos <= lineEnd || index == lines.count - 1 {
+                lineIndex = index
+                cursorOffsetInLine = cursorPos - currentPos
+                break
+            }
+            currentPos = lineEnd + 1
+        }
+
+        // Check if move is valid
+        let targetIndex: Int
+        switch direction {
+        case .up:
+            guard lineIndex > 0 else { return }
+            targetIndex = lineIndex - 1
+        case .down:
+            guard lineIndex < lines.count - 1 else { return }
+            targetIndex = lineIndex + 1
+        }
+
+        // Swap lines
+        var newLines = lines
+        let temp = newLines[lineIndex]
+        newLines[lineIndex] = newLines[targetIndex]
+        newLines[targetIndex] = temp
+
+        let newContent = newLines.joined(separator: "\n")
+
+        // Calculate new cursor position
+        var newCursorPos = 0
+        for i in 0..<targetIndex {
+            newCursorPos += newLines[i].count + 1
+        }
+        newCursorPos += min(cursorOffsetInLine, newLines[targetIndex].count)
+
+        // Update text
+        string = newContent
+        setSelectedRange(NSRange(location: newCursorPos, length: 0))
+
+        // Notify delegate of change
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    private enum MoveDirection {
+        case up
+        case down
     }
 }
 

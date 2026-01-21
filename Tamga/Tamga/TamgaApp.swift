@@ -110,6 +110,23 @@ struct TamgaApp: App {
                     documentViewModel?.toggleGoToLine()
                 }
                 .keyboardShortcut("l", modifiers: .command)
+
+                Divider()
+
+                Button(String(localized: "duplicate.line")) {
+                    NotificationCenter.default.post(name: .duplicateLine, object: nil)
+                }
+                .keyboardShortcut("d", modifiers: .command)
+
+                Button(String(localized: "move.line.up")) {
+                    NotificationCenter.default.post(name: .moveLineUp, object: nil)
+                }
+                .keyboardShortcut(.upArrow, modifiers: .option)
+
+                Button(String(localized: "move.line.down")) {
+                    NotificationCenter.default.post(name: .moveLineDown, object: nil)
+                }
+                .keyboardShortcut(.downArrow, modifiers: .option)
             }
 
             // MARK: - View Menu

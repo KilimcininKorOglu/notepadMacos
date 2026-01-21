@@ -173,3 +173,11 @@ extension Binding {
         )
     }
 }
+
+// MARK: - Notification.Name Extensions
+
+extension Notification.Name {
+    static let duplicateLine = Notification.Name("duplicateLine")
+    static let moveLineUp = Notification.Name("moveLineUp")
+    static let moveLineDown = Notification.Name("moveLineDown")
+}
