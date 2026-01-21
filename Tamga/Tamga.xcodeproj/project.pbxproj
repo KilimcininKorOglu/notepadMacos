@@ -28,6 +28,7 @@
 		A1000019AAAAAAAA00000019 /* FindReplaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000020AAAAAAAA00000020 /* FindReplaceView.swift */; };
 		A1000020AAAAAAAA00000020 /* GoToLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000021AAAAAAAA00000021 /* GoToLineView.swift */; };
 		A1000021AAAAAAAA00000021 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000022AAAAAAAA00000022 /* SidebarView.swift */; };
+		A1000022AAAAAAAA00000022 /* MarkdownPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000023AAAAAAAA00000023 /* MarkdownPreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		A2000020AAAAAAAA00000020 /* FindReplaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindReplaceView.swift; sourceTree = "<group>"; };
 		A2000021AAAAAAAA00000021 /* GoToLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToLineView.swift; sourceTree = "<group>"; };
 		A2000022AAAAAAAA00000022 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		A2000023AAAAAAAA00000023 /* MarkdownPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownPreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				A2000020AAAAAAAA00000020 /* FindReplaceView.swift */,
 				A2000021AAAAAAAA00000021 /* GoToLineView.swift */,
 				A2000022AAAAAAAA00000022 /* SidebarView.swift */,
+				A2000023AAAAAAAA00000023 /* MarkdownPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				A1000019AAAAAAAA00000019 /* FindReplaceView.swift in Sources */,
 				A1000020AAAAAAAA00000020 /* GoToLineView.swift in Sources */,
 				A1000021AAAAAAAA00000021 /* SidebarView.swift in Sources */,
+				A1000022AAAAAAAA00000022 /* MarkdownPreviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

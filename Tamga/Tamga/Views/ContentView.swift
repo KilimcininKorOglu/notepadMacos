@@ -68,6 +68,29 @@ struct ContentView: View {
                                 )
                                 .id("\(activeTab.id)-right")
                             }
+                        } else if appState.isMarkdownPreviewEnabled && activeTab.language == .markdown {
+                            HSplitView {
+                                EditorView(
+                                    text: Binding(
+                                        get: { activeTab.content },
+                                        set: { newContent in
+                                            tabManager.updateContent(newContent, for: activeTab.id)
+                                            updateDocumentInfo(content: newContent)
+                                            documentViewModel.search(in: newContent)
+                                        }
+                                    ),
+                                    language: activeTab.language,
+                                    showLineNumbers: appState.showLineNumbers,
+                                    isWordWrapEnabled: appState.isWordWrapEnabled,
+                                    fontSize: appState.fontSize,
+                                    fontName: appState.fontName,
+                                    goToPosition: activeTab.cursorPosition
+                                )
+                                .id("\(activeTab.id)-editor")
+
+                                MarkdownPreviewView(markdown: activeTab.content)
+                                    .id("\(activeTab.id)-preview")
+                            }
                         } else {
                             EditorView(
                                 text: Binding(

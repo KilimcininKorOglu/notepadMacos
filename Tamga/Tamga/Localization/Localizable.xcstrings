@@ -1292,6 +1292,23 @@
           }
         }
       }
+    },
+    "markdown.preview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markdown Preview"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markdown Onizleme"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

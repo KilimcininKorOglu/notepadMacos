@@ -17,6 +17,7 @@ class AppState: ObservableObject {
     @Published var autoSaveInterval: TimeInterval = 60 // seconds
     @Published var isSplitViewEnabled: Bool = false
     @Published var isSidebarVisible: Bool = false
+    @Published var isMarkdownPreviewEnabled: Bool = false
 
     private let userDefaults = UserDefaults.standard
     private let recentFilesKey = "recentFiles"

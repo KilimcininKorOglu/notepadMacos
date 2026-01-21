@@ -232,6 +232,9 @@ struct TamgaApp: App {
                 Toggle(String(localized: "split.view"), isOn: $appState.isSplitViewEnabled)
                     .keyboardShortcut("\\", modifiers: [.command])
 
+                Toggle(String(localized: "markdown.preview"), isOn: $appState.isMarkdownPreviewEnabled)
+                    .keyboardShortcut("m", modifiers: [.command, .shift])
+
                 Divider()
 
                 Button(String(localized: "zoom.in")) {
