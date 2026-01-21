@@ -103,6 +103,13 @@ struct TamgaApp: App {
                     documentViewModel?.findPrevious()
                 }
                 .keyboardShortcut("g", modifiers: [.command, .shift])
+
+                Divider()
+
+                Button(String(localized: "go.to.line")) {
+                    documentViewModel?.toggleGoToLine()
+                }
+                .keyboardShortcut("l", modifiers: .command)
             }
 
             // MARK: - View Menu

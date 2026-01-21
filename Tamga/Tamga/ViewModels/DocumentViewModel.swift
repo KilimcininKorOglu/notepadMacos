@@ -9,6 +9,8 @@ class DocumentViewModel: ObservableObject {
     @Published var isSearchVisible: Bool = false
     @Published var searchResults: [Range<String.Index>] = []
     @Published var currentSearchIndex: Int = 0
+    @Published var isGoToLineVisible: Bool = false
+    @Published var targetLineNumber: Int?
 
     private let fileService = FileService.shared
 
@@ -77,6 +79,22 @@ class DocumentViewModel: ObservableObject {
             replaceText = ""
             searchResults = []
         }
+    }
+
+    func toggleGoToLine() {
+        isGoToLineVisible.toggle()
+    }
+
+    func goToLine(_ lineNumber: Int, in content: String) -> Int? {
+        let lines = content.components(separatedBy: .newlines)
+        guard lineNumber >= 1 && lineNumber <= lines.count else { return nil }
+
+        var position = 0
+        for i in 0..<(lineNumber - 1) {
+            position += lines[i].count + 1 // +1 for newline
+        }
+        targetLineNumber = lineNumber
+        return position
     }
 
     // MARK: - File Operations

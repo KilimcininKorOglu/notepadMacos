@@ -9,6 +9,7 @@ struct EditorView: View {
     let isWordWrapEnabled: Bool
     let fontSize: CGFloat
     let fontName: String
+    var goToPosition: Int? = nil
 
     @Environment(\.colorScheme) private var colorScheme
     @State private var lineCount: Int = 1
@@ -35,6 +36,7 @@ struct EditorView: View {
                     fontSize: fontSize,
                     fontName: fontName,
                     isWordWrapEnabled: isWordWrapEnabled,
+                    goToPosition: goToPosition,
                     onLineCountChange: { count in
                         lineCount = count
                     },
@@ -101,6 +103,7 @@ struct HighlightedTextEditor: NSViewRepresentable {
     let fontSize: CGFloat
     let fontName: String
     let isWordWrapEnabled: Bool
+    let goToPosition: Int?
     let onLineCountChange: (Int) -> Void
     let onScrollChange: (CGFloat) -> Void
 
@@ -192,6 +195,12 @@ struct HighlightedTextEditor: NSViewRepresentable {
 
         // Apply syntax highlighting
         context.coordinator.applySyntaxHighlighting(language: language, isDarkMode: isDarkMode)
+
+        // Handle go to position
+        if let position = goToPosition, position != context.coordinator.lastGoToPosition {
+            context.coordinator.lastGoToPosition = position
+            context.coordinator.scrollToPosition(position)
+        }
     }
 
     private func updateColors(textView: NSTextView, isDarkMode: Bool) {
@@ -212,12 +221,22 @@ struct HighlightedTextEditor: NSViewRepresentable {
         var parent: HighlightedTextEditor
         weak var textView: NSTextView?
         weak var scrollView: NSScrollView?
+        var lastGoToPosition: Int?
 
         private let highlighter = SyntaxHighlighter.shared
         private var isUpdating = false
 
         init(_ parent: HighlightedTextEditor) {
             self.parent = parent
+        }
+
+        func scrollToPosition(_ position: Int) {
+            guard let textView = textView else { return }
+            let text = textView.string
+            let safePosition = min(position, text.count)
+            let range = NSRange(location: safePosition, length: 0)
+            textView.setSelectedRange(range)
+            textView.scrollRangeToVisible(range)
         }
 
         func textDidChange(_ notification: Notification) {

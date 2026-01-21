@@ -31,7 +31,8 @@ struct ContentView: View {
                         showLineNumbers: appState.showLineNumbers,
                         isWordWrapEnabled: appState.isWordWrapEnabled,
                         fontSize: appState.fontSize,
-                        fontName: appState.fontName
+                        fontName: appState.fontName,
+                        goToPosition: activeTab.cursorPosition
                     )
                     .id(activeTab.id)
                 } else {
@@ -72,6 +73,18 @@ struct ContentView: View {
                 }
                 .transition(.move(edge: .top).combined(with: .opacity))
             }
+
+            // Go to Line Panel
+            if documentViewModel.isGoToLineVisible {
+                GoToLineView(
+                    isVisible: $documentViewModel.isGoToLineVisible,
+                    totalLines: totalLineCount,
+                    onGoToLine: { lineNumber in
+                        goToLine(lineNumber)
+                    }
+                )
+                .transition(.scale.combined(with: .opacity))
+            }
         }
         .frame(minWidth: 600, minHeight: 400)
         .onAppear {
@@ -101,6 +114,21 @@ struct ContentView: View {
             }
         }
         .animation(.easeInOut(duration: 0.2), value: documentViewModel.isSearchVisible)
+        .animation(.easeInOut(duration: 0.2), value: documentViewModel.isGoToLineVisible)
+    }
+
+    // MARK: - Line Calculations
+
+    private var totalLineCount: Int {
+        guard let activeTab = tabManager.activeTab else { return 0 }
+        return activeTab.content.components(separatedBy: .newlines).count
+    }
+
+    private func goToLine(_ lineNumber: Int) {
+        guard let activeTab = tabManager.activeTab else { return }
+        if let position = documentViewModel.goToLine(lineNumber, in: activeTab.content) {
+            tabManager.updateCursorPosition(position, for: activeTab.id)
+        }
     }
 
     // MARK: - Empty State
