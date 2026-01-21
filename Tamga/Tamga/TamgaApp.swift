@@ -201,24 +201,24 @@ struct TamgaApp: App {
                     Button(String(localized: "fold")) {
                         NotificationCenter.default.post(name: .foldCode, object: nil)
                     }
-                    .keyboardShortcut("[", modifiers: [.command, .option])
+                    .keyboardShortcut(.leftArrow, modifiers: [.command, .option])
 
                     Button(String(localized: "unfold")) {
                         NotificationCenter.default.post(name: .unfoldCode, object: nil)
                     }
-                    .keyboardShortcut("]", modifiers: [.command, .option])
+                    .keyboardShortcut(.rightArrow, modifiers: [.command, .option])
 
                     Divider()
 
                     Button(String(localized: "fold.all")) {
                         NotificationCenter.default.post(name: .foldAll, object: nil)
                     }
-                    .keyboardShortcut("[", modifiers: [.command, .option, .shift])
+                    .keyboardShortcut(.leftArrow, modifiers: [.command, .option, .shift])
 
                     Button(String(localized: "unfold.all")) {
                         NotificationCenter.default.post(name: .unfoldAll, object: nil)
                     }
-                    .keyboardShortcut("]", modifiers: [.command, .option, .shift])
+                    .keyboardShortcut(.rightArrow, modifiers: [.command, .option, .shift])
                 }
             }
 
@@ -245,7 +245,7 @@ struct TamgaApp: App {
                     .keyboardShortcut("m", modifiers: [.command, .shift])
 
                 Toggle(String(localized: "show.invisibles"), isOn: $appState.showInvisibleCharacters)
-                    .keyboardShortcut("i", modifiers: [.command, .option])
+                    .keyboardShortcut("8", modifiers: [.command, .option])
 
                 Divider()
 
@@ -290,12 +290,12 @@ struct TamgaApp: App {
                 Button(String(localized: "next.tab")) {
                     tabManager?.selectNextTab()
                 }
-                .keyboardShortcut("]", modifiers: [.command, .shift])
+                .keyboardShortcut(.rightArrow, modifiers: [.command, .shift])
 
                 Button(String(localized: "previous.tab")) {
                     tabManager?.selectPreviousTab()
                 }
-                .keyboardShortcut("[", modifiers: [.command, .shift])
+                .keyboardShortcut(.leftArrow, modifiers: [.command, .shift])
 
                 Divider()
 
