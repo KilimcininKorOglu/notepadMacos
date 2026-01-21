@@ -164,7 +164,7 @@ enum AppLanguage: String, CaseIterable {
         switch self {
         case .system: return String(localized: "lang.system")
         case .english: return "English"
-        case .turkish: return "Turkce"
+        case .turkish: return "Türkçe"
         }
     }
 }
