@@ -13,7 +13,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adsiz"
+            "value" : "Adsız"
           }
         }
       }
@@ -64,7 +64,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ac..."
+            "value" : "Aç..."
           }
         }
       }
@@ -98,7 +98,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Farkli Kaydet..."
+            "value" : "Farklı Kaydet..."
           }
         }
       }
@@ -132,7 +132,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tum Sekmeleri Kapat"
+            "value" : "Tüm Sekmeleri Kapat"
           }
         }
       }
@@ -149,7 +149,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diger Sekmeleri Kapat"
+            "value" : "Diğer Sekmeleri Kapat"
           }
         }
       }
@@ -200,7 +200,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gecmisi Temizle"
+            "value" : "Geçmişi Temizle"
           }
         }
       }
@@ -251,7 +251,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oncekini Bul"
+            "value" : "Öncekini Bul"
           }
         }
       }
@@ -268,7 +268,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sozcuk Kaydirma"
+            "value" : "Sözcük Kaydırma"
           }
         }
       }
@@ -285,7 +285,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satir Numaralarini Goster"
+            "value" : "Satır Numaralarını Göster"
           }
         }
       }
@@ -302,7 +302,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Durum Cubugunu Goster"
+            "value" : "Durum Çubuğunu Göster"
           }
         }
       }
@@ -319,7 +319,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yaklas"
+            "value" : "Yakınlaştır"
           }
         }
       }
@@ -336,7 +336,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzaklas"
+            "value" : "Uzaklaştır"
           }
         }
       }
@@ -353,7 +353,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakinlastirmayi Sifirla"
+            "value" : "Yakınlaştırmayı Sıfırla"
           }
         }
       }
@@ -404,7 +404,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acik"
+            "value" : "Açık"
           }
         }
       }
@@ -455,7 +455,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Onceki Sekme"
+            "value" : "Önceki Sekme"
           }
         }
       }
@@ -472,7 +472,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tamga Hakkinda"
+            "value" : "Tamga Hakkında"
           }
         }
       }
@@ -489,7 +489,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tamga, soz dizimi renklendirme ve sekme destegi olan yerel bir macOS metin duzenleyicisidir."
+            "value" : "Tamga, söz dizimi renklendirme ve sekme desteği olan yerel bir macOS metin düzenleyicisidir."
           }
         }
       }
@@ -506,7 +506,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satir"
+            "value" : "Satır"
           }
         }
       }
@@ -523,7 +523,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sut"
+            "value" : "Sütun"
           }
         }
       }
@@ -574,7 +574,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acik Dosya Yok"
+            "value" : "Açık Dosya Yok"
           }
         }
       }
@@ -591,7 +591,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Finder'da Goster"
+            "value" : "Finder'da Göster"
           }
         }
       }
@@ -625,7 +625,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dosya icerigi cozulemedi."
+            "value" : "Dosya içeriği çözülemedi."
           }
         }
       }
@@ -642,7 +642,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dosya icerigi kodlanamadi."
+            "value" : "Dosya içeriği kodlanamadı."
           }
         }
       }
@@ -659,7 +659,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dosya bulunamadi."
+            "value" : "Dosya bulunamadı."
           }
         }
       }
@@ -676,7 +676,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erisim reddedildi."
+            "value" : "Erişim reddedildi."
           }
         }
       }
@@ -710,7 +710,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bununla degistir"
+            "value" : "Bununla değiştir"
           }
         }
       }
@@ -727,7 +727,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Degistir"
+            "value" : "Değiştir"
           }
         }
       }
@@ -744,7 +744,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tumunu Degistir"
+            "value" : "Tümünü Değiştir"
           }
         }
       }
@@ -761,7 +761,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sonuc yok"
+            "value" : "Sonuç yok"
           }
         }
       }
@@ -778,7 +778,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Degistirmeyi Ac/Kapat"
+            "value" : "Değiştirmeyi Aç/Kapat"
           }
         }
       }
@@ -812,7 +812,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satira Git..."
+            "value" : "Satıra Git..."
           }
         }
       }
@@ -829,7 +829,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satir numarasi"
+            "value" : "Satır numarası"
           }
         }
       }
@@ -863,7 +863,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Iptal"
+            "value" : "İptal"
           }
         }
       }
@@ -880,7 +880,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satiri Cokla"
+            "value" : "Satırı Çoğalt"
           }
         }
       }
@@ -897,7 +897,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satiri Yukari Tasi"
+            "value" : "Satırı Yukarı Taşı"
           }
         }
       }
@@ -914,7 +914,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satiri Asagi Tasi"
+            "value" : "Satırı Aşağı Taşı"
           }
         }
       }
@@ -931,7 +931,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satirlari Sirala"
+            "value" : "Satırları Sırala"
           }
         }
       }
@@ -948,7 +948,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Artan Sirala"
+            "value" : "Artan Sırala"
           }
         }
       }
@@ -965,7 +965,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Azalan Sirala"
+            "value" : "Azalan Sırala"
           }
         }
       }
@@ -982,7 +982,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tekrar Eden Satirlari Kaldir"
+            "value" : "Tekrar Eden Satırları Kaldır"
           }
         }
       }
@@ -999,7 +999,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Harf Boyutunu Degistir"
+            "value" : "Harf Boyutunu Değiştir"
           }
         }
       }
@@ -1016,7 +1016,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BUYUK HARF"
+            "value" : "BÜYÜK HARF"
           }
         }
       }
@@ -1033,7 +1033,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kucuk harf"
+            "value" : "küçük harf"
           }
         }
       }
@@ -1050,7 +1050,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Her Kelimeyi Buyut"
+            "value" : "Her Kelimenin İlk Harfini Büyüt"
           }
         }
       }
@@ -1101,7 +1101,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JSON Kucult"
+            "value" : "JSON Küçült"
           }
         }
       }
@@ -1135,7 +1135,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yazdir..."
+            "value" : "Yazdır..."
           }
         }
       }
@@ -1152,7 +1152,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acmak icin dosyalari buraya birakin"
+            "value" : "Açmak için dosyaları buraya bırakın"
           }
         }
       }
@@ -1220,7 +1220,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tumunu Katla"
+            "value" : "Tümünü Katla"
           }
         }
       }
@@ -1237,7 +1237,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tumunu Ac"
+            "value" : "Tümünü Aç"
           }
         }
       }
@@ -1254,7 +1254,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bolunmus Gorunum"
+            "value" : "Bölünmüş Görünüm"
           }
         }
       }
@@ -1271,7 +1271,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kenar Cubugunu Goster"
+            "value" : "Kenar Çubuğunu Göster"
           }
         }
       }
@@ -1288,7 +1288,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acik Sekmeler"
+            "value" : "Açık Sekmeler"
           }
         }
       }
@@ -1305,7 +1305,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Markdown Onizleme"
+            "value" : "Markdown Önizleme"
           }
         }
       }
@@ -1322,7 +1322,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gorunmez Karakterleri Goster"
+            "value" : "Görünmez Karakterleri Göster"
           }
         }
       }
@@ -1339,7 +1339,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dosyalari Karsilastir"
+            "value" : "Dosyaları Karşılaştır"
           }
         }
       }
@@ -1356,7 +1356,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dosya ile Karsilastir..."
+            "value" : "Dosya ile Karşılaştır..."
           }
         }
       }
