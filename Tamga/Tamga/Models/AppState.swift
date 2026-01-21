@@ -19,6 +19,7 @@ class AppState: ObservableObject {
     @Published var isSidebarVisible: Bool = false
     @Published var isMarkdownPreviewEnabled: Bool = false
     @Published var showInvisibleCharacters: Bool = false
+    @Published var appLanguage: AppLanguage = .system
 
     private let userDefaults = UserDefaults.standard
     private let recentFilesKey = "recentFiles"
@@ -69,6 +70,26 @@ class AppState: ObservableObject {
            let urls = try? JSONDecoder().decode([URL].self, from: recentData) {
             recentFiles = urls.filter { FileManager.default.fileExists(atPath: $0.path) }
         }
+
+        if let langRaw = userDefaults.string(forKey: "appLanguage"),
+           let lang = AppLanguage(rawValue: langRaw) {
+            appLanguage = lang
+            applyLanguage()
+        }
+    }
+
+    func setLanguage(_ language: AppLanguage) {
+        appLanguage = language
+        applyLanguage()
+        saveSettings()
+    }
+
+    private func applyLanguage() {
+        if appLanguage == .system {
+            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+        } else {
+            UserDefaults.standard.set([appLanguage.code], forKey: "AppleLanguages")
+        }
     }
 
     func saveSettings() {
@@ -80,6 +101,7 @@ class AppState: ObservableObject {
         userDefaults.set(currentTheme.rawValue, forKey: "theme")
         userDefaults.set(isAutoSaveEnabled, forKey: "autoSave")
         userDefaults.set(autoSaveInterval, forKey: "autoSaveInterval")
+        userDefaults.set(appLanguage.rawValue, forKey: "appLanguage")
 
         if let data = try? JSONEncoder().encode(recentFiles) {
             userDefaults.set(data, forKey: recentFilesKey)
@@ -120,6 +142,29 @@ enum AppTheme: String, CaseIterable {
         case .system: return String(localized: "system")
         case .light: return String(localized: "light")
         case .dark: return String(localized: "dark")
+        }
+    }
+}
+
+/// Application language options
+enum AppLanguage: String, CaseIterable {
+    case system = "System"
+    case english = "English"
+    case turkish = "Turkish"
+
+    var code: String {
+        switch self {
+        case .system: return ""
+        case .english: return "en"
+        case .turkish: return "tr"
+        }
+    }
+
+    var displayName: String {
+        switch self {
+        case .system: return String(localized: "lang.system")
+        case .english: return "English"
+        case .turkish: return "Turkce"
         }
     }
 }

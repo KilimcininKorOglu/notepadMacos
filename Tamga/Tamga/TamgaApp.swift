@@ -281,6 +281,28 @@ struct TamgaApp: App {
                         }
                     }
                 }
+
+                // Language submenu
+                Menu(String(localized: "language")) {
+                    ForEach(AppLanguage.allCases, id: \.self) { language in
+                        Button {
+                            appState.setLanguage(language)
+                        } label: {
+                            HStack {
+                                Text(language.displayName)
+                                if appState.appLanguage == language {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
+                    }
+
+                    Divider()
+
+                    Text(String(localized: "language.restart.note"))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
 
             // MARK: - Tab Navigation
