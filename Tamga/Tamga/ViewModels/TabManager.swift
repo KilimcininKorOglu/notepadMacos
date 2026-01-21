@@ -65,6 +65,7 @@ class TabManager: ObservableObject {
         tabs.remove(at: index)
 
         if tabs.isEmpty {
+            untitledCounter = 1
             createNewTab()
         } else if activeTabId == id {
             // Select adjacent tab
