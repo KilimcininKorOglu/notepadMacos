@@ -1326,6 +1326,40 @@
           }
         }
       }
+    },
+    "compare.files" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare Files"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dosyalari Karsilastir"
+          }
+        }
+      }
+    },
+    "compare.with.file" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare with File..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dosya ile Karsilastir..."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

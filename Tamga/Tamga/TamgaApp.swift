@@ -53,6 +53,15 @@ struct TamgaApp: App {
 
                 Divider()
 
+                Button(String(localized: "compare.with.file")) {
+                    Task {
+                        await documentViewModel?.openFileForCompare()
+                    }
+                }
+                .disabled(tabManager?.activeTab == nil)
+
+                Divider()
+
                 Button(String(localized: "print")) {
                     printCurrentTab()
                 }

@@ -11,6 +11,9 @@ class DocumentViewModel: ObservableObject {
     @Published var currentSearchIndex: Int = 0
     @Published var isGoToLineVisible: Bool = false
     @Published var targetLineNumber: Int?
+    @Published var isCompareVisible: Bool = false
+    @Published var compareText: String = ""
+    @Published var compareTitle: String = ""
 
     private let fileService = FileService.shared
 
@@ -235,5 +238,35 @@ class DocumentViewModel: ObservableObject {
             print("Error saving file: \(error)")
             return nil
         }
+    }
+
+    // MARK: - Compare Operations
+
+    func openFileForCompare() async {
+        let panel = NSOpenPanel()
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.allowedContentTypes = [.text, .sourceCode, .json, .xml, .html, .plainText]
+        panel.message = String(localized: "compare.with.file")
+
+        let response = await panel.beginSheetModal(for: NSApp.keyWindow ?? NSWindow())
+
+        guard response == .OK, let url = panel.url else { return }
+
+        do {
+            let content = try fileService.readFile(at: url)
+            compareText = content
+            compareTitle = url.lastPathComponent
+            isCompareVisible = true
+        } catch {
+            print("Error opening file for compare: \(error)")
+        }
+    }
+
+    func closeCompare() {
+        isCompareVisible = false
+        compareText = ""
+        compareTitle = ""
     }
 }

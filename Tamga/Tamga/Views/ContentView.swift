@@ -168,6 +168,19 @@ struct ContentView: View {
                 )
                 .transition(.scale.combined(with: .opacity))
             }
+
+            // Compare View
+            if documentViewModel.isCompareVisible, let activeTab = tabManager.activeTab {
+                CompareView(
+                    leftText: activeTab.content,
+                    rightText: documentViewModel.compareText,
+                    leftTitle: activeTab.title,
+                    rightTitle: documentViewModel.compareTitle,
+                    isVisible: $documentViewModel.isCompareVisible
+                )
+                .background(Color(nsColor: .windowBackgroundColor))
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
         }
         .frame(minWidth: 600, minHeight: 400)
         .onAppear {
@@ -198,6 +211,7 @@ struct ContentView: View {
         }
         .animation(.easeInOut(duration: 0.2), value: documentViewModel.isSearchVisible)
         .animation(.easeInOut(duration: 0.2), value: documentViewModel.isGoToLineVisible)
+        .animation(.easeInOut(duration: 0.3), value: documentViewModel.isCompareVisible)
         .onReceive(NotificationCenter.default.publisher(for: .autoSave)) { _ in
             autoSaveDirtyTabs()
         }
