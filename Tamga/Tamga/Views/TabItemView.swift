@@ -8,6 +8,7 @@ struct TabItemView: View {
     let onClose: () -> Void
 
     @State private var isHovering = false
+    @State private var showCloseAlert = false
     @Environment(\.colorScheme) private var colorScheme
 
     private var hoverColor: Color {
@@ -37,7 +38,7 @@ struct TabItemView: View {
 
             // Close button
             if isHovering || isSelected {
-                Button(action: onClose) {
+                Button(action: handleClose) {
                     Image(systemName: "xmark")
                         .font(.system(size: 9, weight: .bold))
                         .foregroundColor(.secondary)
@@ -60,9 +61,17 @@ struct TabItemView: View {
         .onHover { hovering in
             isHovering = hovering
         }
+        .alert(String(localized: "unsaved.changes"), isPresented: $showCloseAlert) {
+            Button(String(localized: "dont.save"), role: .destructive) {
+                onClose()
+            }
+            Button(String(localized: "cancel"), role: .cancel) {}
+        } message: {
+            Text(String(localized: "unsaved.changes.message"))
+        }
         .contextMenu {
             Button(String(localized: "close.tab")) {
-                onClose()
+                handleClose()
             }
 
             Button(String(localized: "close.other.tabs")) {
@@ -92,6 +101,14 @@ struct TabItemView: View {
             return tab.title + " *"
         }
         return tab.title
+    }
+
+    private func handleClose() {
+        if tab.isDirty {
+            showCloseAlert = true
+        } else {
+            onClose()
+        }
     }
 }
 
