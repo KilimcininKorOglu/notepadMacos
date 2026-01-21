@@ -335,7 +335,7 @@ struct TamgaApp: App {
         guard let tabManager = tabManager,
               let tab = tabManager.activeTab else { return }
 
-        if let url = await documentViewModel?.saveFileAs(content: tab.content) {
+        if let url = await documentViewModel?.saveFileAs(content: tab.content, suggestedName: tab.title) {
             tabManager.markAsSaved(id: tab.id, filePath: url)
         }
     }

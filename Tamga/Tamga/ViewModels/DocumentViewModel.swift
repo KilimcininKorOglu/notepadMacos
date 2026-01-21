@@ -221,11 +221,11 @@ class DocumentViewModel: ObservableObject {
         }
     }
 
-    func saveFileAs(content: String) async -> URL? {
+    func saveFileAs(content: String, suggestedName: String = "untitled.txt") async -> URL? {
         let panel = NSSavePanel()
         panel.allowedContentTypes = [.text, .sourceCode, .json, .xml, .html, .plainText]
         panel.canCreateDirectories = true
-        panel.nameFieldStringValue = "untitled.txt"
+        panel.nameFieldStringValue = suggestedName
 
         let response = await panel.beginSheetModal(for: NSApp.keyWindow ?? NSWindow())
 
