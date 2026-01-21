@@ -47,7 +47,7 @@ struct TabItemView: View {
                 .contentShape(Rectangle())
             } else if tab.isDirty {
                 Circle()
-                    .fill(Color.accentColor)
+                    .fill(Color.red)
                     .frame(width: 8, height: 8)
             } else {
                 Spacer()
