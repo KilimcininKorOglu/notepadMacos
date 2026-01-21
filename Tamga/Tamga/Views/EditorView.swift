@@ -357,6 +357,18 @@ class TamgaTextView: NSTextView {
             name: .capitalizeSelection,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleFormatJSON),
+            name: .formatJSON,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleMinifyJSON),
+            name: .minifyJSON,
+            object: nil
+        )
     }
 
     deinit {
@@ -393,6 +405,16 @@ class TamgaTextView: NSTextView {
     @objc private func handleCapitalize() {
         guard window?.firstResponder === self else { return }
         changeCase(.capitalize)
+    }
+
+    @objc private func handleFormatJSON() {
+        guard window?.firstResponder === self else { return }
+        formatJSON(minify: false)
+    }
+
+    @objc private func handleMinifyJSON() {
+        guard window?.firstResponder === self else { return }
+        formatJSON(minify: true)
     }
 
     @objc private func handleDuplicateLine() {
@@ -695,6 +717,59 @@ class TamgaTextView: NSTextView {
         if let textStorage = self.textStorage {
             textStorage.replaceCharacters(in: selectedRange, with: transformedText)
             setSelectedRange(NSRange(location: selectedRange.location, length: transformedText.count))
+        }
+
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    // MARK: - JSON Formatting
+
+    private func formatJSON(minify: Bool) {
+        let text = string
+        let selectedRange = self.selectedRange()
+
+        // Determine text to format (selection or entire document)
+        let textToFormat: String
+        let rangeToReplace: NSRange
+
+        if selectedRange.length > 0 {
+            let nsString = text as NSString
+            textToFormat = nsString.substring(with: selectedRange)
+            rangeToReplace = selectedRange
+        } else {
+            textToFormat = text
+            rangeToReplace = NSRange(location: 0, length: text.count)
+        }
+
+        // Try to parse and format JSON
+        guard let jsonData = textToFormat.data(using: .utf8),
+              let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: .fragmentsAllowed) else {
+            // Invalid JSON - beep
+            NSSound.beep()
+            return
+        }
+
+        let formattedData: Data?
+        if minify {
+            formattedData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .fragmentsAllowed)
+        } else {
+            formattedData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted, .sortedKeys, .fragmentsAllowed])
+        }
+
+        guard let data = formattedData,
+              let formattedString = String(data: data, encoding: .utf8) else {
+            NSSound.beep()
+            return
+        }
+
+        // Replace text
+        if let textStorage = self.textStorage {
+            textStorage.replaceCharacters(in: rangeToReplace, with: formattedString)
+            if selectedRange.length > 0 {
+                setSelectedRange(NSRange(location: rangeToReplace.location, length: formattedString.count))
+            } else {
+                setSelectedRange(NSRange(location: 0, length: 0))
+            }
         }
 
         delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))

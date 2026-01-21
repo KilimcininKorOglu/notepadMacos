@@ -186,4 +186,6 @@ extension Notification.Name {
     static let uppercaseSelection = Notification.Name("uppercaseSelection")
     static let lowercaseSelection = Notification.Name("lowercaseSelection")
     static let capitalizeSelection = Notification.Name("capitalizeSelection")
+    static let formatJSON = Notification.Name("formatJSON")
+    static let minifyJSON = Notification.Name("minifyJSON")
 }

@@ -160,6 +160,20 @@ struct TamgaApp: App {
                         NotificationCenter.default.post(name: .capitalizeSelection, object: nil)
                     }
                 }
+
+                Divider()
+
+                // JSON submenu
+                Menu(String(localized: "json")) {
+                    Button(String(localized: "format.json")) {
+                        NotificationCenter.default.post(name: .formatJSON, object: nil)
+                    }
+                    .keyboardShortcut("j", modifiers: [.command, .shift])
+
+                    Button(String(localized: "minify.json")) {
+                        NotificationCenter.default.post(name: .minifyJSON, object: nil)
+                    }
+                }
             }
 
             // MARK: - View Menu
