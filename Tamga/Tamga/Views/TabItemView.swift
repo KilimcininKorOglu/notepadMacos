@@ -27,7 +27,7 @@ struct TabItemView: View {
             // File icon
             Image(systemName: tab.filePath != nil ? "doc.text.fill" : "doc.text")
                 .font(.system(size: 12))
-                .foregroundColor(isSelected ? .accentColor : .secondary)
+                .foregroundColor(tab.isDirty ? .red : (isSelected ? .accentColor : .secondary))
 
             // Title
             Text(displayTitle)
@@ -35,7 +35,7 @@ struct TabItemView: View {
                 .lineLimit(1)
                 .foregroundColor(isSelected ? .primary : .secondary)
 
-            // Dirty indicator or close button
+            // Close button
             if isHovering || isSelected {
                 Button(action: onClose) {
                     Image(systemName: "xmark")
@@ -45,10 +45,6 @@ struct TabItemView: View {
                 .buttonStyle(.plain)
                 .frame(width: 16, height: 16)
                 .contentShape(Rectangle())
-            } else if tab.isDirty {
-                Circle()
-                    .fill(Color.red)
-                    .frame(width: 8, height: 8)
             } else {
                 Spacer()
                     .frame(width: 16)
