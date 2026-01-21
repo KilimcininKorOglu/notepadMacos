@@ -15,6 +15,7 @@ class AppState: ObservableObject {
     @Published var recentFiles: [URL] = []
     @Published var isAutoSaveEnabled: Bool = false
     @Published var autoSaveInterval: TimeInterval = 60 // seconds
+    @Published var isSplitViewEnabled: Bool = false
 
     private let userDefaults = UserDefaults.standard
     private let recentFilesKey = "recentFiles"

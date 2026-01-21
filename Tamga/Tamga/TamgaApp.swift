@@ -224,6 +224,9 @@ struct TamgaApp: App {
 
                 Toggle(String(localized: "status.bar"), isOn: $appState.isStatusBarVisible)
 
+                Toggle(String(localized: "split.view"), isOn: $appState.isSplitViewEnabled)
+                    .keyboardShortcut("\\", modifiers: [.command])
+
                 Divider()
 
                 Button(String(localized: "zoom.in")) {

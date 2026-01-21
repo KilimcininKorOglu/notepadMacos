@@ -1241,6 +1241,23 @@
           }
         }
       }
+    },
+    "split.view" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Split View"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolunmus Gorunum"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

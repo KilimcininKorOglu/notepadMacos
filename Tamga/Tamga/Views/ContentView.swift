@@ -18,25 +18,65 @@ struct ContentView: View {
 
                 Divider()
 
-                // Editor
+                // Editor (with optional split view)
                 if let activeTab = tabManager.activeTab {
-                    EditorView(
-                        text: Binding(
-                            get: { activeTab.content },
-                            set: { newContent in
-                                tabManager.updateContent(newContent, for: activeTab.id)
-                                updateDocumentInfo(content: newContent)
-                                documentViewModel.search(in: newContent)
-                            }
-                        ),
-                        language: activeTab.language,
-                        showLineNumbers: appState.showLineNumbers,
-                        isWordWrapEnabled: appState.isWordWrapEnabled,
-                        fontSize: appState.fontSize,
-                        fontName: appState.fontName,
-                        goToPosition: activeTab.cursorPosition
-                    )
-                    .id(activeTab.id)
+                    if appState.isSplitViewEnabled {
+                        HSplitView {
+                            EditorView(
+                                text: Binding(
+                                    get: { activeTab.content },
+                                    set: { newContent in
+                                        tabManager.updateContent(newContent, for: activeTab.id)
+                                        updateDocumentInfo(content: newContent)
+                                        documentViewModel.search(in: newContent)
+                                    }
+                                ),
+                                language: activeTab.language,
+                                showLineNumbers: appState.showLineNumbers,
+                                isWordWrapEnabled: appState.isWordWrapEnabled,
+                                fontSize: appState.fontSize,
+                                fontName: appState.fontName,
+                                goToPosition: activeTab.cursorPosition
+                            )
+                            .id("\(activeTab.id)-left")
+
+                            EditorView(
+                                text: Binding(
+                                    get: { activeTab.content },
+                                    set: { newContent in
+                                        tabManager.updateContent(newContent, for: activeTab.id)
+                                        updateDocumentInfo(content: newContent)
+                                        documentViewModel.search(in: newContent)
+                                    }
+                                ),
+                                language: activeTab.language,
+                                showLineNumbers: appState.showLineNumbers,
+                                isWordWrapEnabled: appState.isWordWrapEnabled,
+                                fontSize: appState.fontSize,
+                                fontName: appState.fontName,
+                                goToPosition: activeTab.cursorPosition
+                            )
+                            .id("\(activeTab.id)-right")
+                        }
+                    } else {
+                        EditorView(
+                            text: Binding(
+                                get: { activeTab.content },
+                                set: { newContent in
+                                    tabManager.updateContent(newContent, for: activeTab.id)
+                                    updateDocumentInfo(content: newContent)
+                                    documentViewModel.search(in: newContent)
+                                }
+                            ),
+                            language: activeTab.language,
+                            showLineNumbers: appState.showLineNumbers,
+                            isWordWrapEnabled: appState.isWordWrapEnabled,
+                            fontSize: appState.fontSize,
+                            fontName: appState.fontName,
+                            goToPosition: activeTab.cursorPosition
+                        )
+                        .id(activeTab.id)
+                    }
                 } else {
                     emptyStateView
                 }
