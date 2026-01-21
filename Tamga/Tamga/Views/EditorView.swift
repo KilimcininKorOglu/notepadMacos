@@ -59,13 +59,27 @@ struct LineNumbersView: View {
     let fontSize: CGFloat
     let scrollOffset: CGFloat
 
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var backgroundColor: Color {
+        colorScheme == .dark
+            ? Color(nsColor: NSColor(red: 0.15, green: 0.15, blue: 0.17, alpha: 1))
+            : Color(nsColor: .controlBackgroundColor).opacity(0.5)
+    }
+
+    private var textColor: Color {
+        colorScheme == .dark
+            ? Color(nsColor: NSColor(red: 0.5, green: 0.5, blue: 0.55, alpha: 1))
+            : Color.secondary
+    }
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .trailing, spacing: 0) {
                 ForEach(1...max(lineCount, 1), id: \.self) { lineNumber in
                     Text("\(lineNumber)")
                         .font(.system(size: fontSize, design: .monospaced))
-                        .foregroundColor(.secondary)
+                        .foregroundColor(textColor)
                         .frame(height: fontSize * 1.4)
                 }
             }
@@ -74,7 +88,7 @@ struct LineNumbersView: View {
             .offset(y: -scrollOffset)
         }
         .disabled(true)
-        .background(Color(nsColor: .controlBackgroundColor).opacity(0.5))
+        .background(backgroundColor)
     }
 }
 
@@ -110,6 +124,9 @@ struct HighlightedTextEditor: NSViewRepresentable {
         let font = NSFont(name: fontName, size: fontSize) ?? NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
         textView.font = font
         textView.typingAttributes = [.font: font]
+
+        // Set background and text colors based on theme
+        updateColors(textView: textView, isDarkMode: isDarkMode)
 
         scrollView.documentView = textView
         scrollView.hasVerticalScroller = true
@@ -170,8 +187,21 @@ struct HighlightedTextEditor: NSViewRepresentable {
             scrollView.hasHorizontalScroller = true
         }
 
+        // Update colors for dark mode
+        updateColors(textView: textView, isDarkMode: isDarkMode)
+
         // Apply syntax highlighting
         context.coordinator.applySyntaxHighlighting(language: language, isDarkMode: isDarkMode)
+    }
+
+    private func updateColors(textView: NSTextView, isDarkMode: Bool) {
+        if isDarkMode {
+            textView.backgroundColor = NSColor(red: 0.12, green: 0.12, blue: 0.14, alpha: 1)
+            textView.insertionPointColor = NSColor.white
+        } else {
+            textView.backgroundColor = NSColor.textBackgroundColor
+            textView.insertionPointColor = NSColor.textColor
+        }
     }
 
     func makeCoordinator() -> Coordinator {

@@ -8,6 +8,19 @@ struct TabItemView: View {
     let onClose: () -> Void
 
     @State private var isHovering = false
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var hoverColor: Color {
+        colorScheme == .dark
+            ? Color.white.opacity(0.1)
+            : Color.gray.opacity(0.1)
+    }
+
+    private var selectedColor: Color {
+        colorScheme == .dark
+            ? Color.accentColor.opacity(0.25)
+            : Color.accentColor.opacity(0.15)
+    }
 
     var body: some View {
         HStack(spacing: 6) {
@@ -45,7 +58,7 @@ struct TabItemView: View {
         .padding(.vertical, 6)
         .background(
             RoundedRectangle(cornerRadius: 6)
-                .fill(isSelected ? Color.accentColor.opacity(0.15) : (isHovering ? Color.gray.opacity(0.1) : Color.clear))
+                .fill(isSelected ? selectedColor : (isHovering ? hoverColor : Color.clear))
         )
         .onTapGesture(perform: onSelect)
         .onHover { hovering in
