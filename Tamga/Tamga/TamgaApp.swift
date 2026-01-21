@@ -184,6 +184,33 @@ struct TamgaApp: App {
                         NotificationCenter.default.post(name: .minifyJSON, object: nil)
                     }
                 }
+
+                Divider()
+
+                // Code Folding submenu
+                Menu(String(localized: "code.folding")) {
+                    Button(String(localized: "fold")) {
+                        NotificationCenter.default.post(name: .foldCode, object: nil)
+                    }
+                    .keyboardShortcut("[", modifiers: [.command, .option])
+
+                    Button(String(localized: "unfold")) {
+                        NotificationCenter.default.post(name: .unfoldCode, object: nil)
+                    }
+                    .keyboardShortcut("]", modifiers: [.command, .option])
+
+                    Divider()
+
+                    Button(String(localized: "fold.all")) {
+                        NotificationCenter.default.post(name: .foldAll, object: nil)
+                    }
+                    .keyboardShortcut("[", modifiers: [.command, .option, .shift])
+
+                    Button(String(localized: "unfold.all")) {
+                        NotificationCenter.default.post(name: .unfoldAll, object: nil)
+                    }
+                    .keyboardShortcut("]", modifiers: [.command, .option, .shift])
+                }
             }
 
             // MARK: - View Menu

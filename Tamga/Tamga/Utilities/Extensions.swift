@@ -189,4 +189,8 @@ extension Notification.Name {
     static let formatJSON = Notification.Name("formatJSON")
     static let minifyJSON = Notification.Name("minifyJSON")
     static let autoSave = Notification.Name("autoSave")
+    static let foldCode = Notification.Name("foldCode")
+    static let unfoldCode = Notification.Name("unfoldCode")
+    static let foldAll = Notification.Name("foldAll")
+    static let unfoldAll = Notification.Name("unfoldAll")
 }

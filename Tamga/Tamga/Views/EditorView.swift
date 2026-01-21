@@ -369,10 +369,49 @@ class TamgaTextView: NSTextView {
             name: .minifyJSON,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleFoldCode),
+            name: .foldCode,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleUnfoldCode),
+            name: .unfoldCode,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleFoldAll),
+            name: .foldAll,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleUnfoldAll),
+            name: .unfoldAll,
+            object: nil
+        )
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    // MARK: - Code Folding Storage
+
+    private struct FoldedRegion {
+        let range: NSRange
+        let originalText: String
+        let placeholder: String
+    }
+
+    private static var foldedRegions: [NSTextView: [FoldedRegion]] = [:]
+
+    private var myFoldedRegions: [FoldedRegion] {
+        get { TamgaTextView.foldedRegions[self] ?? [] }
+        set { TamgaTextView.foldedRegions[self] = newValue }
     }
 
     // MARK: - Sort & Transform Handlers
@@ -773,6 +812,186 @@ class TamgaTextView: NSTextView {
         }
 
         delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    // MARK: - Code Folding Handlers
+
+    @objc private func handleFoldCode() {
+        guard window?.firstResponder === self else { return }
+        foldCurrentBlock()
+    }
+
+    @objc private func handleUnfoldCode() {
+        guard window?.firstResponder === self else { return }
+        unfoldAtCursor()
+    }
+
+    @objc private func handleFoldAll() {
+        guard window?.firstResponder === self else { return }
+        foldAllBlocks()
+    }
+
+    @objc private func handleUnfoldAll() {
+        guard window?.firstResponder === self else { return }
+        unfoldAllBlocks()
+    }
+
+    // MARK: - Code Folding Implementation
+
+    private func foldCurrentBlock() {
+        let text = string
+        let cursorPos = selectedRange().location
+
+        // Find the opening brace before or at cursor
+        guard let blockRange = findBlockRange(in: text, around: cursorPos) else {
+            NSSound.beep()
+            return
+        }
+
+        // Extract the content to fold
+        let nsString = text as NSString
+        let blockContent = nsString.substring(with: blockRange)
+
+        // Create placeholder showing first line and "..."
+        let firstLine = blockContent.components(separatedBy: "\n").first ?? ""
+        let placeholder = "\(firstLine) ... }"
+
+        // Store the folded region
+        let region = FoldedRegion(range: blockRange, originalText: blockContent, placeholder: placeholder)
+        myFoldedRegions.append(region)
+
+        // Replace with placeholder
+        if let textStorage = self.textStorage {
+            textStorage.replaceCharacters(in: blockRange, with: placeholder)
+
+            // Add special formatting to indicate folded region
+            let placeholderRange = NSRange(location: blockRange.location, length: placeholder.count)
+            textStorage.addAttribute(.backgroundColor, value: NSColor.systemGray.withAlphaComponent(0.2), range: placeholderRange)
+            textStorage.addAttribute(.toolTip, value: "Click to unfold", range: placeholderRange)
+        }
+
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    private func unfoldAtCursor() {
+        let cursorPos = selectedRange().location
+
+        // Find if cursor is on a folded region
+        for (index, region) in myFoldedRegions.enumerated() {
+            // Adjust for any previous unfolds
+            let adjustedStart = region.range.location
+            let adjustedEnd = adjustedStart + region.placeholder.count
+
+            if cursorPos >= adjustedStart && cursorPos <= adjustedEnd {
+                // Found folded region - unfold it
+                let currentRange = NSRange(location: adjustedStart, length: region.placeholder.count)
+
+                if let textStorage = self.textStorage {
+                    textStorage.replaceCharacters(in: currentRange, with: region.originalText)
+                }
+
+                myFoldedRegions.remove(at: index)
+                delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+                return
+            }
+        }
+
+        NSSound.beep()
+    }
+
+    private func foldAllBlocks() {
+        let text = string
+        var offset = 0
+        var index = text.startIndex
+
+        while index < text.endIndex {
+            let char = text[index]
+            if char == "{" {
+                let position = text.distance(from: text.startIndex, to: index)
+                if let blockRange = findBlockRange(in: string, around: position + offset) {
+                    let nsString = string as NSString
+                    let blockContent = nsString.substring(with: blockRange)
+
+                    let firstLine = blockContent.components(separatedBy: "\n").first ?? ""
+                    let placeholder = "\(firstLine) ... }"
+
+                    let region = FoldedRegion(range: blockRange, originalText: blockContent, placeholder: placeholder)
+                    myFoldedRegions.append(region)
+
+                    if let textStorage = self.textStorage {
+                        textStorage.replaceCharacters(in: blockRange, with: placeholder)
+                        let placeholderRange = NSRange(location: blockRange.location, length: placeholder.count)
+                        textStorage.addAttribute(.backgroundColor, value: NSColor.systemGray.withAlphaComponent(0.2), range: placeholderRange)
+                    }
+
+                    offset -= (blockRange.length - placeholder.count)
+                }
+            }
+            index = text.index(after: index)
+        }
+
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    private func unfoldAllBlocks() {
+        // Unfold in reverse order to maintain correct positions
+        for region in myFoldedRegions.reversed() {
+            let currentRange = NSRange(location: region.range.location, length: region.placeholder.count)
+
+            if let textStorage = self.textStorage {
+                textStorage.replaceCharacters(in: currentRange, with: region.originalText)
+            }
+        }
+
+        myFoldedRegions.removeAll()
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    private func findBlockRange(in text: String, around position: Int) -> NSRange? {
+        // Find the opening brace
+        var openBracePos = position
+        var foundOpenBrace = false
+
+        // Search backwards for opening brace if not at one
+        let chars = Array(text)
+        if position < chars.count && chars[position] == "{" {
+            foundOpenBrace = true
+        } else {
+            var searchPos = min(position, chars.count - 1)
+            while searchPos >= 0 {
+                if chars[searchPos] == "{" {
+                    openBracePos = searchPos
+                    foundOpenBrace = true
+                    break
+                }
+                searchPos -= 1
+            }
+        }
+
+        guard foundOpenBrace else { return nil }
+
+        // Find matching closing brace
+        var braceCount = 1
+        var closeBracePos = openBracePos + 1
+
+        while closeBracePos < chars.count && braceCount > 0 {
+            if chars[closeBracePos] == "{" {
+                braceCount += 1
+            } else if chars[closeBracePos] == "}" {
+                braceCount -= 1
+            }
+            closeBracePos += 1
+        }
+
+        guard braceCount == 0 else { return nil }
+
+        // Find the start of the line containing the opening brace
+        var lineStart = openBracePos
+        while lineStart > 0 && chars[lineStart - 1] != "\n" {
+            lineStart -= 1
+        }
+
+        return NSRange(location: lineStart, length: closeBracePos - lineStart)
     }
 }
 
