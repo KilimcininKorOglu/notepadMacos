@@ -1122,6 +1122,23 @@
           }
         }
       }
+    },
+    "print" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Print..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yazdir..."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

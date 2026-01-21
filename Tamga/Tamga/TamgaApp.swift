@@ -53,6 +53,14 @@ struct TamgaApp: App {
 
                 Divider()
 
+                Button(String(localized: "print")) {
+                    printCurrentTab()
+                }
+                .keyboardShortcut("p", modifiers: .command)
+                .disabled(tabManager?.activeTab == nil)
+
+                Divider()
+
                 Button(String(localized: "close.tab")) {
                     tabManager?.closeActiveTab()
                 }
@@ -298,6 +306,43 @@ struct TamgaApp: App {
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")
         alert.runModal()
+    }
+
+    private func printCurrentTab() {
+        guard let tab = tabManager?.activeTab else { return }
+
+        let textView = NSTextView(frame: NSRect(x: 0, y: 0, width: 612, height: 792)) // US Letter size in points
+        textView.string = tab.content
+
+        // Configure font
+        let font = NSFont(name: appState.fontName, size: appState.fontSize) ?? NSFont.monospacedSystemFont(ofSize: appState.fontSize, weight: .regular)
+        textView.font = font
+        textView.textColor = NSColor.textColor
+
+        // Configure print info
+        let printInfo = NSPrintInfo.shared
+        printInfo.horizontalPagination = .fit
+        printInfo.verticalPagination = .automatic
+        printInfo.isHorizontallyCentered = false
+        printInfo.isVerticallyCentered = false
+
+        // Set margins
+        printInfo.topMargin = 36
+        printInfo.bottomMargin = 36
+        printInfo.leftMargin = 36
+        printInfo.rightMargin = 36
+
+        // Set job name
+        let jobName = tab.filePath?.lastPathComponent ?? tab.title
+        printInfo.jobDisposition = .spool
+
+        // Create print operation
+        let printOperation = NSPrintOperation(view: textView, printInfo: printInfo)
+        printOperation.jobTitle = jobName
+        printOperation.showsPrintPanel = true
+        printOperation.showsProgressPanel = true
+
+        printOperation.run()
     }
 }
 
