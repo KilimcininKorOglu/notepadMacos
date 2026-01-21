@@ -296,12 +296,6 @@ struct TamgaApp: App {
                             }
                         }
                     }
-
-                    Divider()
-
-                    Text(String(localized: "language.restart.note"))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
                 }
             }
 

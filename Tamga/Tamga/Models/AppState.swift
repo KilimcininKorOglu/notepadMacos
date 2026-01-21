@@ -82,6 +82,7 @@ class AppState: ObservableObject {
         appLanguage = language
         applyLanguage()
         saveSettings()
+        restartApp()
     }
 
     private func applyLanguage() {
@@ -90,6 +91,16 @@ class AppState: ObservableObject {
         } else {
             UserDefaults.standard.set([appLanguage.code], forKey: "AppleLanguages")
         }
+    }
+
+    private func restartApp() {
+        let url = URL(fileURLWithPath: Bundle.main.resourcePath!)
+        let path = url.deletingLastPathComponent().deletingLastPathComponent().absoluteString
+        let task = Process()
+        task.launchPath = "/usr/bin/open"
+        task.arguments = [path]
+        task.launch()
+        NSApp.terminate(nil)
     }
 
     func saveSettings() {
