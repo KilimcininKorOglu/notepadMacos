@@ -10,6 +10,7 @@ struct EditorView: View {
     let fontSize: CGFloat
     let fontName: String
     var goToPosition: Int? = nil
+    var showInvisibleCharacters: Bool = false
 
     @Environment(\.colorScheme) private var colorScheme
     @State private var lineCount: Int = 1
@@ -36,6 +37,7 @@ struct EditorView: View {
                     fontSize: fontSize,
                     fontName: fontName,
                     isWordWrapEnabled: isWordWrapEnabled,
+                    showInvisibleCharacters: showInvisibleCharacters,
                     goToPosition: goToPosition,
                     onLineCountChange: { count in
                         lineCount = count
@@ -103,6 +105,7 @@ struct HighlightedTextEditor: NSViewRepresentable {
     let fontSize: CGFloat
     let fontName: String
     let isWordWrapEnabled: Bool
+    let showInvisibleCharacters: Bool
     let goToPosition: Int?
     let onLineCountChange: (Int) -> Void
     let onScrollChange: (CGFloat) -> Void
@@ -111,6 +114,7 @@ struct HighlightedTextEditor: NSViewRepresentable {
         let scrollView = NSScrollView()
         let textView = TamgaTextView()
 
+        textView.showInvisibles = showInvisibleCharacters
         textView.delegate = context.coordinator
         textView.isEditable = true
         textView.isSelectable = true
@@ -160,7 +164,13 @@ struct HighlightedTextEditor: NSViewRepresentable {
     }
 
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
-        guard let textView = scrollView.documentView as? NSTextView else { return }
+        guard let textView = scrollView.documentView as? TamgaTextView else { return }
+
+        // Update invisible characters setting
+        if textView.showInvisibles != showInvisibleCharacters {
+            textView.showInvisibles = showInvisibleCharacters
+            textView.needsDisplay = true
+        }
 
         // Update text if changed externally
         if textView.string != text {
@@ -287,6 +297,18 @@ struct HighlightedTextEditor: NSViewRepresentable {
 // MARK: - Custom Text View
 
 class TamgaTextView: NSTextView {
+    var showInvisibles: Bool = false {
+        didSet {
+            if showInvisibles != oldValue {
+                needsDisplay = true
+            }
+        }
+    }
+
+    private let spaceSymbol = "·"
+    private let tabSymbol = "→"
+    private let newlineSymbol = "¶"
+
     override init(frame frameRect: NSRect, textContainer container: NSTextContainer?) {
         super.init(frame: frameRect, textContainer: container)
         setupNotifications()
@@ -300,6 +322,64 @@ class TamgaTextView: NSTextView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupNotifications()
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+
+        if showInvisibles {
+            drawInvisibleCharacters(in: dirtyRect)
+        }
+    }
+
+    private func drawInvisibleCharacters(in rect: NSRect) {
+        guard let layoutManager = layoutManager,
+              let textContainer = textContainer,
+              let textStorage = textStorage else { return }
+
+        let text = string
+        let invisibleColor = NSColor.tertiaryLabelColor
+
+        let font = self.font ?? NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: invisibleColor
+        ]
+
+        let glyphRange = layoutManager.glyphRange(forBoundingRect: rect, in: textContainer)
+
+        // Draw invisible characters
+        layoutManager.enumerateLineFragments(forGlyphRange: glyphRange) { [weak self] (_, usedRect, _, charRange, _) in
+            guard let self = self else { return }
+
+            let lineString = (text as NSString).substring(with: charRange)
+
+            for (index, char) in lineString.enumerated() {
+                let charIndex = charRange.location + index
+                guard charIndex < text.count else { continue }
+
+                var symbol: String?
+                if char == " " {
+                    symbol = self.spaceSymbol
+                } else if char == "\t" {
+                    symbol = self.tabSymbol
+                } else if char == "\n" {
+                    symbol = self.newlineSymbol
+                }
+
+                if let symbol = symbol {
+                    let glyphIndex = layoutManager.glyphIndexForCharacter(at: charIndex)
+                    let glyphRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: glyphIndex, length: 1), in: textContainer)
+
+                    let point = NSPoint(
+                        x: glyphRect.origin.x + self.textContainerInset.width,
+                        y: glyphRect.origin.y + self.textContainerInset.height
+                    )
+
+                    symbol.draw(at: point, withAttributes: attributes)
+                }
+            }
+        }
     }
 
     private func setupNotifications() {

@@ -235,6 +235,9 @@ struct TamgaApp: App {
                 Toggle(String(localized: "markdown.preview"), isOn: $appState.isMarkdownPreviewEnabled)
                     .keyboardShortcut("m", modifiers: [.command, .shift])
 
+                Toggle(String(localized: "show.invisibles"), isOn: $appState.showInvisibleCharacters)
+                    .keyboardShortcut("i", modifiers: [.command, .option])
+
                 Divider()
 
                 Button(String(localized: "zoom.in")) {

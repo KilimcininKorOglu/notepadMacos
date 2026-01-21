@@ -1309,6 +1309,23 @@
           }
         }
       }
+    },
+    "show.invisibles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Invisible Characters"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gorunmez Karakterleri Goster"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

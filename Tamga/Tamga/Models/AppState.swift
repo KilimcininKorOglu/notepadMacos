@@ -18,6 +18,7 @@ class AppState: ObservableObject {
     @Published var isSplitViewEnabled: Bool = false
     @Published var isSidebarVisible: Bool = false
     @Published var isMarkdownPreviewEnabled: Bool = false
+    @Published var showInvisibleCharacters: Bool = false
 
     private let userDefaults = UserDefaults.standard
     private let recentFilesKey = "recentFiles"

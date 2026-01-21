@@ -46,7 +46,8 @@ struct ContentView: View {
                                     isWordWrapEnabled: appState.isWordWrapEnabled,
                                     fontSize: appState.fontSize,
                                     fontName: appState.fontName,
-                                    goToPosition: activeTab.cursorPosition
+                                    goToPosition: activeTab.cursorPosition,
+                                    showInvisibleCharacters: appState.showInvisibleCharacters
                                 )
                                 .id("\(activeTab.id)-left")
 
@@ -64,7 +65,8 @@ struct ContentView: View {
                                     isWordWrapEnabled: appState.isWordWrapEnabled,
                                     fontSize: appState.fontSize,
                                     fontName: appState.fontName,
-                                    goToPosition: activeTab.cursorPosition
+                                    goToPosition: activeTab.cursorPosition,
+                                    showInvisibleCharacters: appState.showInvisibleCharacters
                                 )
                                 .id("\(activeTab.id)-right")
                             }
@@ -84,7 +86,8 @@ struct ContentView: View {
                                     isWordWrapEnabled: appState.isWordWrapEnabled,
                                     fontSize: appState.fontSize,
                                     fontName: appState.fontName,
-                                    goToPosition: activeTab.cursorPosition
+                                    goToPosition: activeTab.cursorPosition,
+                                    showInvisibleCharacters: appState.showInvisibleCharacters
                                 )
                                 .id("\(activeTab.id)-editor")
 
@@ -106,7 +109,8 @@ struct ContentView: View {
                                 isWordWrapEnabled: appState.isWordWrapEnabled,
                                 fontSize: appState.fontSize,
                                 fontName: appState.fontName,
-                                goToPosition: activeTab.cursorPosition
+                                goToPosition: activeTab.cursorPosition,
+                                showInvisibleCharacters: appState.showInvisibleCharacters
                             )
                             .id(activeTab.id)
                         }
