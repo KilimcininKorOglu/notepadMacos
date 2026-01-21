@@ -342,6 +342,62 @@ class TamgaTextView: NSTextView {
         moveCurrentLineDown()
     }
 
+    // MARK: - Auto-indent
+
+    override func insertNewline(_ sender: Any?) {
+        let text = string
+        let cursorPos = selectedRange().location
+
+        // Find the current line content before cursor
+        let lines = text.components(separatedBy: "\n")
+        var currentPos = 0
+        var lineContent = ""
+
+        for line in lines {
+            let lineEnd = currentPos + line.count
+            if cursorPos <= lineEnd {
+                // Get the part of the line before cursor
+                let cursorOffsetInLine = cursorPos - currentPos
+                let endIndex = line.index(line.startIndex, offsetBy: min(cursorOffsetInLine, line.count))
+                lineContent = String(line[line.startIndex..<endIndex])
+                break
+            }
+            currentPos = lineEnd + 1 // +1 for newline
+        }
+
+        // Calculate current indentation
+        var indentation = ""
+        for char in lineContent {
+            if char == " " || char == "\t" {
+                indentation.append(char)
+            } else {
+                break
+            }
+        }
+
+        // Check if line ends with opening bracket or colon (for languages like Python)
+        let trimmedLine = lineContent.trimmingCharacters(in: CharacterSet.whitespaces)
+        let shouldAddExtraIndent = trimmedLine.hasSuffix("{") ||
+                                   trimmedLine.hasSuffix(":") ||
+                                   trimmedLine.hasSuffix("(") ||
+                                   trimmedLine.hasSuffix("[")
+
+        if shouldAddExtraIndent {
+            // Use tabs or 4 spaces based on existing indentation style
+            let indentChar = indentation.contains("\t") ? "\t" : "    "
+            indentation += indentChar
+        }
+
+        // Insert newline with indentation
+        super.insertNewline(sender)
+        insertText(indentation, replacementRange: selectedRange())
+    }
+
+    override func insertTab(_ sender: Any?) {
+        // Insert 4 spaces instead of tab for consistency
+        insertText("    ", replacementRange: selectedRange())
+    }
+
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         // Allow standard shortcuts
         if event.modifierFlags.contains(.command) {
