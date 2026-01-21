@@ -12,87 +12,98 @@ struct ContentView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            VStack(spacing: 0) {
-                // Tab bar
-                TabBarView(tabManager: tabManager)
-
-                Divider()
-
-                // Editor (with optional split view)
-                if let activeTab = tabManager.activeTab {
-                    if appState.isSplitViewEnabled {
-                        HSplitView {
-                            EditorView(
-                                text: Binding(
-                                    get: { activeTab.content },
-                                    set: { newContent in
-                                        tabManager.updateContent(newContent, for: activeTab.id)
-                                        updateDocumentInfo(content: newContent)
-                                        documentViewModel.search(in: newContent)
-                                    }
-                                ),
-                                language: activeTab.language,
-                                showLineNumbers: appState.showLineNumbers,
-                                isWordWrapEnabled: appState.isWordWrapEnabled,
-                                fontSize: appState.fontSize,
-                                fontName: appState.fontName,
-                                goToPosition: activeTab.cursorPosition
-                            )
-                            .id("\(activeTab.id)-left")
-
-                            EditorView(
-                                text: Binding(
-                                    get: { activeTab.content },
-                                    set: { newContent in
-                                        tabManager.updateContent(newContent, for: activeTab.id)
-                                        updateDocumentInfo(content: newContent)
-                                        documentViewModel.search(in: newContent)
-                                    }
-                                ),
-                                language: activeTab.language,
-                                showLineNumbers: appState.showLineNumbers,
-                                isWordWrapEnabled: appState.isWordWrapEnabled,
-                                fontSize: appState.fontSize,
-                                fontName: appState.fontName,
-                                goToPosition: activeTab.cursorPosition
-                            )
-                            .id("\(activeTab.id)-right")
-                        }
-                    } else {
-                        EditorView(
-                            text: Binding(
-                                get: { activeTab.content },
-                                set: { newContent in
-                                    tabManager.updateContent(newContent, for: activeTab.id)
-                                    updateDocumentInfo(content: newContent)
-                                    documentViewModel.search(in: newContent)
-                                }
-                            ),
-                            language: activeTab.language,
-                            showLineNumbers: appState.showLineNumbers,
-                            isWordWrapEnabled: appState.isWordWrapEnabled,
-                            fontSize: appState.fontSize,
-                            fontName: appState.fontName,
-                            goToPosition: activeTab.cursorPosition
-                        )
-                        .id(activeTab.id)
+            HStack(spacing: 0) {
+                // Sidebar
+                if appState.isSidebarVisible {
+                    SidebarView(tabManager: tabManager) { url in
+                        openFile(url)
                     }
-                } else {
-                    emptyStateView
+
+                    Divider()
                 }
 
-                // Status bar
-                if appState.isStatusBarVisible, let activeTab = tabManager.activeTab {
+                VStack(spacing: 0) {
+                    // Tab bar
+                    TabBarView(tabManager: tabManager)
+
                     Divider()
 
-                    StatusBarView(
-                        documentInfo: currentDocumentInfo,
-                        language: activeTab.language,
-                        encoding: activeTab.encoding,
-                        onLanguageChange: { language in
-                            tabManager.setLanguage(language, for: activeTab.id)
+                    // Editor (with optional split view)
+                    if let activeTab = tabManager.activeTab {
+                        if appState.isSplitViewEnabled {
+                            HSplitView {
+                                EditorView(
+                                    text: Binding(
+                                        get: { activeTab.content },
+                                        set: { newContent in
+                                            tabManager.updateContent(newContent, for: activeTab.id)
+                                            updateDocumentInfo(content: newContent)
+                                            documentViewModel.search(in: newContent)
+                                        }
+                                    ),
+                                    language: activeTab.language,
+                                    showLineNumbers: appState.showLineNumbers,
+                                    isWordWrapEnabled: appState.isWordWrapEnabled,
+                                    fontSize: appState.fontSize,
+                                    fontName: appState.fontName,
+                                    goToPosition: activeTab.cursorPosition
+                                )
+                                .id("\(activeTab.id)-left")
+
+                                EditorView(
+                                    text: Binding(
+                                        get: { activeTab.content },
+                                        set: { newContent in
+                                            tabManager.updateContent(newContent, for: activeTab.id)
+                                            updateDocumentInfo(content: newContent)
+                                            documentViewModel.search(in: newContent)
+                                        }
+                                    ),
+                                    language: activeTab.language,
+                                    showLineNumbers: appState.showLineNumbers,
+                                    isWordWrapEnabled: appState.isWordWrapEnabled,
+                                    fontSize: appState.fontSize,
+                                    fontName: appState.fontName,
+                                    goToPosition: activeTab.cursorPosition
+                                )
+                                .id("\(activeTab.id)-right")
+                            }
+                        } else {
+                            EditorView(
+                                text: Binding(
+                                    get: { activeTab.content },
+                                    set: { newContent in
+                                        tabManager.updateContent(newContent, for: activeTab.id)
+                                        updateDocumentInfo(content: newContent)
+                                        documentViewModel.search(in: newContent)
+                                    }
+                                ),
+                                language: activeTab.language,
+                                showLineNumbers: appState.showLineNumbers,
+                                isWordWrapEnabled: appState.isWordWrapEnabled,
+                                fontSize: appState.fontSize,
+                                fontName: appState.fontName,
+                                goToPosition: activeTab.cursorPosition
+                            )
+                            .id(activeTab.id)
                         }
-                    )
+                    } else {
+                        emptyStateView
+                    }
+
+                    // Status bar
+                    if appState.isStatusBarVisible, let activeTab = tabManager.activeTab {
+                        Divider()
+
+                        StatusBarView(
+                            documentInfo: currentDocumentInfo,
+                            language: activeTab.language,
+                            encoding: activeTab.encoding,
+                            onLanguageChange: { language in
+                                tabManager.setLanguage(language, for: activeTab.id)
+                            }
+                        )
+                    }
                 }
             }
 
@@ -210,12 +221,16 @@ struct ContentView: View {
     }
 
     private func openDroppedFile(_ url: URL) {
+        openFile(url)
+    }
+
+    private func openFile(_ url: URL) {
         do {
             let content = try FileService.shared.readFile(at: url)
             tabManager.openTab(with: url, content: content)
             appState.addRecentFile(url)
         } catch {
-            print("Failed to open dropped file: \(error)")
+            print("Failed to open file: \(error)")
         }
     }
 

@@ -217,6 +217,11 @@ struct TamgaApp: App {
             CommandGroup(after: .toolbar) {
                 Divider()
 
+                Toggle(String(localized: "sidebar"), isOn: $appState.isSidebarVisible)
+                    .keyboardShortcut("b", modifiers: .command)
+
+                Divider()
+
                 Toggle(String(localized: "word.wrap"), isOn: $appState.isWordWrapEnabled)
                     .keyboardShortcut("w", modifiers: [.command, .option])
 
