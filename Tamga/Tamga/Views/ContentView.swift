@@ -9,45 +9,68 @@ struct ContentView: View {
     @State private var currentDocumentInfo = DocumentInfo()
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Tab bar
-            TabBarView(tabManager: tabManager)
+        ZStack(alignment: .top) {
+            VStack(spacing: 0) {
+                // Tab bar
+                TabBarView(tabManager: tabManager)
 
-            Divider()
-
-            // Editor
-            if let activeTab = tabManager.activeTab {
-                EditorView(
-                    text: Binding(
-                        get: { activeTab.content },
-                        set: { newContent in
-                            tabManager.updateContent(newContent, for: activeTab.id)
-                            updateDocumentInfo(content: newContent)
-                        }
-                    ),
-                    language: activeTab.language,
-                    showLineNumbers: appState.showLineNumbers,
-                    isWordWrapEnabled: appState.isWordWrapEnabled,
-                    fontSize: appState.fontSize,
-                    fontName: appState.fontName
-                )
-                .id(activeTab.id)
-            } else {
-                emptyStateView
-            }
-
-            // Status bar
-            if appState.isStatusBarVisible, let activeTab = tabManager.activeTab {
                 Divider()
 
-                StatusBarView(
-                    documentInfo: currentDocumentInfo,
-                    language: activeTab.language,
-                    encoding: activeTab.encoding,
-                    onLanguageChange: { language in
-                        tabManager.setLanguage(language, for: activeTab.id)
-                    }
-                )
+                // Editor
+                if let activeTab = tabManager.activeTab {
+                    EditorView(
+                        text: Binding(
+                            get: { activeTab.content },
+                            set: { newContent in
+                                tabManager.updateContent(newContent, for: activeTab.id)
+                                updateDocumentInfo(content: newContent)
+                                documentViewModel.search(in: newContent)
+                            }
+                        ),
+                        language: activeTab.language,
+                        showLineNumbers: appState.showLineNumbers,
+                        isWordWrapEnabled: appState.isWordWrapEnabled,
+                        fontSize: appState.fontSize,
+                        fontName: appState.fontName
+                    )
+                    .id(activeTab.id)
+                } else {
+                    emptyStateView
+                }
+
+                // Status bar
+                if appState.isStatusBarVisible, let activeTab = tabManager.activeTab {
+                    Divider()
+
+                    StatusBarView(
+                        documentInfo: currentDocumentInfo,
+                        language: activeTab.language,
+                        encoding: activeTab.encoding,
+                        onLanguageChange: { language in
+                            tabManager.setLanguage(language, for: activeTab.id)
+                        }
+                    )
+                }
+            }
+
+            // Find & Replace Panel
+            if documentViewModel.isSearchVisible {
+                VStack {
+                    Spacer().frame(height: 44) // Below tab bar
+                    FindReplaceView(
+                        searchText: $documentViewModel.searchText,
+                        replaceText: $documentViewModel.replaceText,
+                        isVisible: $documentViewModel.isSearchVisible,
+                        matchCount: documentViewModel.searchResults.count,
+                        currentMatch: documentViewModel.currentSearchIndex,
+                        onFindNext: { documentViewModel.findNext() },
+                        onFindPrevious: { documentViewModel.findPrevious() },
+                        onReplace: { replaceCurrentMatch() },
+                        onReplaceAll: { replaceAllMatches() }
+                    )
+                    Spacer()
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
         .frame(minWidth: 600, minHeight: 400)
@@ -67,6 +90,17 @@ struct ContentView: View {
         }
         .focusedSceneValue(\.tabManager, tabManager)
         .focusedSceneValue(\.documentViewModel, documentViewModel)
+        .onChange(of: documentViewModel.searchText) { _ in
+            if let tab = tabManager.activeTab {
+                documentViewModel.search(in: tab.content)
+            }
+        }
+        .onChange(of: documentViewModel.isSearchVisible) { _ in
+            if documentViewModel.isSearchVisible, let tab = tabManager.activeTab {
+                documentViewModel.search(in: tab.content)
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: documentViewModel.isSearchVisible)
     }
 
     // MARK: - Empty State
@@ -115,6 +149,25 @@ struct ContentView: View {
             content: content,
             cursorPosition: 0 // TODO: Get actual cursor position
         )
+    }
+
+    // MARK: - Search & Replace
+
+    private func replaceCurrentMatch() {
+        guard let activeTab = tabManager.activeTab else { return }
+
+        var content = activeTab.content
+        if documentViewModel.replace(in: &content) {
+            tabManager.updateContent(content, for: activeTab.id)
+        }
+    }
+
+    private func replaceAllMatches() {
+        guard let activeTab = tabManager.activeTab else { return }
+
+        var content = activeTab.content
+        _ = documentViewModel.replaceAll(in: &content)
+        tabManager.updateContent(content, for: activeTab.id)
     }
 }
 

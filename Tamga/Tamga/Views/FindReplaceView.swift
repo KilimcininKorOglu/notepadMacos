@@ -1,0 +1,122 @@
+import SwiftUI
+
+/// Find and Replace panel view
+struct FindReplaceView: View {
+    @Binding var searchText: String
+    @Binding var replaceText: String
+    @Binding var isVisible: Bool
+    let matchCount: Int
+    let currentMatch: Int
+    let onFindNext: () -> Void
+    let onFindPrevious: () -> Void
+    let onReplace: () -> Void
+    let onReplaceAll: () -> Void
+
+    @State private var showReplace: Bool = false
+    @FocusState private var isSearchFocused: Bool
+
+    var body: some View {
+        VStack(spacing: 8) {
+            // Search row
+            HStack(spacing: 8) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                    .frame(width: 20)
+
+                TextField(String(localized: "find.placeholder"), text: $searchText)
+                    .textFieldStyle(.plain)
+                    .focused($isSearchFocused)
+                    .onSubmit {
+                        onFindNext()
+                    }
+
+                if !searchText.isEmpty {
+                    Text(matchCount > 0 ? "\(currentMatch + 1)/\(matchCount)" : String(localized: "no.results"))
+                        .font(.caption)
+                        .foregroundColor(matchCount > 0 ? .secondary : .red)
+                        .frame(minWidth: 50)
+                }
+
+                Button(action: onFindPrevious) {
+                    Image(systemName: "chevron.up")
+                }
+                .buttonStyle(.borderless)
+                .disabled(matchCount == 0)
+                .help(String(localized: "find.previous"))
+
+                Button(action: onFindNext) {
+                    Image(systemName: "chevron.down")
+                }
+                .buttonStyle(.borderless)
+                .disabled(matchCount == 0)
+                .help(String(localized: "find.next"))
+
+                Button(action: { showReplace.toggle() }) {
+                    Image(systemName: showReplace ? "chevron.up.square" : "chevron.down.square")
+                }
+                .buttonStyle(.borderless)
+                .help(String(localized: "toggle.replace"))
+
+                Button(action: { isVisible = false }) {
+                    Image(systemName: "xmark")
+                }
+                .buttonStyle(.borderless)
+                .help(String(localized: "close"))
+            }
+
+            // Replace row
+            if showReplace {
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.triangle.swap")
+                        .foregroundColor(.secondary)
+                        .frame(width: 20)
+
+                    TextField(String(localized: "replace.placeholder"), text: $replaceText)
+                        .textFieldStyle(.plain)
+                        .onSubmit {
+                            onReplace()
+                        }
+
+                    Button(String(localized: "replace")) {
+                        onReplace()
+                    }
+                    .buttonStyle(.borderless)
+                    .disabled(matchCount == 0)
+
+                    Button(String(localized: "replace.all")) {
+                        onReplaceAll()
+                    }
+                    .buttonStyle(.borderless)
+                    .disabled(matchCount == 0)
+                }
+            }
+        }
+        .padding(12)
+        .background(Color(nsColor: .controlBackgroundColor))
+        .cornerRadius(8)
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .onAppear {
+            isSearchFocused = true
+        }
+    }
+}
+
+#Preview {
+    VStack {
+        FindReplaceView(
+            searchText: .constant("test"),
+            replaceText: .constant(""),
+            isVisible: .constant(true),
+            matchCount: 5,
+            currentMatch: 2,
+            onFindNext: {},
+            onFindPrevious: {},
+            onReplace: {},
+            onReplaceAll: {}
+        )
+        Spacer()
+    }
+    .frame(width: 500, height: 200)
+}
