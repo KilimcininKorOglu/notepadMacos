@@ -127,6 +127,39 @@ struct TamgaApp: App {
                     NotificationCenter.default.post(name: .moveLineDown, object: nil)
                 }
                 .keyboardShortcut(.downArrow, modifiers: .option)
+
+                Divider()
+
+                // Sort Lines submenu
+                Menu(String(localized: "sort.lines")) {
+                    Button(String(localized: "sort.lines.ascending")) {
+                        NotificationCenter.default.post(name: .sortLinesAscending, object: nil)
+                    }
+                    Button(String(localized: "sort.lines.descending")) {
+                        NotificationCenter.default.post(name: .sortLinesDescending, object: nil)
+                    }
+                }
+
+                Button(String(localized: "remove.duplicate.lines")) {
+                    NotificationCenter.default.post(name: .removeDuplicateLines, object: nil)
+                }
+
+                // Change Case submenu
+                Menu(String(localized: "change.case")) {
+                    Button(String(localized: "uppercase")) {
+                        NotificationCenter.default.post(name: .uppercaseSelection, object: nil)
+                    }
+                    .keyboardShortcut("u", modifiers: [.command, .shift])
+
+                    Button(String(localized: "lowercase")) {
+                        NotificationCenter.default.post(name: .lowercaseSelection, object: nil)
+                    }
+                    .keyboardShortcut("l", modifiers: [.command, .shift])
+
+                    Button(String(localized: "capitalize")) {
+                        NotificationCenter.default.post(name: .capitalizeSelection, object: nil)
+                    }
+                }
             }
 
             // MARK: - View Menu

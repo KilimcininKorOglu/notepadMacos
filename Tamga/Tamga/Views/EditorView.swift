@@ -321,10 +321,78 @@ class TamgaTextView: NSTextView {
             name: .moveLineDown,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleSortLinesAscending),
+            name: .sortLinesAscending,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleSortLinesDescending),
+            name: .sortLinesDescending,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleRemoveDuplicateLines),
+            name: .removeDuplicateLines,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleUppercase),
+            name: .uppercaseSelection,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleLowercase),
+            name: .lowercaseSelection,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleCapitalize),
+            name: .capitalizeSelection,
+            object: nil
+        )
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    // MARK: - Sort & Transform Handlers
+
+    @objc private func handleSortLinesAscending() {
+        guard window?.firstResponder === self else { return }
+        sortLines(ascending: true)
+    }
+
+    @objc private func handleSortLinesDescending() {
+        guard window?.firstResponder === self else { return }
+        sortLines(ascending: false)
+    }
+
+    @objc private func handleRemoveDuplicateLines() {
+        guard window?.firstResponder === self else { return }
+        removeDuplicateLines()
+    }
+
+    @objc private func handleUppercase() {
+        guard window?.firstResponder === self else { return }
+        changeCase(.uppercase)
+    }
+
+    @objc private func handleLowercase() {
+        guard window?.firstResponder === self else { return }
+        changeCase(.lowercase)
+    }
+
+    @objc private func handleCapitalize() {
+        guard window?.firstResponder === self else { return }
+        changeCase(.capitalize)
     }
 
     @objc private func handleDuplicateLine() {
@@ -539,6 +607,97 @@ class TamgaTextView: NSTextView {
     private enum MoveDirection {
         case up
         case down
+    }
+
+    // MARK: - Sort Lines
+
+    private func sortLines(ascending: Bool) {
+        let text = string
+        let selectedRange = self.selectedRange()
+
+        // If there's a selection, sort only selected lines
+        // Otherwise sort all lines
+        if selectedRange.length > 0 {
+            // Get selected text and sort it
+            let nsString = text as NSString
+            let selectedText = nsString.substring(with: selectedRange)
+            var lines = selectedText.components(separatedBy: "\n")
+            lines = ascending ? lines.sorted() : lines.sorted().reversed()
+            let sortedText = lines.joined(separator: "\n")
+
+            // Replace selected text
+            if let textStorage = self.textStorage {
+                textStorage.replaceCharacters(in: selectedRange, with: sortedText)
+                setSelectedRange(NSRange(location: selectedRange.location, length: sortedText.count))
+            }
+        } else {
+            // Sort all lines
+            var lines = text.components(separatedBy: "\n")
+            lines = ascending ? lines.sorted() : lines.sorted().reversed()
+            let newContent = lines.joined(separator: "\n")
+
+            string = newContent
+            setSelectedRange(NSRange(location: 0, length: 0))
+        }
+
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    // MARK: - Remove Duplicate Lines
+
+    private func removeDuplicateLines() {
+        let text = string
+        let lines = text.components(separatedBy: "\n")
+
+        var seen = Set<String>()
+        var uniqueLines: [String] = []
+
+        for line in lines {
+            if !seen.contains(line) {
+                seen.insert(line)
+                uniqueLines.append(line)
+            }
+        }
+
+        let newContent = uniqueLines.joined(separator: "\n")
+        string = newContent
+        setSelectedRange(NSRange(location: 0, length: 0))
+
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    }
+
+    // MARK: - Change Case
+
+    private enum CaseType {
+        case uppercase
+        case lowercase
+        case capitalize
+    }
+
+    private func changeCase(_ caseType: CaseType) {
+        let selectedRange = self.selectedRange()
+
+        guard selectedRange.length > 0 else { return }
+
+        let nsString = string as NSString
+        let selectedText = nsString.substring(with: selectedRange)
+
+        let transformedText: String
+        switch caseType {
+        case .uppercase:
+            transformedText = selectedText.uppercased()
+        case .lowercase:
+            transformedText = selectedText.lowercased()
+        case .capitalize:
+            transformedText = selectedText.capitalized
+        }
+
+        if let textStorage = self.textStorage {
+            textStorage.replaceCharacters(in: selectedRange, with: transformedText)
+            setSelectedRange(NSRange(location: selectedRange.location, length: transformedText.count))
+        }
+
+        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
     }
 }
 

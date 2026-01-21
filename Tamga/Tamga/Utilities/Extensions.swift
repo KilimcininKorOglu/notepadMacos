@@ -180,4 +180,10 @@ extension Notification.Name {
     static let duplicateLine = Notification.Name("duplicateLine")
     static let moveLineUp = Notification.Name("moveLineUp")
     static let moveLineDown = Notification.Name("moveLineDown")
+    static let sortLinesAscending = Notification.Name("sortLinesAscending")
+    static let sortLinesDescending = Notification.Name("sortLinesDescending")
+    static let removeDuplicateLines = Notification.Name("removeDuplicateLines")
+    static let uppercaseSelection = Notification.Name("uppercaseSelection")
+    static let lowercaseSelection = Notification.Name("lowercaseSelection")
+    static let capitalizeSelection = Notification.Name("capitalizeSelection")
 }
