@@ -128,6 +128,9 @@ struct ContentView: View {
                             encoding: activeTab.encoding,
                             onLanguageChange: { language in
                                 tabManager.setLanguage(language, for: activeTab.id)
+                            },
+                            onEncodingChange: { encoding in
+                                tabManager.setEncoding(encoding, for: activeTab.id)
                             }
                         )
                     }

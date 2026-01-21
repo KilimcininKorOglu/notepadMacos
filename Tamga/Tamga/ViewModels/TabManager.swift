@@ -146,6 +146,11 @@ class TabManager: ObservableObject {
         tabs[index].language = language
     }
 
+    func setEncoding(_ encoding: String, for id: UUID) {
+        guard let index = tabs.firstIndex(where: { $0.id == id }) else { return }
+        tabs[index].encoding = encoding
+    }
+
     // MARK: - Tab Reordering
 
     func moveTab(from sourceIndex: Int, to destinationIndex: Int) {

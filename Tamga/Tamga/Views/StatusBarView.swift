@@ -6,6 +6,23 @@ struct StatusBarView: View {
     let language: SyntaxLanguage
     let encoding: String
     let onLanguageChange: (SyntaxLanguage) -> Void
+    let onEncodingChange: (String) -> Void
+
+    private static let availableEncodings = [
+        "UTF-8",
+        "UTF-16",
+        "UTF-16 LE",
+        "UTF-16 BE",
+        "ASCII",
+        "ISO-8859-1",
+        "ISO-8859-2",
+        "Windows-1252",
+        "Windows-1250",
+        "Shift JIS",
+        "EUC-JP",
+        "GB2312",
+        "Big5"
+    ]
 
     var body: some View {
         HStack(spacing: 16) {
@@ -42,9 +59,29 @@ struct StatusBarView: View {
 
             Spacer()
 
-            // Encoding
-            Text(encoding)
-                .foregroundColor(.secondary)
+            // Encoding selector
+            Menu {
+                ForEach(Self.availableEncodings, id: \.self) { enc in
+                    Button {
+                        onEncodingChange(enc)
+                    } label: {
+                        HStack {
+                            Text(enc)
+                            if enc == encoding {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            } label: {
+                HStack(spacing: 4) {
+                    Text(encoding)
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: 8))
+                }
+            }
+            .menuStyle(.borderlessButton)
+            .fixedSize()
 
             Divider()
                 .frame(height: 12)
@@ -80,6 +117,7 @@ struct StatusBarView: View {
         documentInfo: DocumentInfo(content: "Hello World\nThis is a test", cursorPosition: 5),
         language: .swift,
         encoding: "UTF-8",
-        onLanguageChange: { _ in }
+        onLanguageChange: { _ in },
+        onEncodingChange: { _ in }
     )
 }
