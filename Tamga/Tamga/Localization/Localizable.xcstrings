@@ -1105,6 +1105,23 @@
           }
         }
       }
+    },
+    "auto.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto Save"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otomatik Kaydet"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

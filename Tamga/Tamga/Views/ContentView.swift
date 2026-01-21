@@ -115,6 +115,28 @@ struct ContentView: View {
         }
         .animation(.easeInOut(duration: 0.2), value: documentViewModel.isSearchVisible)
         .animation(.easeInOut(duration: 0.2), value: documentViewModel.isGoToLineVisible)
+        .onReceive(NotificationCenter.default.publisher(for: .autoSave)) { _ in
+            autoSaveDirtyTabs()
+        }
+        .onChange(of: appState.isAutoSaveEnabled) { _ in
+            // Timer is managed in AppState
+        }
+    }
+
+    // MARK: - Auto-save
+
+    private func autoSaveDirtyTabs() {
+        let dirtyTabs = tabManager.getDirtyTabs()
+        for tab in dirtyTabs {
+            if let filePath = tab.filePath {
+                do {
+                    try FileService.shared.writeFile(content: tab.content, to: filePath)
+                    tabManager.markAsSaved(id: tab.id, filePath: filePath)
+                } catch {
+                    print("Auto-save failed for \(filePath.lastPathComponent): \(error)")
+                }
+            }
+        }
     }
 
     // MARK: - Line Calculations

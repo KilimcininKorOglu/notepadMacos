@@ -13,13 +13,38 @@ class AppState: ObservableObject {
     @Published var fontName: String = "SF Mono"
     @Published var showLineNumbers: Bool = true
     @Published var recentFiles: [URL] = []
+    @Published var isAutoSaveEnabled: Bool = false
+    @Published var autoSaveInterval: TimeInterval = 60 // seconds
 
     private let userDefaults = UserDefaults.standard
     private let recentFilesKey = "recentFiles"
     private let maxRecentFiles = 10
+    private var autoSaveTimer: Timer?
 
     private init() {
         loadSettings()
+        setupAutoSaveTimer()
+    }
+
+    private func setupAutoSaveTimer() {
+        autoSaveTimer?.invalidate()
+        if isAutoSaveEnabled {
+            autoSaveTimer = Timer.scheduledTimer(withTimeInterval: autoSaveInterval, repeats: true) { [weak self] _ in
+                Task { @MainActor in
+                    self?.triggerAutoSave()
+                }
+            }
+        }
+    }
+
+    func toggleAutoSave() {
+        isAutoSaveEnabled.toggle()
+        saveSettings()
+        setupAutoSaveTimer()
+    }
+
+    private func triggerAutoSave() {
+        NotificationCenter.default.post(name: .autoSave, object: nil)
     }
 
     func loadSettings() {
@@ -28,6 +53,8 @@ class AppState: ObservableObject {
         fontSize = userDefaults.object(forKey: "fontSize") as? CGFloat ?? 14
         fontName = userDefaults.string(forKey: "fontName") ?? "SF Mono"
         showLineNumbers = userDefaults.object(forKey: "lineNumbers") as? Bool ?? true
+        isAutoSaveEnabled = userDefaults.object(forKey: "autoSave") as? Bool ?? false
+        autoSaveInterval = userDefaults.object(forKey: "autoSaveInterval") as? TimeInterval ?? 60
 
         if let themeRaw = userDefaults.string(forKey: "theme"),
            let theme = AppTheme(rawValue: themeRaw) {
@@ -47,6 +74,8 @@ class AppState: ObservableObject {
         userDefaults.set(fontName, forKey: "fontName")
         userDefaults.set(showLineNumbers, forKey: "lineNumbers")
         userDefaults.set(currentTheme.rawValue, forKey: "theme")
+        userDefaults.set(isAutoSaveEnabled, forKey: "autoSave")
+        userDefaults.set(autoSaveInterval, forKey: "autoSaveInterval")
 
         if let data = try? JSONEncoder().encode(recentFiles) {
             userDefaults.set(data, forKey: recentFilesKey)

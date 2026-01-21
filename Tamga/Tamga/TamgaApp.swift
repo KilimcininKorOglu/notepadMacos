@@ -49,6 +49,8 @@ struct TamgaApp: App {
                 .keyboardShortcut("s", modifiers: [.command, .shift])
                 .disabled(tabManager?.activeTab == nil)
 
+                Toggle(String(localized: "auto.save"), isOn: $appState.isAutoSaveEnabled)
+
                 Divider()
 
                 Button(String(localized: "close.tab")) {

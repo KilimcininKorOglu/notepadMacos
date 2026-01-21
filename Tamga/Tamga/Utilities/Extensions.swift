@@ -188,4 +188,5 @@ extension Notification.Name {
     static let capitalizeSelection = Notification.Name("capitalizeSelection")
     static let formatJSON = Notification.Name("formatJSON")
     static let minifyJSON = Notification.Name("minifyJSON")
+    static let autoSave = Notification.Name("autoSave")
 }
