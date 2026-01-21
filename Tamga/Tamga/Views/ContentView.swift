@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 /// Main content view containing tabs, editor, and status bar
 struct ContentView: View {
@@ -7,6 +8,7 @@ struct ContentView: View {
     @ObservedObject private var appState = AppState.shared
 
     @State private var currentDocumentInfo = DocumentInfo()
+    @State private var isDropTargeted = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -120,6 +122,60 @@ struct ContentView: View {
         }
         .onChange(of: appState.isAutoSaveEnabled) { _ in
             // Timer is managed in AppState
+        }
+        .onDrop(of: [.fileURL], isTargeted: $isDropTargeted) { providers in
+            handleDrop(providers: providers)
+        }
+        .overlay {
+            if isDropTargeted {
+                dropOverlay
+            }
+        }
+    }
+
+    // MARK: - Drag & Drop
+
+    private var dropOverlay: some View {
+        ZStack {
+            Color.accentColor.opacity(0.2)
+            VStack(spacing: 12) {
+                Image(systemName: "doc.badge.plus")
+                    .font(.system(size: 48))
+                    .foregroundColor(.accentColor)
+                Text(String(localized: "drop.files.here"))
+                    .font(.title2)
+                    .foregroundColor(.accentColor)
+            }
+        }
+        .ignoresSafeArea()
+    }
+
+    private func handleDrop(providers: [NSItemProvider]) -> Bool {
+        for provider in providers {
+            if provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
+                provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier, options: nil) { item, error in
+                    guard error == nil,
+                          let data = item as? Data,
+                          let url = URL(dataRepresentation: data, relativeTo: nil) else {
+                        return
+                    }
+
+                    Task { @MainActor in
+                        openDroppedFile(url)
+                    }
+                }
+            }
+        }
+        return true
+    }
+
+    private func openDroppedFile(_ url: URL) {
+        do {
+            let content = try FileService.shared.readFile(at: url)
+            tabManager.openTab(with: url, content: content)
+            appState.addRecentFile(url)
+        } catch {
+            print("Failed to open dropped file: \(error)")
         }
     }
 
