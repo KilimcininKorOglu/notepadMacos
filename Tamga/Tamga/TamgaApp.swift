@@ -510,6 +510,11 @@ open "$APP_PATH" --args "${args[@]}"
 
 // MARK: - CLI Processing
 
+/// Stores CLI file paths to be opened after session restore
+enum CLIFileQueue {
+    static var pendingFiles: [String] = []
+}
+
 private func processCommandLineArguments() {
     let args = CommandLine.arguments
 
@@ -521,14 +526,8 @@ private func processCommandLineArguments() {
             continue
         }
 
-        // Post notification with small delay to allow app to fully initialize
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            NotificationCenter.default.post(
-                name: .openFileFromCLI,
-                object: nil,
-                userInfo: ["path": path]
-            )
-        }
+        // Store paths to be processed after session restore
+        CLIFileQueue.pendingFiles.append(path)
     }
 }
 

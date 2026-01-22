@@ -215,11 +215,6 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .autoSave)) { _ in
             autoSaveDirtyTabs()
         }
-        .onReceive(NotificationCenter.default.publisher(for: .openFileFromCLI)) { notification in
-            if let path = notification.userInfo?["path"] as? String {
-                openFileFromPath(path)
-            }
-        }
         .onChange(of: appState.isAutoSaveEnabled) { _ in
             // Timer is managed in AppState
         }
@@ -368,6 +363,18 @@ struct ContentView: View {
                 tabManager.tabs = session.tabs
                 tabManager.activeTabId = session.activeTabId ?? session.tabs.first?.id
             }
+        }
+
+        // Process CLI files after session restore
+        processPendingCLIFiles()
+    }
+
+    private func processPendingCLIFiles() {
+        let pendingFiles = CLIFileQueue.pendingFiles
+        CLIFileQueue.pendingFiles.removeAll()
+
+        for path in pendingFiles {
+            openFileFromPath(path)
         }
     }
 
