@@ -1,0 +1,154 @@
+# Tamga
+
+A native macOS text editor with syntax highlighting and tab support, designed as a lightweight alternative to Notepad++.
+
+## Features
+
+### Core Editing
+- **Tab System** - Open multiple files in tabs with drag-and-drop reordering
+- **Syntax Highlighting** - Support for 14 programming languages
+- **Session Restore** - Automatically saves and restores all open tabs
+- **Find & Replace** - Search with regex support
+- **Go to Line** - Quick navigation to specific line numbers
+- **File Comparison** - Side-by-side diff view
+
+### Editor Features
+- Line numbers
+- Word wrap toggle
+- Invisible characters display
+- Code folding
+- Duplicate line
+- Move line up/down
+- Sort lines (ascending/descending)
+- Remove duplicate lines
+- JSON formatting and minification
+
+### Interface
+- Native macOS design
+- Light/Dark/System theme support
+- Customizable font and size
+- Status bar with line/column/character count
+- Sidebar with open tabs list
+- Markdown preview
+- Drag and drop file opening
+
+### Localization
+Available in 20 languages:
+Arabic, Bengali, Chinese (Simplified), Dutch, English, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Ukrainian, Vietnamese
+
+## Requirements
+
+- macOS 13.0 (Ventura) or later
+- Apple Silicon or Intel Mac
+
+## Installation
+
+### Download
+Download the latest release from the [Releases](../../releases) page.
+
+### Build from Source
+
+```bash
+# Clone the repository
+git clone https://github.com/user/tamga.git
+cd tamga
+
+# Build
+xcodebuild -scheme Tamga -destination 'platform=macOS' build
+
+# Or open in Xcode
+open Tamga/Tamga.xcodeproj
+```
+
+## CLI Usage
+
+Install the CLI tool from **Help > Install CLI Tool...** in the app menu.
+
+```bash
+# Open a file
+tamga file.txt
+
+# Open multiple files
+tamga file1.txt file2.py file3.json
+
+# Launch the app
+tamga
+```
+
+## Supported Syntax Languages
+
+| Language   | Extensions                    |
+|------------|-------------------------------|
+| Swift      | .swift                        |
+| Python     | .py, .pyw                     |
+| JavaScript | .js, .jsx, .ts, .tsx          |
+| PHP        | .php, .phtml, .php3-5, .phps  |
+| JSON       | .json                         |
+| HTML       | .html, .htm                   |
+| CSS        | .css, .scss, .sass, .less     |
+| Markdown   | .md, .markdown                |
+| XML        | .xml, .plist                  |
+| SQL        | .sql                          |
+| Shell      | .sh, .bash, .zsh              |
+| YAML       | .yml, .yaml                   |
+
+## Keyboard Shortcuts
+
+| Shortcut       | Action              |
+|----------------|---------------------|
+| Cmd+N          | New Tab             |
+| Cmd+O          | Open File           |
+| Cmd+S          | Save                |
+| Cmd+Shift+S    | Save As             |
+| Cmd+W          | Close Tab           |
+| Cmd+Shift+W    | Close All Tabs      |
+| Cmd+F          | Find                |
+| Cmd+G          | Find Next           |
+| Cmd+Shift+G    | Find Previous       |
+| Cmd+H          | Replace             |
+| Cmd+L          | Go to Line          |
+| Cmd+1-9        | Switch to Tab       |
+| Cmd+]          | Next Tab            |
+| Cmd+[          | Previous Tab        |
+| Cmd++          | Zoom In             |
+| Cmd+-          | Zoom Out            |
+| Cmd+0          | Reset Zoom          |
+
+## Project Structure
+
+```
+Tamga/
+├── Tamga.xcodeproj/
+└── Tamga/
+    ├── TamgaApp.swift
+    ├── Models/
+    ├── Views/
+    ├── ViewModels/
+    ├── Services/
+    ├── Localization/
+    └── Utilities/
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Use camelCase for all identifiers
+- Add localization strings to all 20 language files
+- Ensure build succeeds before committing
+- Test on both Light and Dark modes
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Built with SwiftUI and AppKit
+- Inspired by Notepad++ and CotEditor
