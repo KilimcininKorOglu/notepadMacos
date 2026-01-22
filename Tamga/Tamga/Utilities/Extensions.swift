@@ -193,4 +193,5 @@ extension Notification.Name {
     static let unfoldCode = Notification.Name("unfoldCode")
     static let foldAll = Notification.Name("foldAll")
     static let unfoldAll = Notification.Name("unfoldAll")
+    static let openFileFromCLI = Notification.Name("openFileFromCLI")
 }

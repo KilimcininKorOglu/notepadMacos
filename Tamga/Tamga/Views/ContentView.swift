@@ -215,6 +215,11 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .autoSave)) { _ in
             autoSaveDirtyTabs()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .openFileFromCLI)) { notification in
+            if let path = notification.userInfo?["path"] as? String {
+                openFileFromPath(path)
+            }
+        }
         .onChange(of: appState.isAutoSaveEnabled) { _ in
             // Timer is managed in AppState
         }
@@ -275,6 +280,25 @@ struct ContentView: View {
             appState.addRecentFile(url)
         } catch {
             print("Failed to open file: \(error)")
+        }
+    }
+
+    private func openFileFromPath(_ path: String) {
+        let url = URL(fileURLWithPath: path).standardized
+
+        // Dosya yoksa oluştur
+        if !FileManager.default.fileExists(atPath: url.path) {
+            FileManager.default.createFile(atPath: url.path, contents: nil)
+        }
+
+        // Dosyayı aç
+        do {
+            let content = try FileService.shared.readFile(at: url)
+            tabManager.openTab(with: url, content: content)
+            appState.addRecentFile(url)
+        } catch {
+            // Boş dosya olarak aç
+            tabManager.openTab(with: url, content: "")
         }
     }
 

@@ -7,6 +7,10 @@ struct TamgaApp: App {
     @FocusedValue(\.documentViewModel) var documentViewModel
     @ObservedObject private var appState = AppState.shared
 
+    init() {
+        processCommandLineArguments()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -329,6 +333,12 @@ struct TamgaApp: App {
                 Button(String(localized: "about.tamga")) {
                     showAboutPanel()
                 }
+
+                Divider()
+
+                Button(String(localized: "install.cli.tool")) {
+                    installCLITool()
+                }
             }
         }
     }
@@ -409,6 +419,116 @@ struct TamgaApp: App {
         printOperation.showsProgressPanel = true
 
         printOperation.run()
+    }
+
+    private func installCLITool() {
+        let cliScript = """
+#!/bin/bash
+# Tamga CLI - Terminal'den dosya açma aracı
+
+APP_PATH="/Applications/Tamga.app"
+
+if [ $# -eq 0 ]; then
+    # Argüman yoksa sadece uygulamayı aç
+    open "$APP_PATH"
+    exit 0
+fi
+
+# Her dosya için tam yol oluştur
+args=()
+for file in "$@"; do
+    if [[ "$file" = /* ]]; then
+        # Zaten tam yol
+        args+=("$file")
+    else
+        # Göreceli yolu tam yola çevir
+        args+=("$(pwd)/$file")
+    fi
+done
+
+# Uygulamayı dosyalarla aç
+open "$APP_PATH" --args "${args[@]}"
+"""
+
+        let alert = NSAlert()
+        alert.messageText = String(localized: "install.cli.title")
+        alert.informativeText = String(localized: "install.cli.message")
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: String(localized: "install"))
+        alert.addButton(withTitle: String(localized: "cancel"))
+
+        let response = alert.runModal()
+        guard response == .alertFirstButtonReturn else { return }
+
+        let destinationPath = "/usr/local/bin/tamga"
+
+        do {
+            // Create /usr/local/bin if it doesn't exist
+            let fileManager = FileManager.default
+            let binPath = "/usr/local/bin"
+            if !fileManager.fileExists(atPath: binPath) {
+                let createDirScript = "mkdir -p '\(binPath)'"
+                let createProcess = Process()
+                createProcess.launchPath = "/usr/bin/osascript"
+                createProcess.arguments = ["-e", "do shell script \"\(createDirScript)\" with administrator privileges"]
+                try createProcess.run()
+                createProcess.waitUntilExit()
+            }
+
+            // Write the script using admin privileges
+            let tempPath = NSTemporaryDirectory() + "tamga-cli.sh"
+            try cliScript.write(toFile: tempPath, atomically: true, encoding: .utf8)
+
+            let installScript = "cp '\(tempPath)' '\(destinationPath)' && chmod +x '\(destinationPath)'"
+            let process = Process()
+            process.launchPath = "/usr/bin/osascript"
+            process.arguments = ["-e", "do shell script \"\(installScript)\" with administrator privileges"]
+            try process.run()
+            process.waitUntilExit()
+
+            // Clean up temp file
+            try? fileManager.removeItem(atPath: tempPath)
+
+            if process.terminationStatus == 0 {
+                let successAlert = NSAlert()
+                successAlert.messageText = String(localized: "install.cli.success.title")
+                successAlert.informativeText = String(localized: "install.cli.success.message")
+                successAlert.alertStyle = .informational
+                successAlert.addButton(withTitle: "OK")
+                successAlert.runModal()
+            }
+        } catch {
+            let errorAlert = NSAlert()
+            errorAlert.messageText = String(localized: "install.cli.error.title")
+            errorAlert.informativeText = error.localizedDescription
+            errorAlert.alertStyle = .critical
+            errorAlert.addButton(withTitle: "OK")
+            errorAlert.runModal()
+        }
+    }
+}
+
+// MARK: - CLI Processing
+
+private func processCommandLineArguments() {
+    let args = CommandLine.arguments
+
+    // İlk argüman uygulama yolu, sonrakiler dosya yolları
+    for i in 1..<args.count {
+        let path = args[i]
+        // Skip Xcode debug arguments
+        if path.starts(with: "-") || path.contains("XCTest") {
+            continue
+        }
+
+        // Post notification with small delay to allow app to fully initialize
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            NotificationCenter.default.post(
+                name: .openFileFromCLI,
+                object: nil,
+                userInfo: ["path": path]
+            )
+        }
     }
 }
 
