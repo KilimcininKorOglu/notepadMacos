@@ -67,51 +67,51 @@ Initial release of Tamga with:
 
 ## Turkish (tr)
 
-**App Name:** Tamga - Metin Editoru
+**App Name:** Tamga - Metin Editörü
 
-**Subtitle:** Kod Editoru ve Renklendirme
+**Subtitle:** Kod Editörü ve Renklendirme
 
 **Promotional Text:**
-Hafif, yerli macOS metin editoru. Syntax renklendirme, sekmeler ve oturum geri yukleme ozellikleriyle geliştiriciler icin ideal.
+Hafif, yerli macOS metin editörü. Syntax renklendirme, sekmeler ve oturum geri yükleme özellikleriyle geliştiriciler için ideal.
 
 **Description:**
-Tamga, macOS icin ozel olarak tasarlanmis guclu ve hafif bir metin editorudur. Kod yazarken, yapilandirma dosyalarini duzenlerken veya not alirken, Tamga ihtiyaciniz olan tum ozelliklerle temiz ve yerel bir deneyim sunar.
+Tamga, macOS için özel olarak tasarlanmış güçlü ve hafif bir metin editörüdür. Kod yazarken, yapılandırma dosyalarını düzenlerken veya not alırken, Tamga ihtiyacınız olan tüm özelliklerle temiz ve yerel bir deneyim sunar.
 
-Temel Ozellikler:
+Temel Özellikler:
 
-- Sekme Sistemi: Surukle-birak ile sekme siralama
-- Syntax Renklendirme: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell ve YAML destegi
-- Oturum Geri Yukleme: Calisma alaniniz otomatik kaydedilir
-- Bul ve Degistir: Regex destekli guclu arama
-- Dosya Karsilastirma: Yan yana diff gorunumu
-- Yerel Tasarim: Gercek macOS deneyimi icin SwiftUI ile yapildi
-- Karanlik Mod: Acik, Koyu ve Sistem temalari
-- Yerellistirme: 20 dilde mevcut
+- Sekme Sistemi: Sürükle-bırak ile sekme sıralama
+- Syntax Renklendirme: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell ve YAML desteği
+- Oturum Geri Yükleme: Çalışma alanınız otomatik kaydedilir
+- Bul ve Değiştir: Regex destekli güçlü arama
+- Dosya Karşılaştırma: Yan yana diff görünümü
+- Yerel Tasarım: Gerçek macOS deneyimi için SwiftUI ile yapıldı
+- Karanlık Mod: Açık, Koyu ve Sistem temaları
+- Yerelleştirme: 20 dilde mevcut
 
-Editor Ozellikleri:
-- Satir numaralari
-- Sozcuk kaydirma
+Editör Özellikleri:
+- Satır numaraları
+- Sözcük kaydırma
 - Kod katlama
-- Gorunmez karakterler
-- Satira git
-- Satir kopyala
-- Satirlari sirala
+- Görünmez karakterler
+- Satıra git
+- Satır kopyala
+- Satırları sırala
 - JSON formatlama
 
-Tamga ucretsiz, hizli ve gizliliginize saygi duyar.
+Tamga ücretsiz, hızlı ve gizliliğinize saygı duyar.
 
 **Keywords:**
-metin editoru,kod editoru,syntax,gelistirici,notepad,programlama,markdown,json,swift,kodlama
+metin editörü,kod editörü,syntax,geliştirici,notepad,programlama,markdown,json,swift,kodlama
 
 **What's New (Version 1.0):**
-Tamga'nin ilk surumu:
-- Sekmeli dosya duzenleme
-- 14 dil icin syntax renklendirme
-- Otomatik oturum geri yukleme
-- Regex ile bul ve degistir
-- Dosya karsilastirma
-- 20 dilde arayuz destegi
-- Terminal entegrasyonu icin CLI araci
+Tamga'nın ilk sürümü:
+- Sekmeli dosya düzenleme
+- 14 dil için syntax renklendirme
+- Otomatik oturum geri yükleme
+- Regex ile bul ve değiştir
+- Dosya karşılaştırma
+- 20 dilde arayüz desteği
+- Terminal entegrasyonu için CLI aracı
 
 ---
 
@@ -122,58 +122,58 @@ Tamga'nin ilk surumu:
 **Subtitle:** Code-Editor mit Syntaxfarben
 
 **Promotional Text:**
-Ein leichter, nativer macOS-Texteditor mit Syntaxhervorhebung, Tabs und Sitzungswiederherstellung. Perfekt fur Entwickler.
+Ein leichter, nativer macOS-Texteditor mit Syntaxhervorhebung, Tabs und Sitzungswiederherstellung. Perfekt für Entwickler.
 
 **Description:**
-Tamga ist ein leistungsstarker und dennoch leichter Texteditor, der speziell fur macOS entwickelt wurde. Ob Sie Code schreiben, Konfigurationsdateien bearbeiten oder Notizen machen, Tamga bietet eine saubere, native Erfahrung mit allen Funktionen, die Sie benotigen.
+Tamga ist ein leistungsstarker und dennoch leichter Texteditor, der speziell für macOS entwickelt wurde. Ob Sie Code schreiben, Konfigurationsdateien bearbeiten oder Notizen machen, Tamga bietet eine saubere, native Erfahrung mit allen Funktionen, die Sie benötigen.
 
 Hauptfunktionen:
 
-- Tab-System: Offnen und verwalten Sie mehrere Dateien mit Drag-and-Drop
-- Syntaxhervorhebung: Unterstutzung fur Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell und YAML
+- Tab-System: Öffnen und verwalten Sie mehrere Dateien mit Drag-and-Drop
+- Syntaxhervorhebung: Unterstützung für Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell und YAML
 - Sitzungswiederherstellung: Ihr Arbeitsbereich wird automatisch gespeichert
-- Suchen und Ersetzen: Leistungsstarke Suche mit Regex-Unterstutzung
+- Suchen und Ersetzen: Leistungsstarke Suche mit Regex-Unterstützung
 - Dateivergleich: Nebeneinander-Diff-Ansicht
-- Natives Design: Mit SwiftUI fur echte macOS-Erfahrung
-- Dunkler Modus: Volle Unterstutzung fur helle, dunkle und Systemthemen
-- Lokalisierung: In 20 Sprachen verfugbar
+- Natives Design: Mit SwiftUI für echte macOS-Erfahrung
+- Dunkler Modus: Volle Unterstützung für helle, dunkle und Systemthemen
+- Lokalisierung: In 20 Sprachen verfügbar
 
 **Keywords:**
 texteditor,code-editor,syntaxhervorhebung,entwicklertools,notepad,programmierung,markdown,json,swift
 
 **What's New (Version 1.0):**
-Erstveroeffentlichung von Tamga mit Tab-Bearbeitung, Syntaxhervorhebung fur 14 Sprachen, automatischer Sitzungswiederherstellung und 20 Sprachen UI-Unterstutzung.
+Erstveröffentlichung von Tamga mit Tab-Bearbeitung, Syntaxhervorhebung für 14 Sprachen, automatischer Sitzungswiederherstellung und 20 Sprachen UI-Unterstützung.
 
 ---
 
 ## French (fr)
 
-**App Name:** Tamga - Editeur de Texte
+**App Name:** Tamga - Éditeur de Texte
 
-**Subtitle:** Editeur de Code avec Couleurs
+**Subtitle:** Éditeur de Code avec Couleurs
 
 **Promotional Text:**
-Un editeur de texte macOS natif et leger avec coloration syntaxique, onglets et restauration de session. Parfait pour les developpeurs.
+Un éditeur de texte macOS natif et léger avec coloration syntaxique, onglets et restauration de session. Parfait pour les développeurs.
 
 **Description:**
-Tamga est un editeur de texte puissant mais leger concu specifiquement pour macOS. Que vous ecriviez du code, modifiiez des fichiers de configuration ou preniez des notes, Tamga offre une experience native et propre avec toutes les fonctionnalites dont vous avez besoin.
+Tamga est un éditeur de texte puissant mais léger conçu spécifiquement pour macOS. Que vous écriviez du code, modifiiez des fichiers de configuration ou preniez des notes, Tamga offre une expérience native et propre avec toutes les fonctionnalités dont vous avez besoin.
 
-Fonctionnalites principales:
+Fonctionnalités principales:
 
-- Systeme d'onglets: Ouvrez et gerez plusieurs fichiers avec glisser-deposer
+- Système d'onglets: Ouvrez et gérez plusieurs fichiers avec glisser-déposer
 - Coloration syntaxique: Support pour Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell et YAML
-- Restauration de session: Votre espace de travail est automatiquement sauvegarde
+- Restauration de session: Votre espace de travail est automatiquement sauvegardé
 - Rechercher et Remplacer: Recherche puissante avec support regex
-- Comparaison de fichiers: Vue diff cote a cote
-- Design natif: Construit avec SwiftUI pour une vraie experience macOS
-- Mode sombre: Support complet des themes clair, sombre et systeme
+- Comparaison de fichiers: Vue diff côte à côte
+- Design natif: Construit avec SwiftUI pour une vraie expérience macOS
+- Mode sombre: Support complet des thèmes clair, sombre et système
 - Localisation: Disponible en 20 langues
 
 **Keywords:**
-editeur texte,editeur code,coloration syntaxique,outils developpeur,notepad,programmation,markdown,json
+éditeur texte,éditeur code,coloration syntaxique,outils développeur,notepad,programmation,markdown,json
 
 **What's New (Version 1.0):**
-Premiere version de Tamga avec edition par onglets, coloration syntaxique pour 14 langages, restauration automatique de session et support de 20 langues.
+Première version de Tamga avec édition par onglets, coloration syntaxique pour 14 langages, restauration automatique de session et support de 20 langues.
 
 ---
 
@@ -181,30 +181,30 @@ Premiere version de Tamga avec edition par onglets, coloration syntaxique pour 1
 
 **App Name:** Tamga - Editor de Texto
 
-**Subtitle:** Editor de Codigo con Colores
+**Subtitle:** Editor de Código con Colores
 
 **Promotional Text:**
-Un editor de texto nativo y ligero para macOS con resaltado de sintaxis, pestanas y restauracion de sesion. Perfecto para desarrolladores.
+Un editor de texto nativo y ligero para macOS con resaltado de sintaxis, pestañas y restauración de sesión. Perfecto para desarrolladores.
 
 **Description:**
-Tamga es un editor de texto potente pero ligero disenado especificamente para macOS. Ya sea que este escribiendo codigo, editando archivos de configuracion o tomando notas, Tamga ofrece una experiencia nativa y limpia con todas las funciones que necesita.
+Tamga es un editor de texto potente pero ligero diseñado específicamente para macOS. Ya sea que esté escribiendo código, editando archivos de configuración o tomando notas, Tamga ofrece una experiencia nativa y limpia con todas las funciones que necesita.
 
-Caracteristicas principales:
+Características principales:
 
-- Sistema de pestanas: Abra y administre multiples archivos con arrastrar y soltar
+- Sistema de pestañas: Abra y administre múltiples archivos con arrastrar y soltar
 - Resaltado de sintaxis: Soporte para Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell y YAML
-- Restauracion de sesion: Su espacio de trabajo se guarda automaticamente
-- Buscar y Reemplazar: Busqueda potente con soporte regex
-- Comparacion de archivos: Vista diff lado a lado
-- Diseno nativo: Construido con SwiftUI para una verdadera experiencia macOS
+- Restauración de sesión: Su espacio de trabajo se guarda automáticamente
+- Buscar y Reemplazar: Búsqueda potente con soporte regex
+- Comparación de archivos: Vista diff lado a lado
+- Diseño nativo: Construido con SwiftUI para una verdadera experiencia macOS
 - Modo oscuro: Soporte completo para temas claro, oscuro y del sistema
-- Localizacion: Disponible en 20 idiomas
+- Localización: Disponible en 20 idiomas
 
 **Keywords:**
-editor texto,editor codigo,resaltado sintaxis,herramientas desarrollador,notepad,programacion,markdown,json
+editor texto,editor código,resaltado sintaxis,herramientas desarrollador,notepad,programación,markdown,json
 
 **What's New (Version 1.0):**
-Primera version de Tamga con edicion por pestanas, resaltado de sintaxis para 14 lenguajes, restauracion automatica de sesion y soporte para 20 idiomas.
+Primera versión de Tamga con edición por pestañas, resaltado de sintaxis para 14 lenguajes, restauración automática de sesión y soporte para 20 idiomas.
 
 ---
 
@@ -212,30 +212,30 @@ Primera version de Tamga con edicion por pestanas, resaltado de sintaxis para 14
 
 **App Name:** Tamga - Editor de Texto
 
-**Subtitle:** Editor de Codigo com Cores
+**Subtitle:** Editor de Código com Cores
 
 **Promotional Text:**
-Um editor de texto nativo e leve para macOS com destaque de sintaxe, abas e restauracao de sessao. Perfeito para desenvolvedores.
+Um editor de texto nativo e leve para macOS com destaque de sintaxe, abas e restauração de sessão. Perfeito para desenvolvedores.
 
 **Description:**
-Tamga e um editor de texto poderoso, mas leve, projetado especificamente para macOS. Seja escrevendo codigo, editando arquivos de configuracao ou fazendo anotacoes, Tamga oferece uma experiencia nativa e limpa com todos os recursos que voce precisa.
+Tamga é um editor de texto poderoso, mas leve, projetado especificamente para macOS. Seja escrevendo código, editando arquivos de configuração ou fazendo anotações, Tamga oferece uma experiência nativa e limpa com todos os recursos que você precisa.
 
 Recursos principais:
 
-- Sistema de abas: Abra e gerencie varios arquivos com arrastar e soltar
+- Sistema de abas: Abra e gerencie vários arquivos com arrastar e soltar
 - Destaque de sintaxe: Suporte para Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell e YAML
-- Restauracao de sessao: Seu espaco de trabalho e salvo automaticamente
+- Restauração de sessão: Seu espaço de trabalho é salvo automaticamente
 - Localizar e Substituir: Pesquisa poderosa com suporte a regex
-- Comparacao de arquivos: Visualizacao diff lado a lado
-- Design nativo: Construido com SwiftUI para uma verdadeira experiencia macOS
+- Comparação de arquivos: Visualização diff lado a lado
+- Design nativo: Construído com SwiftUI para uma verdadeira experiência macOS
 - Modo escuro: Suporte completo para temas claro, escuro e do sistema
-- Localizacao: Disponivel em 20 idiomas
+- Localização: Disponível em 20 idiomas
 
 **Keywords:**
-editor texto,editor codigo,destaque sintaxe,ferramentas desenvolvedor,notepad,programacao,markdown,json
+editor texto,editor código,destaque sintaxe,ferramentas desenvolvedor,notepad,programação,markdown,json
 
 **What's New (Version 1.0):**
-Primeira versao do Tamga com edicao por abas, destaque de sintaxe para 14 linguagens, restauracao automatica de sessao e suporte para 20 idiomas.
+Primeira versão do Tamga com edição por abas, destaque de sintaxe para 14 linguagens, restauração automática de sessão e suporte para 20 idiomas.
 
 ---
 
@@ -249,17 +249,17 @@ Primeira versao do Tamga com edicao por abas, destaque de sintaxe para 14 lingua
 Un editor di testo nativo e leggero per macOS con evidenziazione della sintassi, schede e ripristino della sessione. Perfetto per sviluppatori.
 
 **Description:**
-Tamga e un editor di testo potente ma leggero progettato specificamente per macOS. Che tu stia scrivendo codice, modificando file di configurazione o prendendo appunti, Tamga offre un'esperienza nativa e pulita con tutte le funzionalita di cui hai bisogno.
+Tamga è un editor di testo potente ma leggero progettato specificamente per macOS. Che tu stia scrivendo codice, modificando file di configurazione o prendendo appunti, Tamga offre un'esperienza nativa e pulita con tutte le funzionalità di cui hai bisogno.
 
 Caratteristiche principali:
 
-- Sistema a schede: Apri e gestisci piu file con trascinamento
+- Sistema a schede: Apri e gestisci più file con trascinamento
 - Evidenziazione sintassi: Supporto per Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell e YAML
 - Ripristino sessione: Il tuo spazio di lavoro viene salvato automaticamente
 - Cerca e Sostituisci: Ricerca potente con supporto regex
 - Confronto file: Vista diff affiancata
 - Design nativo: Costruito con SwiftUI per una vera esperienza macOS
-- Modalita scura: Supporto completo per temi chiaro, scuro e di sistema
+- Modalità scura: Supporto completo per temi chiaro, scuro e di sistema
 - Localizzazione: Disponibile in 20 lingue
 
 **Keywords:**
@@ -308,244 +308,244 @@ Eerste release van Tamga met tabbladbewerking, syntaxiskleuring voor 14 talen, a
 **Subtitle:** Edytor Kodu z Kolorami
 
 **Promotional Text:**
-Lekki, natywny edytor tekstu macOS z podswietlaniem skladni, kartami i przywracaniem sesji. Idealny dla programistow.
+Lekki, natywny edytor tekstu macOS z podświetlaniem składni, kartami i przywracaniem sesji. Idealny dla programistów.
 
 **Description:**
-Tamga to potezny, ale lekki edytor tekstu zaprojektowany specjalnie dla macOS. Niezaleznie od tego, czy piszesz kod, edytujesz pliki konfiguracyjne czy robisz notatki, Tamga zapewnia czyste, natywne doswiadczenie ze wszystkimi potrzebnymi funkcjami.
+Tamga to potężny, ale lekki edytor tekstu zaprojektowany specjalnie dla macOS. Niezależnie od tego, czy piszesz kod, edytujesz pliki konfiguracyjne czy robisz notatki, Tamga zapewnia czyste, natywne doświadczenie ze wszystkimi potrzebnymi funkcjami.
 
-Glowne funkcje:
+Główne funkcje:
 
-- System kart: Otwieraj i zarzadzaj wieloma plikami przeciaganiem i upuszczaniem
-- Podswietlanie skladni: Obsluga Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell i YAML
-- Przywracanie sesji: Twoja przestrzen robocza jest automatycznie zapisywana
-- Znajdz i Zamien: Potezne wyszukiwanie z obsluga regex
-- Porownywanie plikow: Widok diff obok siebie
-- Natywny design: Zbudowany w SwiftUI dla prawdziwego doswiadczenia macOS
-- Tryb ciemny: Pelna obsluga jasnych, ciemnych i systemowych motywow
-- Lokalizacja: Dostepny w 20 jezykach
+- System kart: Otwieraj i zarządzaj wieloma plikami przeciąganiem i upuszczaniem
+- Podświetlanie składni: Obsługa Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell i YAML
+- Przywracanie sesji: Twoja przestrzeń robocza jest automatycznie zapisywana
+- Znajdź i Zamień: Potężne wyszukiwanie z obsługą regex
+- Porównywanie plików: Widok diff obok siebie
+- Natywny design: Zbudowany w SwiftUI dla prawdziwego doświadczenia macOS
+- Tryb ciemny: Pełna obsługa jasnych, ciemnych i systemowych motywów
+- Lokalizacja: Dostępny w 20 językach
 
 **Keywords:**
-edytor tekstu,edytor kodu,podswietlanie skladni,narzedzia programisty,notepad,programowanie,markdown,json
+edytor tekstu,edytor kodu,podświetlanie składni,narzędzia programisty,notepad,programowanie,markdown,json
 
 **What's New (Version 1.0):**
-Pierwsza wersja Tamga z edycja kart, podswietlaniem skladni dla 14 jezykow, automatycznym przywracaniem sesji i obsluga 20 jezykow.
+Pierwsza wersja Tamga z edycją kart, podświetlaniem składni dla 14 języków, automatycznym przywracaniem sesji i obsługą 20 języków.
 
 ---
 
 ## Russian (ru)
 
-**App Name:** Tamga - Tekstovyy Redaktor
+**App Name:** Tamga - Текстовый редактор
 
-**Subtitle:** Redaktor Koda s Podsvetkoy
+**Subtitle:** Редактор кода с подсветкой
 
 **Promotional Text:**
-Legkiy, nativnyy tekstovyy redaktor macOS s podsvetkoy sintaksisa, vkladkami i vosstanovleniem sessii. Idealnyy dlya razrabotchikov.
+Лёгкий, нативный текстовый редактор macOS с подсветкой синтаксиса, вкладками и восстановлением сессии. Идеально для разработчиков.
 
 **Description:**
-Tamga - eto moshchnyy, no legkiy tekstovyy redaktor, razrabotannyy spetsialno dlya macOS. Nezavisimo ot togo, pishete li vy kod, redaktiruete konfiguratcionnye fayly ili delaete zametki, Tamga predlagaet chistyy, nativnyy opyt so vsemi neobkhodimymi funktsiyami.
+Tamga — это мощный, но лёгкий текстовый редактор, разработанный специально для macOS. Независимо от того, пишете ли вы код, редактируете конфигурационные файлы или делаете заметки, Tamga предлагает чистый, нативный опыт со всеми необходимыми функциями.
 
-Osnovnye funktsii:
+Основные функции:
 
-- Sistema vkladok: Otkryvayte i upravlyayte neskolkimi faylami s pomoshchyu peretaskivaniya
-- Podsvetka sintaksisa: Podderzhka Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell i YAML
-- Vosstanovlenie sessii: Vashe rabochee prostranstvo avtomaticheski sokhraniaetsya
-- Nayti i Zamenit: Moshchnyy poisk s podderzhkoy regex
-- Sravnenie faylov: Parallelnoe otobrazhenie razlichiy
-- Nativnyy dizayn: Sozdan s pomoshchyu SwiftUI dlya nastoyashchego opyta macOS
-- Temnyy rezhim: Polnaya podderzhka svetlykh, temnykh i sistemnykh tem
-- Lokalizatsiya: Dostupen na 20 yazykakh
+- Система вкладок: Открывайте и управляйте несколькими файлами с помощью перетаскивания
+- Подсветка синтаксиса: Поддержка Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell и YAML
+- Восстановление сессии: Ваше рабочее пространство автоматически сохраняется
+- Найти и Заменить: Мощный поиск с поддержкой regex
+- Сравнение файлов: Параллельное отображение различий
+- Нативный дизайн: Создан с помощью SwiftUI для настоящего опыта macOS
+- Тёмный режим: Полная поддержка светлых, тёмных и системных тем
+- Локализация: Доступен на 20 языках
 
 **Keywords:**
-tekstovyy redaktor,redaktor koda,podsvetka sintaksisa,instrumenty razrabotchika,notepad,programmirovanie,markdown
+текстовый редактор,редактор кода,подсветка синтаксиса,инструменты разработчика,notepad,программирование,markdown
 
 **What's New (Version 1.0):**
-Pervyy reliz Tamga s redaktirovaniem vkladok, podsvetkoy sintaksisa dlya 14 yazykov, avtomaticheskim vosstanovleniem sessii i podderzhkoy 20 yazykov.
+Первый релиз Tamga с редактированием вкладок, подсветкой синтаксиса для 14 языков, автоматическим восстановлением сессии и поддержкой 20 языков.
 
 ---
 
 ## Japanese (ja)
 
-**App Name:** Tamga - Tekisutoedita
+**App Name:** Tamga - テキストエディタ
 
-**Subtitle:** Shintakkusu Karangu Kodoedita
+**Subtitle:** シンタックスカラーコードエディタ
 
 **Promotional Text:**
-Shintakkusu hairaitingu, tabu, sesshon fukugen kinoo wo sonaeta keiriyoo no neitibu macOS tekisuto edita. Kaihatsusha ni saitekidesu.
+シンタックスハイライト、タブ、セッション復元機能を備えた軽量のネイティブmacOSテキストエディタ。開発者に最適です。
 
 **Description:**
-Tamga wa macOS no tame ni tokubetsu ni sekkei sareta pawa furu de keiryoo na tekisuto edita desu. Koodo wo kaite mo, settei fairu wo henshuu shite mo, memodemo, Tamga wa hitsuyoo na subete no kinoo wo sonaeta kuriinna neitibu taiken wo teikyoo shimasu.
+Tamgaは、macOS専用に設計された強力で軽量なテキストエディタです。コードを書いたり、設定ファイルを編集したり、メモを取ったりする際に、必要なすべての機能を備えたクリーンでネイティブな体験を提供します。
 
-Shuyoo kinoo:
+主な機能:
 
-- Tabu shisutemu: Doraggu ando doroppu de fukusuu no fairu wo kanri
-- Shintakkusu hairaitingu: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML no sapoto
-- Sesshon fukugen: Waakusupeesu wa jidooteki ni hozon saremasu
-- Kensaku to Chikan: Regex sapoto no kyooryokuna kensaku
-- Fairu hikaku: Saido bai saido no diff byuu
-- Neitibu dezain: Hontoo no macOS taiken no tame SwiftUI de kochiku
-- Daaku moodo: Raito, daaku, shisutemu teema no furu sapoto
-- Rokaraizeeshon: 20 gengo de riyoo kanoo
+- タブシステム: ドラッグ＆ドロップで複数のファイルを管理
+- シンタックスハイライト: Swift、Python、JavaScript、PHP、JSON、HTML、CSS、Markdown、XML、SQL、Shell、YAMLをサポート
+- セッション復元: ワークスペースは自動的に保存されます
+- 検索と置換: 正規表現をサポートした強力な検索
+- ファイル比較: サイドバイサイドのdiffビュー
+- ネイティブデザイン: 本物のmacOS体験のためにSwiftUIで構築
+- ダークモード: ライト、ダーク、システムテーマのフルサポート
+- ローカライゼーション: 20言語で利用可能
 
 **Keywords:**
-tekisutoedita,kodoedita,shintakkusu,kaihatsu,notepad,puroguramingu,markdown,json,swift,koodingu
+テキストエディタ,コードエディタ,シンタックス,開発,notepad,プログラミング,markdown,json,swift,コーディング
 
 **What's New (Version 1.0):**
-Tamga no saisho no ririisu. Tabu henshuu, 14 gengo no shintakkusu hairaitingu, jidoo sesshon fukugen, 20 gengo UI sapoto.
+Tamgaの最初のリリース。タブ編集、14言語のシンタックスハイライト、自動セッション復元、20言語UIサポート。
 
 ---
 
 ## Korean (ko)
 
-**App Name:** Tamga - Tekseuteu Editeo
+**App Name:** Tamga - 텍스트 에디터
 
-**Subtitle:** Gumunyeom Editeo
+**Subtitle:** 구문 강조 코드 에디터
 
 **Promotional Text:**
-Gumunyeom gangjyo, taeb, sesyeon bogguwon gineung-i issneun gabyeoun gibon macOS tekseuteu editeo. Gaebaljadeul-ege wanbyeoghamnida.
+구문 강조, 탭, 세션 복원 기능을 갖춘 가벼운 네이티브 macOS 텍스트 에디터. 개발자에게 완벽합니다.
 
 **Description:**
-Tamga-neun macOS-leul wihae teugbyeolhi seolgye doen ganglyeoghago gabyeoun tekseuteu editeo-imnida. Kodeuleul jageunghadeun, seoljeong pail-eul pyeonjiphadeon, memoleul jageunghadeun, Tamga-neun pilyohan modeun gineung-gwa hamkke kkaekkeutan gibon gyeongheom-eul jegonghamnida.
+Tamga는 macOS를 위해 특별히 설계된 강력하고 가벼운 텍스트 에디터입니다. 코드를 작성하든, 설정 파일을 편집하든, 메모를 작성하든, Tamga는 필요한 모든 기능과 함께 깨끗한 네이티브 경험을 제공합니다.
 
-Juyo gineung:
+주요 기능:
 
-- Taeb siseutem: Deulaegeun & deulob-eulo yeoleo pail gwanli
-- Gumunyeom gangjyo: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML jiwon
-- Sesyeon bogguwon: Jageobyeong-yeog-i jadong-eulo jeogjang doemnida
-- Chajgi mit Baggug: Regex jiwon-ui ganglyeoghan geomang
-- Pail bigiyo: Naranhi diff bogi
-- Gibon dijain: Jinjjeong-han macOS gyeongheom-eul wihan SwiftUI
-- Dakeu modeu: Balggi, eodumi, siseutem tema jiwon
-- Hyeonjihwa: 20gae eon-eo-lo iyong ganeung
+- 탭 시스템: 드래그 앤 드롭으로 여러 파일 관리
+- 구문 강조: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML 지원
+- 세션 복원: 작업 영역이 자동으로 저장됩니다
+- 찾기 및 바꾸기: 정규식 지원의 강력한 검색
+- 파일 비교: 나란히 diff 보기
+- 네이티브 디자인: 진정한 macOS 경험을 위한 SwiftUI
+- 다크 모드: 밝기, 어둡기, 시스템 테마 지원
+- 현지화: 20개 언어로 이용 가능
 
 **Keywords:**
-tekseuteuediteo,kodeuedi,gumunyeom,gaebaldogu,notepad,peulogeulaem,markdown,json,swift,koding
+텍스트에디터,코드에디터,구문강조,개발도구,notepad,프로그래밍,markdown,json,swift,코딩
 
 **What's New (Version 1.0):**
-Tamga-ui cheos beonjjae chulgsi. Taeb pyeonjib, 14gae eon-eo gumunyeom gangjyo, jadong sesyeon bogguwon, 20gae eon-eo UI jiwon.
+Tamga의 첫 번째 출시. 탭 편집, 14개 언어 구문 강조, 자동 세션 복원, 20개 언어 UI 지원.
 
 ---
 
 ## Chinese Simplified (zh-Hans)
 
-**App Name:** Tamga - Wenben Bianjiqi
+**App Name:** Tamga - 文本编辑器
 
-**Subtitle:** Daima Bianjiqi yu Gaoliang
+**Subtitle:** 代码编辑器与语法高亮
 
 **Promotional Text:**
-Yi kuan qingliangji de yuansheng macOS wenben bianjiqi, zhichi yufa gaoliang, biaoqianye he huihua huifu. Feichang shihe kaifazhe.
+一款轻量级的原生macOS文本编辑器，支持语法高亮、标签页和会话恢复。非常适合开发者。
 
 **Description:**
-Tamga shi yi kuan zhuanmen wei macOS sheji de qiangda er qingliangji de wenben bianjiqi. Wulun nin shi zai bianxie daima, bianji peizhi wenjian haishi zuobi ji, Tamga dou neng tigong yi ge ganjing de yuansheng tiyan, jubei nin suoxudesuoyou gongneng.
+Tamga是一款专门为macOS设计的强大而轻量级的文本编辑器。无论您是在编写代码、编辑配置文件还是做笔记，Tamga都能提供一个干净的原生体验，具备您所需的所有功能。
 
-Zhuyao gongneng:
+主要功能:
 
-- Biaoqianye xitong: Tuozhuai paixu guanli duoge wenjian
-- Yufa gaoliang: Zhichi Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
-- Huihua huifu: Nin de gongzuo kongjian zidong baocun
-- Chazhao he Tihuan: Zhichi zhengze biaodashi de qiangda sousuo
-- Wenjian bijiao: Bingpai diff shitu
-- Yuansheng sheji: Shiyong SwiftUI goujian, tigong zhenzheng de macOS tiyan
-- Shen se moshi: Wanquan zhichi qianse, shense he xitong zhuti
-- Bendihua: Tigong 20 zhong yuyan
+- 标签页系统: 拖拽排序管理多个文件
+- 语法高亮: 支持Swift、Python、JavaScript、PHP、JSON、HTML、CSS、Markdown、XML、SQL、Shell、YAML
+- 会话恢复: 您的工作空间自动保存
+- 查找和替换: 支持正则表达式的强大搜索
+- 文件比较: 并排diff视图
+- 原生设计: 使用SwiftUI构建，提供真正的macOS体验
+- 深色模式: 完全支持浅色、深色和系统主题
+- 本地化: 提供20种语言
 
 **Keywords:**
-wenben bianjiqi,daima bianjiqi,yufa gaoliang,kaifa gongju,notepad,biancheng,markdown,json,swift
+文本编辑器,代码编辑器,语法高亮,开发工具,notepad,编程,markdown,json,swift
 
 **What's New (Version 1.0):**
-Tamga shoufa banben, zhichi biaoqianye bianji, 14 zhong yuyan yufa gaoliang, zidong huihua huifu he 20 zhong yuyan jiemian.
+Tamga首发版本，支持标签页编辑、14种语言语法高亮、自动会话恢复和20种语言界面。
 
 ---
 
 ## Arabic (ar)
 
-**App Name:** Tamga - Muharrir Nass
+**App Name:** Tamga - محرر نصوص
 
-**Subtitle:** Muharrir Kod ma Talween
+**Subtitle:** محرر كود مع تلوين
 
 **Promotional Text:**
-Muharrir nass khafeef li macOS ma talween al-syntax, alsanah al-tabreeb wa istiadat al-jalsa. Mithaali lil-mutawwireen.
+محرر نصوص خفيف لـ macOS مع تلوين الصيغة، علامات التبويب واستعادة الجلسة. مثالي للمطورين.
 
 **Description:**
-Tamga huwa muharrir nass qawi wa khafeef musammam khaseesan li macOS. Sawa kunta taktub kod, tuharrir milaffat al-tadheeb aw tatkhuth mulahazaat, yuqaddim Tamga tajriba aslia nadhifa ma jamee al-myzat allati tahtajuha.
+Tamga هو محرر نصوص قوي وخفيف مصمم خصيصًا لـ macOS. سواء كنت تكتب كود، تحرر ملفات التكوين أو تأخذ ملاحظات، يقدم Tamga تجربة أصلية نظيفة مع جميع الميزات التي تحتاجها.
 
-Al-myzat al-raisia:
+الميزات الرئيسية:
 
-- Nizam al-tabweeb: Iftah wa adir milaffat mutaaddida bil sahb wal iflaat
-- Talween al-syntax: Daam Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
-- Istiadat al-jalsa: Yatim hifz misahat al-amal taaliqyan
-- Bahth wa Istibdal: Bahth qawi ma daam regex
-- Muqaranat al-milaffat: Ard diff janiban ila janib
-- Tasmeem asli: Mabni bi SwiftUI li tajriba macOS haqiqia
-- Al-wada al-muzlim: Daam kamil lil mawadee al-fatiha, al-muzlima wal nizam
-- Al-tarjama: Mutah bi 20 lugha
+- نظام التبويب: افتح وأدر ملفات متعددة بالسحب والإفلات
+- تلوين الصيغة: دعم Swift، Python، JavaScript، PHP، JSON، HTML، CSS، Markdown، XML، SQL، Shell، YAML
+- استعادة الجلسة: يتم حفظ مساحة العمل تلقائيًا
+- بحث واستبدال: بحث قوي مع دعم regex
+- مقارنة الملفات: عرض diff جنبًا إلى جنب
+- تصميم أصلي: مبني بـ SwiftUI لتجربة macOS حقيقية
+- الوضع المظلم: دعم كامل للمواضيع الفاتحة والمظلمة والنظام
+- الترجمة: متاح بـ 20 لغة
 
 **Keywords:**
-muharrir nass,muharrir kod,talween syntax,adawat mutawwir,notepad,barmaja,markdown,json,swift
+محرر نصوص,محرر كود,تلوين الصيغة,أدوات المطور,notepad,برمجة,markdown,json,swift
 
 **What's New (Version 1.0):**
-Al-isdar al-awwal min Tamga ma tahrir bil tabweeb, talween syntax li 14 lugha, istiadat jalsa taaliqya wa daam 20 lugha.
+الإصدار الأول من Tamga مع تحرير بالتبويب، تلوين الصيغة لـ 14 لغة، استعادة جلسة تلقائية ودعم 20 لغة.
 
 ---
 
 ## Hindi (hi)
 
-**App Name:** Tamga - Text Editor
+**App Name:** Tamga - टेक्स्ट एडिटर
 
-**Subtitle:** Code Editor aur Rangeen
+**Subtitle:** कोड एडिटर और रंगीन
 
 **Promotional Text:**
-Syntax highlighting, tabs aur session restore ke saath halka, native macOS text editor. Developers ke liye perfect.
+सिंटैक्स हाइलाइटिंग, टैब और सेशन रिस्टोर के साथ हल्का, नेटिव macOS टेक्स्ट एडिटर। डेवलपर्स के लिए परफेक्ट।
 
 **Description:**
-Tamga ek shaktishali lekin halka text editor hai jo vishesh roop se macOS ke liye design kiya gaya hai. Chahe aap code likh rahe hon, configuration files edit kar rahe hon ya notes le rahe hon, Tamga ek saaf, native anubhav pradaan karta hai jisme aapko zaroorat ki sabhi suvidhayen hain.
+Tamga एक शक्तिशाली लेकिन हल्का टेक्स्ट एडिटर है जो विशेष रूप से macOS के लिए डिज़ाइन किया गया है। चाहे आप कोड लिख रहे हों, कॉन्फ़िगरेशन फाइलें एडिट कर रहे हों या नोट्स ले रहे हों, Tamga एक साफ, नेटिव अनुभव प्रदान करता है जिसमें आपको ज़रूरत की सभी सुविधाएं हैं।
 
-Mukhya Suvidhayen:
+मुख्य सुविधाएं:
 
-- Tab System: Drag aur drop ke saath kai files kholein aur prabandhit karein
-- Syntax Highlighting: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML ka samarthan
-- Session Restore: Aapka workspace svachalit roop se save hota hai
-- Khojein aur Badlein: Regex samarthan ke saath shaktishali khoj
-- File Tulna: Side by side diff view
-- Native Design: Asli macOS anubhav ke liye SwiftUI ke saath nirm
-- Dark Mode: Light, Dark aur System themes ka poorna samarthan
-- Sthaneeyakaran: 20 bhashaon mein uplabdh
+- टैब सिस्टम: ड्रैग और ड्रॉप के साथ कई फाइलें खोलें और प्रबंधित करें
+- सिंटैक्स हाइलाइटिंग: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML का समर्थन
+- सेशन रिस्टोर: आपका वर्कस्पेस स्वचालित रूप से सेव होता है
+- खोजें और बदलें: Regex समर्थन के साथ शक्तिशाली खोज
+- फाइल तुलना: साइड बाय साइड diff व्यू
+- नेटिव डिज़ाइन: असली macOS अनुभव के लिए SwiftUI के साथ निर्मित
+- डार्क मोड: Light, Dark और System थीम्स का पूर्ण समर्थन
+- स्थानीयकरण: 20 भाषाओं में उपलब्ध
 
 **Keywords:**
-text editor,code editor,syntax highlighting,developer tools,notepad,programming,markdown,json,swift
+टेक्स्ट एडिटर,कोड एडिटर,सिंटैक्स हाइलाइटिंग,डेवलपर टूल्स,notepad,प्रोग्रामिंग,markdown,json,swift
 
 **What's New (Version 1.0):**
-Tamga ka pehla release tab editing, 14 bhashaon ke liye syntax highlighting, svachalit session restore aur 20 bhasha UI samarthan ke saath.
+Tamga का पहला रिलीज़ टैब एडिटिंग, 14 भाषाओं के लिए सिंटैक्स हाइलाइटिंग, स्वचालित सेशन रिस्टोर और 20 भाषा UI समर्थन के साथ।
 
 ---
 
 ## Bengali (bn)
 
-**App Name:** Tamga - Text Sompaadk
+**App Name:** Tamga - টেক্সট সম্পাদক
 
-**Subtitle:** Code Sompaadk Rong Sohit
+**Subtitle:** কোড সম্পাদক রং সহ
 
 **Promotional Text:**
-Syntax highlighting, tab ebong session restore soho halka, native macOS text editor. Developers der jonno perfect.
+সিনট্যাক্স হাইলাইটিং, ট্যাব এবং সেশন রিস্টোর সহ হালকা, নেটিভ macOS টেক্সট এডিটর। ডেভেলপারদের জন্য পারফেক্ট।
 
 **Description:**
-Tamga ekti shoktishshali kintu halka text editor ja bishesh bhabe macOS er jonno design kora hoyeche. Apni code likhchen, configuration file edit korchen ba notes nichchen, Tamga apnar proyojoniyo sob feature soho ekti porishkar, native onubhob pradan kore.
+Tamga একটি শক্তিশালী কিন্তু হালকা টেক্সট এডিটর যা বিশেষভাবে macOS এর জন্য ডিজাইন করা হয়েছে। আপনি কোড লিখছেন, কনফিগারেশন ফাইল এডিট করছেন বা নোট নিচ্ছেন, Tamga আপনার প্রয়োজনীয় সব ফিচার সহ একটি পরিষ্কার, নেটিভ অনুভব প্রদান করে।
 
-Prodhan Boishishto:
+প্রধান বৈশিষ্ট্য:
 
-- Tab System: Drag and drop er maddhome onek file khulun ebong manage korun
-- Syntax Highlighting: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML support
-- Session Restore: Apnar workspace swakriyobhabe save hoy
-- Khojen ebong Bodlun: Regex support soho shoktishshali search
-- File Tulona: Pasapashi diff view
-- Native Design: Prokrito macOS onubhober jonno SwiftUI diye toiri
-- Dark Mode: Light, Dark ebong System theme er purno support
-- Sthaniokoron: 20 ti bhasay upolobdho
+- ট্যাব সিস্টেম: ড্র্যাগ এবং ড্রপের মাধ্যমে অনেক ফাইল খুলুন এবং ম্যানেজ করুন
+- সিনট্যাক্স হাইলাইটিং: Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML সাপোর্ট
+- সেশন রিস্টোর: আপনার ওয়ার্কস্পেস স্বয়ংক্রিয়ভাবে সেভ হয়
+- খোঁজেন এবং বদলান: Regex সাপোর্ট সহ শক্তিশালী সার্চ
+- ফাইল তুলনা: পাশাপাশি diff ভিউ
+- নেটিভ ডিজাইন: প্রকৃত macOS অনুভবের জন্য SwiftUI দিয়ে তৈরি
+- ডার্ক মোড: Light, Dark এবং System থিমের পূর্ণ সাপোর্ট
+- স্থানীয়করণ: ২০টি ভাষায় উপলব্ধ
 
 **Keywords:**
-text editor,code editor,syntax,developer,notepad,programming,markdown,json,swift,coding
+টেক্সট এডিটর,কোড এডিটর,সিনট্যাক্স,ডেভেলপার,notepad,প্রোগ্রামিং,markdown,json,swift,কোডিং
 
 **What's New (Version 1.0):**
-Tamga er prothom release tab editing, 14 ti bhashar jonno syntax highlighting, swakriyo session restore ebong 20 ti bhasha UI support soho.
+Tamga এর প্রথম রিলিজ ট্যাব এডিটিং, ১৪টি ভাষার জন্য সিনট্যাক্স হাইলাইটিং, স্বয়ংক্রিয় সেশন রিস্টোর এবং ২০টি ভাষা UI সাপোর্ট সহ।
 
 ---
 
@@ -582,91 +582,91 @@ Rilis pertama Tamga dengan pengeditan tab, penyorotan sintaks untuk 14 bahasa, p
 
 ## Thai (th)
 
-**App Name:** Tamga - Text Editor
+**App Name:** Tamga - โปรแกรมแก้ไขข้อความ
 
-**Subtitle:** Code Editor Prom Si
+**Subtitle:** โปรแกรมแก้ไขโค้ดพร้อมสี
 
 **Promotional Text:**
-Text editor macOS native thi bao, mi syntax highlighting, tab lae kan kuen kha session.หมาะสำหรับนักพัฒนา
+โปรแกรมแก้ไขข้อความ macOS แบบเนทีฟที่เบา มี syntax highlighting, แท็บ และการกู้คืนเซสชัน เหมาะสำหรับนักพัฒนา
 
 **Description:**
-Tamga pen text editor thi mi pralang tae bao thi ok baep ma sam rap macOS doy chapo. Mai wa khun ja khian code, kaekhai file config rue tham note, Tamga hai pra sop kan chai thi sa at lae pen native prom kap feature thang mot thi khun tongkan.
+Tamga เป็นโปรแกรมแก้ไขข้อความที่มีประสิทธิภาพแต่เบา ออกแบบมาสำหรับ macOS โดยเฉพาะ ไม่ว่าคุณจะเขียนโค้ด แก้ไขไฟล์ config หรือทำโน้ต Tamga ให้ประสบการณ์ใช้งานที่สะอาดและเป็นเนทีฟพร้อมฟีเจอร์ทั้งหมดที่คุณต้องการ
 
-Khun sombat lak:
+คุณสมบัติหลัก:
 
-- Rabop Tab: Poet lae chatkan lai file duai kan lak lae wang
-- Syntax Highlighting: Rap rop Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
-- Kuen Kha Session: Phuen thi tham ngan khong khun ja thuuk banthuek otonomat
-- Kha lae Thaen Thi: Kan kha thi mi pralang prom kan rap rop regex
-- Priap Thiap File: Mum mong diff khang khang
-- Ok Baep Native: Sang duai SwiftUI sam rap pra sop kan macOS thi thae ching
-- Mode Muet: Rap rop tem thi sam rap theme sawang, muet, lae rabop
-- Kan plaeng phasa: Mi hai chai nai 20 phasa
+- ระบบแท็บ: เปิดและจัดการหลายไฟล์ด้วยการลากและวาง
+- Syntax Highlighting: รองรับ Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
+- กู้คืนเซสชัน: พื้นที่ทำงานของคุณจะถูกบันทึกอัตโนมัติ
+- ค้นหาและแทนที่: การค้นหาที่มีประสิทธิภาพพร้อมรองรับ regex
+- เปรียบเทียบไฟล์: มุมมอง diff แบบเคียงข้างกัน
+- ออกแบบเนทีฟ: สร้างด้วย SwiftUI สำหรับประสบการณ์ macOS ที่แท้จริง
+- โหมดมืด: รองรับเต็มที่สำหรับธีมสว่าง มืด และระบบ
+- การแปลภาษา: มีให้ใช้งานใน 20 ภาษา
 
 **Keywords:**
-text editor,code editor,syntax highlighting,khrueang mue nak phatna,notepad,kan khian program,markdown,json
+โปรแกรมแก้ไขข้อความ,โปรแกรมแก้ไขโค้ด,syntax highlighting,เครื่องมือนักพัฒนา,notepad,การเขียนโปรแกรม,markdown,json
 
 **What's New (Version 1.0):**
-Rilis raek khong Tamga prom kan kaekhai tab, syntax highlighting sam rap 14 phasa, kuen kha session otonomat, lae rap rop UI 20 phasa.
+รีลีสแรกของ Tamga พร้อมการแก้ไขแท็บ, syntax highlighting สำหรับ 14 ภาษา, กู้คืนเซสชันอัตโนมัติ และรองรับ UI 20 ภาษา
 
 ---
 
 ## Vietnamese (vi)
 
-**App Name:** Tamga - Trinh Soan Thao
+**App Name:** Tamga - Trình Soạn Thảo
 
-**Subtitle:** Trinh Soan Thao Ma Mau
+**Subtitle:** Trình Soạn Thảo Mã Màu
 
 **Promotional Text:**
-Trinh soan thao van ban macOS nhe, ho tro to sang cu phap, tab va khoi phuc phien. Hoan hao cho lap trinh vien.
+Trình soạn thảo văn bản macOS nhẹ, hỗ trợ tô sáng cú pháp, tab và khôi phục phiên. Hoàn hảo cho lập trình viên.
 
 **Description:**
-Tamga la mot trinh soan thao van ban manh me nhung nhe duoc thiet ke dac biet cho macOS. Du ban dang viet ma, chinh sua tep cau hinh hay ghi chu, Tamga cung cap trai nghiem nguyen ban sach se voi tat ca cac tinh nang ban can.
+Tamga là một trình soạn thảo văn bản mạnh mẽ nhưng nhẹ được thiết kế đặc biệt cho macOS. Dù bạn đang viết mã, chỉnh sửa tệp cấu hình hay ghi chú, Tamga cung cấp trải nghiệm nguyên bản sạch sẽ với tất cả các tính năng bạn cần.
 
-Tinh nang chinh:
+Tính năng chính:
 
-- He thong Tab: Mo va quan ly nhieu tep bang keo va tha
-- To sang cu phap: Ho tro Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
-- Khoi phuc phien: Khong gian lam viec cua ban duoc luu tu dong
-- Tim va Thay the: Tim kiem manh me voi ho tro regex
-- So sanh tep: Xem diff canh nhau
-- Thiet ke nguyen ban: Xay dung voi SwiftUI de co trai nghiem macOS that su
-- Che do toi: Ho tro day du chu de sang, toi va he thong
-- Ban dia hoa: Co san bang 20 ngon ngu
+- Hệ thống Tab: Mở và quản lý nhiều tệp bằng kéo và thả
+- Tô sáng cú pháp: Hỗ trợ Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
+- Khôi phục phiên: Không gian làm việc của bạn được lưu tự động
+- Tìm và Thay thế: Tìm kiếm mạnh mẽ với hỗ trợ regex
+- So sánh tệp: Xem diff cạnh nhau
+- Thiết kế nguyên bản: Xây dựng với SwiftUI để có trải nghiệm macOS thực sự
+- Chế độ tối: Hỗ trợ đầy đủ chủ đề sáng, tối và hệ thống
+- Bản địa hóa: Có sẵn bằng 20 ngôn ngữ
 
 **Keywords:**
-trinh soan thao,code editor,to sang cu phap,cong cu lap trinh,notepad,lap trinh,markdown,json,swift
+trình soạn thảo,code editor,tô sáng cú pháp,công cụ lập trình,notepad,lập trình,markdown,json,swift
 
 **What's New (Version 1.0):**
-Ban phat hanh dau tien cua Tamga voi chinh sua tab, to sang cu phap cho 14 ngon ngu, khoi phuc phien tu dong va ho tro 20 ngon ngu giao dien.
+Bản phát hành đầu tiên của Tamga với chỉnh sửa tab, tô sáng cú pháp cho 14 ngôn ngữ, khôi phục phiên tự động và hỗ trợ 20 ngôn ngữ giao diện.
 
 ---
 
 ## Ukrainian (uk)
 
-**App Name:** Tamga - Tekstovyy Redaktor
+**App Name:** Tamga - Текстовий редактор
 
-**Subtitle:** Redaktor Kodu z Koloramy
+**Subtitle:** Редактор коду з кольорами
 
 **Promotional Text:**
-Lehkyy, nativnyy tekstovyy redaktor macOS z pidsvitkoy syntaksysu, vkladkamy ta vidnovlennyam sesiyi. Idealnyy dlya rozrobnykiv.
+Легкий, нативний текстовий редактор macOS з підсвіткою синтаксису, вкладками та відновленням сесії. Ідеальний для розробників.
 
 **Description:**
-Tamga - tse potuzhnyy, ale lehkyy tekstovyy redaktor, spetsialno rozroblenyy dlya macOS. Nezalezhno vid toho, chy vy pyshete kod, redahuyete fayly konfiguratsiyi chy robyte notatky, Tamga proponuye chystyy, nativnyy dosvid z usima neobkhidnymy funktsiyamy.
+Tamga — це потужний, але легкий текстовий редактор, спеціально розроблений для macOS. Незалежно від того, чи ви пишете код, редагуєте файли конфігурації чи робите нотатки, Tamga пропонує чистий, нативний досвід з усіма необхідними функціями.
 
-Osnovni funktsiyi:
+Основні функції:
 
-- Systema vkladok: Vidkryvayte ta keruite bahatma faylamy za dopomohoyu peretyahuvannya
-- Pidsvitkasyntaksysu: Pidtrymka Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
-- Vidnovlennya sesiyi: Vash robochyy prostir avtomatychno zberihayetsya
-- Znajty ta Zaminyty: Potuzhnyy poshuk z pidtrymkoyu regex
-- Porivnyannya fayliv: Paralelnepodannya vidminnostey
-- Nativnyy dyzayn: Stvorenyy za dopomohoyu SwiftUI dlya spravzhnoho dosvidu macOS
-- Temnyy rezhym: Povna pidtrymka svitlykh, temnykh ta systemnykh tem
-- Lokalizatsiya: Dostupnyy 20 movamy
+- Система вкладок: Відкривайте та керуйте багатьма файлами за допомогою перетягування
+- Підсвітка синтаксису: Підтримка Swift, Python, JavaScript, PHP, JSON, HTML, CSS, Markdown, XML, SQL, Shell, YAML
+- Відновлення сесії: Ваш робочий простір автоматично зберігається
+- Знайти та Замінити: Потужний пошук з підтримкою regex
+- Порівняння файлів: Паралельне подання відмінностей
+- Нативний дизайн: Створений за допомогою SwiftUI для справжнього досвіду macOS
+- Темний режим: Повна підтримка світлих, темних та системних тем
+- Локалізація: Доступний 20 мовами
 
 **Keywords:**
-tekstovyy redaktor,redaktor kodu,pidsvitkasyntaksysu,instrumenty rozrobnyka,notepad,prohramuvannya,markdown
+текстовий редактор,редактор коду,підсвітка синтаксису,інструменти розробника,notepad,програмування,markdown
 
 **What's New (Version 1.0):**
-Pershyy reliz Tamga z redahuvannyam vkladok, pidsvitkoy syntaksysu dlya 14 mov, avtomatychnym vidnovlennyam sesiyi ta pidtrymkoyu 20 mov.
+Перший реліз Tamga з редагуванням вкладок, підсвіткою синтаксису для 14 мов, автоматичним відновленням сесії та підтримкою 20 мов.
