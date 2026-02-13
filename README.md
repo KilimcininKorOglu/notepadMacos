@@ -13,17 +13,21 @@ A native macOS text editor with syntax highlighting and tab support, designed as
 - **File Comparison** - Side-by-side diff view
 
 ### Editor Features
+
 - Line numbers
 - Word wrap toggle
 - Invisible characters display
-- Code folding
+- Code folding (fold/unfold)
 - Duplicate line
 - Move line up/down
 - Sort lines (ascending/descending)
 - Remove duplicate lines
+- Change case (uppercase/lowercase/capitalize)
 - JSON formatting and minification
+- Split view
 
 ### Interface
+
 - Native macOS design
 - Light/Dark/System theme support
 - Customizable font and size
@@ -31,6 +35,9 @@ A native macOS text editor with syntax highlighting and tab support, designed as
 - Sidebar with open tabs list
 - Markdown preview
 - Drag and drop file opening
+- Recent files menu
+- Auto-save option
+- Print support
 
 ### Localization
 Available in 20 languages:
@@ -77,42 +84,80 @@ tamga
 
 ## Supported Syntax Languages
 
-| Language   | Extensions                    |
-|------------|-------------------------------|
-| Swift      | .swift                        |
-| Python     | .py, .pyw                     |
-| JavaScript | .js, .jsx, .ts, .tsx          |
-| PHP        | .php, .phtml, .php3-5, .phps  |
-| JSON       | .json                         |
-| HTML       | .html, .htm                   |
-| CSS        | .css, .scss, .sass, .less     |
-| Markdown   | .md, .markdown                |
-| XML        | .xml, .plist                  |
-| SQL        | .sql                          |
-| Shell      | .sh, .bash, .zsh              |
-| YAML       | .yml, .yaml                   |
+| Language   | Extensions                   |
+|------------|------------------------------|
+| Plain Text | .txt, .text                  |
+| Swift      | .swift                       |
+| Python     | .py, .pyw                    |
+| JavaScript | .js, .jsx, .ts, .tsx         |
+| PHP        | .php, .phtml, .php3-5, .phps |
+| JSON       | .json                        |
+| HTML       | .html, .htm                  |
+| CSS        | .css, .scss, .sass, .less    |
+| Markdown   | .md, .markdown               |
+| XML        | .xml, .plist                 |
+| SQL        | .sql                         |
+| Shell      | .sh, .bash, .zsh             |
+| YAML       | .yml, .yaml                  |
 
 ## Keyboard Shortcuts
 
-| Shortcut       | Action              |
-|----------------|---------------------|
-| Cmd+N          | New Tab             |
-| Cmd+O          | Open File           |
-| Cmd+S          | Save                |
-| Cmd+Shift+S    | Save As             |
-| Cmd+W          | Close Tab           |
-| Cmd+Shift+W    | Close All Tabs      |
-| Cmd+F          | Find                |
-| Cmd+G          | Find Next           |
-| Cmd+Shift+G    | Find Previous       |
-| Cmd+H          | Replace             |
-| Cmd+L          | Go to Line          |
-| Cmd+1-9        | Switch to Tab       |
-| Cmd+]          | Next Tab            |
-| Cmd+[          | Previous Tab        |
-| Cmd++          | Zoom In             |
-| Cmd+-          | Zoom Out            |
-| Cmd+0          | Reset Zoom          |
+### File Operations
+
+| Shortcut           | Action         |
+|--------------------|----------------|
+| Cmd+N              | New Tab        |
+| Cmd+O              | Open File      |
+| Cmd+S              | Save           |
+| Cmd+Shift+S        | Save As        |
+| Cmd+W              | Close Tab      |
+| Cmd+Shift+Option+W | Close All Tabs |
+| Cmd+P              | Print          |
+
+### Edit Operations
+
+| Shortcut           | Action              |
+|--------------------|---------------------|
+| Cmd+F              | Find                |
+| Cmd+G              | Find Next           |
+| Cmd+Shift+G        | Find Previous       |
+| Cmd+L              | Go to Line          |
+| Cmd+D              | Duplicate Line      |
+| Option+Up          | Move Line Up        |
+| Option+Down        | Move Line Down      |
+| Cmd+Shift+U        | Uppercase Selection |
+| Cmd+Shift+L        | Lowercase Selection |
+| Cmd+Shift+J        | Format JSON         |
+
+### Code Folding
+
+| Shortcut                | Action     |
+|-------------------------|------------|
+| Cmd+Option+Left         | Fold       |
+| Cmd+Option+Right        | Unfold     |
+| Cmd+Option+Shift+Left   | Fold All   |
+| Cmd+Option+Shift+Right  | Unfold All |
+
+### View
+
+| Shortcut       | Action            |
+|----------------|-------------------|
+| Cmd+B          | Toggle Sidebar    |
+| Cmd+Option+W   | Toggle Word Wrap  |
+| Cmd+\          | Toggle Split View |
+| Cmd+Shift+M    | Markdown Preview  |
+| Cmd+Option+8   | Show Invisibles   |
+| Cmd++          | Zoom In           |
+| Cmd+-          | Zoom Out          |
+| Cmd+0          | Reset Zoom        |
+
+### Tab Navigation
+
+| Shortcut         | Action       |
+|------------------|--------------|
+| Cmd+Shift+Right  | Next Tab     |
+| Cmd+Shift+Left   | Previous Tab |
+| Cmd+1-9          | Switch Tab   |
 
 ## Project Structure
 
