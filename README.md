@@ -6,7 +6,7 @@ A native macOS text editor with syntax highlighting and tab support, designed as
 
 ### Core Editing
 - **Tab System** - Open multiple files in tabs with drag-and-drop reordering
-- **Syntax Highlighting** - Support for 14 programming languages
+- **Syntax Highlighting** - Support for 13 programming languages
 - **Session Restore** - Automatically saves and restores all open tabs
 - **Find & Replace** - Search with regex support
 - **Go to Line** - Quick navigation to specific line numbers
