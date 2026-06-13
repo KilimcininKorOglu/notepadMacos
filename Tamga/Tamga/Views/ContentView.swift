@@ -192,6 +192,14 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
             saveSession()
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.willResignActiveNotification)) { _ in
+            if appState.isAutoSaveEnabled {
+                SessionService.shared.saveSessionInBackground(
+                    tabs: tabManager.tabs,
+                    activeTabId: tabManager.activeTabId
+                )
+            }
+        }
         .onChange(of: tabManager.activeTabId) { _ in
             if let tab = tabManager.activeTab {
                 updateDocumentInfo(content: tab.content)

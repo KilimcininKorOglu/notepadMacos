@@ -16,6 +16,8 @@ enum Constants {
         static let fontName = "SF Mono"
         static let tabWidth = 4
         static let maxRecentFiles = 10
+        /// Quiet period after the last edit before a crash-safety session save fires.
+        static let sessionAutosaveDebounceInterval: TimeInterval = 2.0
     }
 
     /// File paths

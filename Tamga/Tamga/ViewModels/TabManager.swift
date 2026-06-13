@@ -9,6 +9,7 @@ class TabManager: ObservableObject {
     @Published var draggedTab: Tab?
 
     private var untitledCounter: Int = 1
+    private var sessionSaveTimer: Timer?
 
     var activeTab: Tab? {
         guard let id = activeTabId else { return nil }
@@ -120,6 +121,7 @@ class TabManager: ObservableObject {
         tabs[index].content = content
         tabs[index].isDirty = true
         tabs[index].lastModifiedAt = Date()
+        scheduleSessionAutosave()
     }
 
     func updateCursorPosition(_ position: Int, for id: UUID) {
@@ -150,6 +152,27 @@ class TabManager: ObservableObject {
     func setEncoding(_ encoding: String, for id: UUID) {
         guard let index = tabs.firstIndex(where: { $0.id == id }) else { return }
         tabs[index].encoding = encoding
+    }
+
+    // MARK: - Session Autosave (crash safety)
+
+    /// Debounces a background session save after edits stop, so unsaved tabs
+    /// survive an abrupt termination. Gated behind the Auto Save setting; the
+    /// write itself runs off the main thread in `SessionService`.
+    private func scheduleSessionAutosave() {
+        sessionSaveTimer?.invalidate()
+        sessionSaveTimer = Timer.scheduledTimer(
+            withTimeInterval: Constants.Defaults.sessionAutosaveDebounceInterval,
+            repeats: false
+        ) { [weak self] _ in
+            Task { @MainActor in
+                guard let self, AppState.shared.isAutoSaveEnabled else { return }
+                SessionService.shared.saveSessionInBackground(
+                    tabs: self.tabs,
+                    activeTabId: self.activeTabId
+                )
+            }
+        }
     }
 
     // MARK: - Tab Reordering

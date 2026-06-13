@@ -7,6 +7,9 @@ class SessionService {
     private let fileManager = FileManager.default
     private let sessionFileName = "session.json"
 
+    /// Serial queue for off-main-thread session writes (frequent autosaves).
+    private let saveQueue = DispatchQueue(label: "com.tamga.sessionSave", qos: .utility)
+
     private var applicationSupportDirectory: URL {
         let paths = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         let appSupportDir = paths[0].appendingPathComponent("Tamga")
@@ -42,6 +45,7 @@ class SessionService {
             let encoding: String
             let createdAt: Date
             let lastModifiedAt: Date
+            let isDirty: Bool?
         }
     }
 
@@ -59,7 +63,8 @@ class SessionService {
                 languageRaw: tab.language.rawValue,
                 encoding: tab.encoding,
                 createdAt: tab.createdAt,
-                lastModifiedAt: tab.lastModifiedAt
+                lastModifiedAt: tab.lastModifiedAt,
+                isDirty: tab.isDirty
             )
         }
 
@@ -76,6 +81,15 @@ class SessionService {
             try data.write(to: sessionFileURL, options: .atomic)
         } catch {
             print("Failed to save session: \(error)")
+        }
+    }
+
+    /// Saves the session off the main thread on a serial queue.
+    /// Use for frequent autosaves (typing debounce, focus loss). Terminal-event
+    /// saves must stay synchronous so the write completes before the process exits.
+    func saveSessionInBackground(tabs: [Tab], activeTabId: UUID?) {
+        saveQueue.async { [weak self] in
+            self?.saveSession(tabs: tabs, activeTabId: activeTabId)
         }
     }
 
@@ -96,7 +110,7 @@ class SessionService {
                     title: tabData.title,
                     content: tabData.content,
                     filePath: tabData.filePath.map { URL(fileURLWithPath: $0) },
-                    isDirty: tabData.filePath == nil && !tabData.content.isEmpty,
+                    isDirty: tabData.isDirty ?? (tabData.filePath == nil && !tabData.content.isEmpty),
                     cursorPosition: tabData.cursorPosition,
                     scrollPosition: tabData.scrollPosition,
                     language: SyntaxLanguage(rawValue: tabData.languageRaw) ?? .plainText,
