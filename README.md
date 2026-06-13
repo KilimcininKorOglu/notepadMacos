@@ -116,48 +116,48 @@ tamga
 
 ### Edit Operations
 
-| Shortcut           | Action              |
-|--------------------|---------------------|
-| Cmd+F              | Find                |
-| Cmd+G              | Find Next           |
-| Cmd+Shift+G        | Find Previous       |
-| Cmd+L              | Go to Line          |
-| Cmd+D              | Duplicate Line      |
-| Option+Up          | Move Line Up        |
-| Option+Down        | Move Line Down      |
-| Cmd+Shift+U        | Uppercase Selection |
-| Cmd+Shift+L        | Lowercase Selection |
-| Cmd+Shift+J        | Format JSON         |
+| Shortcut    | Action              |
+|-------------|---------------------|
+| Cmd+F       | Find                |
+| Cmd+G       | Find Next           |
+| Cmd+Shift+G | Find Previous       |
+| Cmd+L       | Go to Line          |
+| Cmd+D       | Duplicate Line      |
+| Option+Up   | Move Line Up        |
+| Option+Down | Move Line Down      |
+| Cmd+Shift+U | Uppercase Selection |
+| Cmd+Shift+L | Lowercase Selection |
+| Cmd+Shift+J | Format JSON         |
 
 ### Code Folding
 
-| Shortcut                | Action     |
-|-------------------------|------------|
-| Cmd+Option+Left         | Fold       |
-| Cmd+Option+Right        | Unfold     |
-| Cmd+Option+Shift+Left   | Fold All   |
-| Cmd+Option+Shift+Right  | Unfold All |
+| Shortcut               | Action     |
+|------------------------|------------|
+| Cmd+Option+Left        | Fold       |
+| Cmd+Option+Right       | Unfold     |
+| Cmd+Option+Shift+Left  | Fold All   |
+| Cmd+Option+Shift+Right | Unfold All |
 
 ### View
 
-| Shortcut       | Action            |
-|----------------|-------------------|
-| Cmd+B          | Toggle Sidebar    |
-| Cmd+Option+W   | Toggle Word Wrap  |
-| Cmd+\          | Toggle Split View |
-| Cmd+Shift+M    | Markdown Preview  |
-| Cmd+Option+8   | Show Invisibles   |
-| Cmd++          | Zoom In           |
-| Cmd+-          | Zoom Out          |
-| Cmd+0          | Reset Zoom        |
+| Shortcut     | Action            |
+|--------------|-------------------|
+| Cmd+B        | Toggle Sidebar    |
+| Cmd+Option+W | Toggle Word Wrap  |
+| Cmd+\        | Toggle Split View |
+| Cmd+Shift+M  | Markdown Preview  |
+| Cmd+Option+8 | Show Invisibles   |
+| Cmd++        | Zoom In           |
+| Cmd+-        | Zoom Out          |
+| Cmd+0        | Reset Zoom        |
 
 ### Tab Navigation
 
-| Shortcut         | Action       |
-|------------------|--------------|
-| Cmd+Shift+Right  | Next Tab     |
-| Cmd+Shift+Left   | Previous Tab |
-| Cmd+1-9          | Switch Tab   |
+| Shortcut        | Action       |
+|-----------------|--------------|
+| Cmd+Shift+Right | Next Tab     |
+| Cmd+Shift+Left  | Previous Tab |
+| Cmd+1-9         | Switch Tab   |
 
 ## Project Structure
 
