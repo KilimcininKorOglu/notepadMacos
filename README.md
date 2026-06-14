@@ -6,7 +6,7 @@ A native macOS text editor with syntax highlighting and tab support, designed as
 
 ### Core Editing
 - **Tab System** - Open multiple files in tabs with drag-and-drop reordering
-- **Syntax Highlighting** - Support for 13 programming languages
+- **Syntax Highlighting** - Highlighting for 13 languages, with tree-sitter powering embedded multi-language files (JavaScript and CSS inside HTML, or PHP + HTML + JS + CSS in a single file)
 - **Session Restore** - Automatically saves and restores all open tabs
 - **Find & Replace** - Search with regex support
 - **Go to Line** - Quick navigation to specific line numbers
@@ -60,8 +60,8 @@ Download the latest release from the [Releases](../../releases) page.
 git clone https://github.com/user/tamga.git
 cd tamga
 
-# Build
-xcodebuild -scheme Tamga -destination 'platform=macOS' build
+# Build (the Xcode project lives in the Tamga/ subdirectory)
+xcodebuild -project Tamga/Tamga.xcodeproj -scheme Tamga -destination 'platform=macOS' build
 
 # Or open in Xcode
 open Tamga/Tamga.xcodeproj
@@ -99,6 +99,8 @@ tamga
 | SQL        | .sql                         |
 | Shell      | .sh, .bash, .zsh             |
 | YAML       | .yml, .yaml                  |
+
+Most languages are highlighted by a tree-sitter parser, which also enables embedded multi-language highlighting: a single file can color several languages at once, such as `<script>` JavaScript and `<style>` CSS inside an HTML file, or PHP, HTML, JavaScript, and CSS together in a `.php` file. Markdown and plain text use a built-in pattern highlighter.
 
 ## Keyboard Shortcuts
 
@@ -196,4 +198,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Built with SwiftUI and AppKit
+- Syntax highlighting powered by tree-sitter via SwiftTreeSitter and Neon
 - Inspired by Notepad++ and CotEditor
