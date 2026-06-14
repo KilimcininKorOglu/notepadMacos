@@ -128,6 +128,11 @@ struct HighlightedTextEditor: NSViewRepresentable {
 
         textView.textContainerInset = NSSize(width: 8, height: 8)
 
+        // Layout-based code folding hides glyphs through the layout manager delegate.
+        // Contiguous layout keeps fold collapse/restore deterministic.
+        textView.layoutManager?.delegate = textView
+        textView.layoutManager?.allowsNonContiguousLayout = false
+
         let font = NSFont(name: fontName, size: fontSize) ?? NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
         textView.font = font
         textView.typingAttributes = [.font: font]
@@ -174,6 +179,9 @@ struct HighlightedTextEditor: NSViewRepresentable {
 
         // Update text if changed externally
         if textView.string != text {
+            // Stored fold positions belong to the previous content; drop them before
+            // swapping in new text (e.g. switching tabs on a reused text view).
+            textView.clearAllFolds()
             let selectedRanges = textView.selectedRanges
             textView.string = text
             textView.selectedRanges = selectedRanges
@@ -345,6 +353,8 @@ class TamgaTextView: NSTextView {
         if showInvisibles {
             drawInvisibleCharacters(in: dirtyRect)
         }
+
+        drawFoldIndicators()
     }
 
     private func drawInvisibleCharacters(in rect: NSRect) {
@@ -372,6 +382,7 @@ class TamgaTextView: NSTextView {
             for (index, char) in lineString.enumerated() {
                 let charIndex = charRange.location + index
                 guard charIndex < text.count else { continue }
+                if isFolded(charIndex) { continue }
 
                 var symbol: String?
                 if char == " " {
@@ -494,20 +505,22 @@ class TamgaTextView: NSTextView {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // MARK: - Code Folding Storage
+    // MARK: - Code Folding State (layout-based; never mutates text)
 
-    private struct FoldedRegion {
-        let range: NSRange
-        let originalText: String
-        let placeholder: String
-    }
+    /// Character ranges currently hidden by folding. Each range covers everything after
+    /// a block's opening brace through its matching closing brace. Hiding happens purely
+    /// at the layout stage (see `FoldingSupport.swift`) — the text storage is never
+    /// modified, so `string`, save, and copy always return the full document.
+    var foldedRanges: [NSRange] = []
 
-    private static var foldedRegions: [NSTextView: [FoldedRegion]] = [:]
+    /// Last caret location, used to infer movement direction when snapping the caret out
+    /// of a folded range.
+    var lastCaretLocation: Int = 0
 
-    private var myFoldedRegions: [FoldedRegion] {
-        get { TamgaTextView.foldedRegions[self] ?? [] }
-        set { TamgaTextView.foldedRegions[self] = newValue }
-    }
+    private var pendingEditLocation: Int = 0
+    private var pendingEditOldLength: Int = 0
+    private var pendingEditNewLength: Int = 0
+    private var hasPendingEdit: Bool = false
 
     // MARK: - Sort & Transform Handlers
 
@@ -663,6 +676,7 @@ class TamgaTextView: NSTextView {
     }
 
     private func duplicateCurrentLine() {
+        clearAllFolds()
         let text = string
         let cursorPos = selectedRange().location
         let lines = text.components(separatedBy: "\n")
@@ -708,6 +722,7 @@ class TamgaTextView: NSTextView {
     }
 
     private func moveCurrentLine(direction: MoveDirection) {
+        clearAllFolds()
         let text = string
         let cursorPos = selectedRange().location
         let lines = text.components(separatedBy: "\n")
@@ -768,6 +783,7 @@ class TamgaTextView: NSTextView {
     // MARK: - Sort Lines
 
     private func sortLines(ascending: Bool) {
+        clearAllFolds()
         let text = string
         let selectedRange = self.selectedRange()
 
@@ -802,6 +818,7 @@ class TamgaTextView: NSTextView {
     // MARK: - Remove Duplicate Lines
 
     private func removeDuplicateLines() {
+        clearAllFolds()
         let text = string
         let lines = text.components(separatedBy: "\n")
 
@@ -834,6 +851,7 @@ class TamgaTextView: NSTextView {
         let selectedRange = self.selectedRange()
 
         guard selectedRange.length > 0 else { return }
+        clearAllFolds()
 
         let nsString = string as NSString
         let selectedText = nsString.substring(with: selectedRange)
@@ -897,6 +915,7 @@ class TamgaTextView: NSTextView {
         }
 
         // Replace text
+        clearAllFolds()
         if let textStorage = self.textStorage {
             textStorage.replaceCharacters(in: rangeToReplace, with: formattedString)
             if selectedRange.length > 0 {
@@ -913,180 +932,114 @@ class TamgaTextView: NSTextView {
 
     @objc private func handleFoldCode() {
         guard window?.firstResponder === self else { return }
-        foldCurrentBlock()
+        performFoldCurrentBlock()
     }
 
     @objc private func handleUnfoldCode() {
         guard window?.firstResponder === self else { return }
-        unfoldAtCursor()
+        performUnfoldAtCursor()
     }
 
     @objc private func handleFoldAll() {
         guard window?.firstResponder === self else { return }
-        foldAllBlocks()
+        performFoldAll()
     }
 
     @objc private func handleUnfoldAll() {
         guard window?.firstResponder === self else { return }
-        unfoldAllBlocks()
+        performUnfoldAll()
     }
 
-    // MARK: - Code Folding Implementation
+    // MARK: - Code Folding (layout-based overrides)
 
-    private func foldCurrentBlock() {
-        let text = string
-        let cursorPos = selectedRange().location
-
-        // Find the opening brace before or at cursor
-        guard let blockRange = findBlockRange(in: text, around: cursorPos) else {
-            NSSound.beep()
+    /// Keeps the caret out of a folded (hidden) range. All selection changes funnel
+    /// through this method, so it covers arrow keys, clicks, and programmatic selection.
+    override func setSelectedRanges(_ ranges: [NSValue], affinity: NSSelectionAffinity, stillSelecting flag: Bool) {
+        guard !foldedRanges.isEmpty else {
+            super.setSelectedRanges(ranges, affinity: affinity, stillSelecting: flag)
+            lastCaretLocation = selectedRange().location
             return
         }
-
-        // Extract the content to fold
-        let nsString = text as NSString
-        let blockContent = nsString.substring(with: blockRange)
-
-        // Create placeholder showing first line and "..."
-        let firstLine = blockContent.components(separatedBy: "\n").first ?? ""
-        let placeholder = "\(firstLine) ... }"
-
-        // Store the folded region
-        let region = FoldedRegion(range: blockRange, originalText: blockContent, placeholder: placeholder)
-        myFoldedRegions.append(region)
-
-        // Replace with placeholder
-        if let textStorage = self.textStorage {
-            textStorage.replaceCharacters(in: blockRange, with: placeholder)
-
-            // Add special formatting to indicate folded region
-            let placeholderRange = NSRange(location: blockRange.location, length: placeholder.count)
-            textStorage.addAttribute(.backgroundColor, value: NSColor.systemGray.withAlphaComponent(0.2), range: placeholderRange)
-            textStorage.addAttribute(.toolTip, value: "Click to unfold", range: placeholderRange)
+        let adjusted = ranges.map { value -> NSValue in
+            let range = value.rangeValue
+            guard range.length == 0 else { return value }
+            let movingForward = range.location >= lastCaretLocation
+            let snapped = adjustedCaretLocation(range.location, movingForward: movingForward)
+            return snapped == range.location ? value : NSValue(range: NSRange(location: snapped, length: 0))
         }
-
-        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+        super.setSelectedRanges(adjusted, affinity: affinity, stillSelecting: flag)
+        lastCaretLocation = selectedRange().location
     }
 
-    private func unfoldAtCursor() {
-        let cursorPos = selectedRange().location
+    /// Records the pending edit so `didChangeText()` can shift or drop folds.
+    override func shouldChangeText(in affectedCharRange: NSRange, replacementString: String?) -> Bool {
+        pendingEditLocation = affectedCharRange.location
+        pendingEditOldLength = affectedCharRange.length
+        pendingEditNewLength = (replacementString as NSString?)?.length ?? 0
+        hasPendingEdit = true
+        return super.shouldChangeText(in: affectedCharRange, replacementString: replacementString)
+    }
 
-        // Find if cursor is on a folded region
-        for (index, region) in myFoldedRegions.enumerated() {
-            // Adjust for any previous unfolds
-            let adjustedStart = region.range.location
-            let adjustedEnd = adjustedStart + region.placeholder.count
+    /// Maintains fold positions after every edit.
+    override func didChangeText() {
+        super.didChangeText()
+        maintainFoldsAfterEdit()
+    }
 
-            if cursorPos >= adjustedStart && cursorPos <= adjustedEnd {
-                // Found folded region - unfold it
-                let currentRange = NSRange(location: adjustedStart, length: region.placeholder.count)
-
-                if let textStorage = self.textStorage {
-                    textStorage.replaceCharacters(in: currentRange, with: region.originalText)
-                }
-
-                myFoldedRegions.remove(at: index)
-                delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
+    /// A click on a folded block's brace or indicator unfolds it.
+    override func mouseDown(with event: NSEvent) {
+        if !foldedRanges.isEmpty,
+           let layoutManager = layoutManager,
+           let textContainer = textContainer {
+            let viewPoint = convert(event.locationInWindow, from: nil)
+            let containerPoint = NSPoint(x: viewPoint.x - textContainerInset.width,
+                                         y: viewPoint.y - textContainerInset.height)
+            let glyphIndex = layoutManager.glyphIndex(for: containerPoint, in: textContainer)
+            let charIndex = layoutManager.characterIndexForGlyph(at: glyphIndex)
+            if let index = foldedRanges.firstIndex(where: { charIndex == $0.location - 1 || charIndex == $0.location }) {
+                foldedRanges.remove(at: index)
+                invalidateFoldLayout()
                 return
             }
         }
-
-        NSSound.beep()
+        super.mouseDown(with: event)
     }
 
-    private func foldAllBlocks() {
-        let text = string
-        var offset = 0
-        var index = text.startIndex
-
-        while index < text.endIndex {
-            let char = text[index]
-            if char == "{" {
-                let position = text.distance(from: text.startIndex, to: index)
-                if let blockRange = findBlockRange(in: string, around: position + offset) {
-                    let nsString = string as NSString
-                    let blockContent = nsString.substring(with: blockRange)
-
-                    let firstLine = blockContent.components(separatedBy: "\n").first ?? ""
-                    let placeholder = "\(firstLine) ... }"
-
-                    let region = FoldedRegion(range: blockRange, originalText: blockContent, placeholder: placeholder)
-                    myFoldedRegions.append(region)
-
-                    if let textStorage = self.textStorage {
-                        textStorage.replaceCharacters(in: blockRange, with: placeholder)
-                        let placeholderRange = NSRange(location: blockRange.location, length: placeholder.count)
-                        textStorage.addAttribute(.backgroundColor, value: NSColor.systemGray.withAlphaComponent(0.2), range: placeholderRange)
-                    }
-
-                    offset -= (blockRange.length - placeholder.count)
-                }
-            }
-            index = text.index(after: index)
+    /// Applies the edit recorded by `shouldChangeText(in:replacementString:)` to the
+    /// stored folds: folds entirely before the edit shift by the length delta, folds the
+    /// edit overlaps are dropped (the block unfolds), folds entirely after are unchanged.
+    /// An edit it cannot attribute clears all folds, which is always safe since the text
+    /// itself is never altered by folding.
+    private func maintainFoldsAfterEdit() {
+        guard !foldedRanges.isEmpty else {
+            hasPendingEdit = false
+            return
         }
+        guard hasPendingEdit else {
+            clearAllFolds()
+            return
+        }
+        hasPendingEdit = false
 
-        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
-    }
+        let editStart = pendingEditLocation
+        let editEnd = pendingEditLocation + pendingEditOldLength
+        let delta = pendingEditNewLength - pendingEditOldLength
 
-    private func unfoldAllBlocks() {
-        // Unfold in reverse order to maintain correct positions
-        for region in myFoldedRegions.reversed() {
-            let currentRange = NSRange(location: region.range.location, length: region.placeholder.count)
-
-            if let textStorage = self.textStorage {
-                textStorage.replaceCharacters(in: currentRange, with: region.originalText)
+        var updated: [NSRange] = []
+        for range in foldedRanges {
+            let foldStart = range.location
+            let foldEnd = range.location + range.length
+            if editEnd <= foldStart {
+                updated.append(NSRange(location: foldStart + delta, length: range.length))
+            } else if editStart >= foldEnd {
+                updated.append(range)
             }
         }
 
-        myFoldedRegions.removeAll()
-        delegate?.textDidChange?(Notification(name: NSText.didChangeNotification, object: self))
-    }
-
-    private func findBlockRange(in text: String, around position: Int) -> NSRange? {
-        // Find the opening brace
-        var openBracePos = position
-        var foundOpenBrace = false
-
-        // Search backwards for opening brace if not at one
-        let chars = Array(text)
-        if position < chars.count && chars[position] == "{" {
-            foundOpenBrace = true
-        } else {
-            var searchPos = min(position, chars.count - 1)
-            while searchPos >= 0 {
-                if chars[searchPos] == "{" {
-                    openBracePos = searchPos
-                    foundOpenBrace = true
-                    break
-                }
-                searchPos -= 1
-            }
-        }
-
-        guard foundOpenBrace else { return nil }
-
-        // Find matching closing brace
-        var braceCount = 1
-        var closeBracePos = openBracePos + 1
-
-        while closeBracePos < chars.count && braceCount > 0 {
-            if chars[closeBracePos] == "{" {
-                braceCount += 1
-            } else if chars[closeBracePos] == "}" {
-                braceCount -= 1
-            }
-            closeBracePos += 1
-        }
-
-        guard braceCount == 0 else { return nil }
-
-        // Find the start of the line containing the opening brace
-        var lineStart = openBracePos
-        while lineStart > 0 && chars[lineStart - 1] != "\n" {
-            lineStart -= 1
-        }
-
-        return NSRange(location: lineStart, length: closeBracePos - lineStart)
+        let changed = updated.count != foldedRanges.count
+            || zip(updated, foldedRanges).contains { !NSEqualRanges($0, $1) }
+        foldedRanges = updated
+        if changed { invalidateFoldLayout() }
     }
 }
 
