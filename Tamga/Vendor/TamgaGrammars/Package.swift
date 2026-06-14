@@ -24,6 +24,7 @@ let package = Package(
                 "TreeSitterXML",
                 "TreeSitterSwift",
                 "TreeSitterSQL",
+                "TreeSitterPHP",
             ]
         ),
     ],
@@ -103,6 +104,14 @@ let package = Package(
         .target(
             name: "TreeSitterSQL",
             path: "Sources/TreeSitterSQL",
+            sources: ["src/parser.c", "src/scanner.c"],
+            resources: [.copy("queries")],
+            publicHeadersPath: "bindings/swift",
+            cSettings: [.headerSearchPath("src")]
+        ),
+        .target(
+            name: "TreeSitterPHP",
+            path: "Sources/TreeSitterPHP",
             sources: ["src/parser.c", "src/scanner.c"],
             resources: [.copy("queries")],
             publicHeadersPath: "bindings/swift",

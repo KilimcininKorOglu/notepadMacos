@@ -12,6 +12,7 @@ import TreeSitterYAML
 import TreeSitterXML
 import TreeSitterSwift
 import TreeSitterSQL
+import TreeSitterPHP
 
 // MARK: - Capture → Theme mapping
 
@@ -73,7 +74,7 @@ enum TreeSitterTheme {
 enum TreeSitterLanguageResolver {
     /// Languages currently driven by tree-sitter. Kept in sync with ``setup(for:)``.
     static let migratedLanguages: Set<SyntaxLanguage> = [
-        .html, .javascript, .css, .python, .json, .xml, .shell, .yaml, .swift, .sql,
+        .html, .javascript, .css, .python, .json, .xml, .shell, .yaml, .swift, .sql, .php,
     ]
 
     /// A resolved tree-sitter setup: the root language plus a provider for embedded
@@ -102,6 +103,7 @@ enum TreeSitterLanguageResolver {
     private static let xmlConfiguration = config(tree_sitter_xml(), "xml", bundle: "TamgaGrammars_TreeSitterXML")
     private static let swiftConfiguration = config(tree_sitter_swift(), "swift", bundle: "TamgaGrammars_TreeSitterSwift")
     private static let sqlConfiguration = config(tree_sitter_sql(), "sql", bundle: "TamgaGrammars_TreeSitterSQL")
+    private static let phpConfiguration = config(tree_sitter_php(), "php", bundle: "TamgaGrammars_TreeSitterPHP")
 
     /// Maps an injection language name (from a host grammar's `injections.scm`) to a
     /// child configuration. Names are taken from the actual query files, not guessed:
@@ -135,6 +137,7 @@ enum TreeSitterLanguageResolver {
         case .xml: root = xmlConfiguration
         case .swift: root = swiftConfiguration
         case .sql: root = sqlConfiguration
+        case .php: root = phpConfiguration
         default: root = nil
         }
         guard let root else { return nil }
