@@ -30,6 +30,11 @@
 		A1000021AAAAAAAA00000021 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000022AAAAAAAA00000022 /* SidebarView.swift */; };
 		A1000022AAAAAAAA00000022 /* MarkdownPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000023AAAAAAAA00000023 /* MarkdownPreviewView.swift */; };
 		A1000023AAAAAAAA00000023 /* CompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000024AAAAAAAA00000024 /* CompareView.swift */; };
+		A1000025AAAAAAAA00000025 /* TreeSitterHighlighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000025AAAAAAAA00000025 /* TreeSitterHighlighting.swift */; };
+		C3000001CCCCCCCC00000001 /* Neon in Frameworks */ = {isa = PBXBuildFile; productRef = C2000001CCCCCCCC00000001 /* Neon */; };
+		C3000002CCCCCCCC00000002 /* SwiftTreeSitter in Frameworks */ = {isa = PBXBuildFile; productRef = C2000002CCCCCCCC00000002 /* SwiftTreeSitter */; };
+		C3000003CCCCCCCC00000003 /* SwiftTreeSitterLayer in Frameworks */ = {isa = PBXBuildFile; productRef = C2000003CCCCCCCC00000003 /* SwiftTreeSitterLayer */; };
+		D3000001DDDDDDDD00000001 /* TamgaGrammars in Frameworks */ = {isa = PBXBuildFile; productRef = D2000001DDDDDDDD00000001 /* TamgaGrammars */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +54,7 @@
 		A2000013AAAAAAAA00000013 /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		A2000014AAAAAAAA00000014 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		A2000015AAAAAAAA00000015 /* SyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighlighter.swift; sourceTree = "<group>"; };
+		A2000025AAAAAAAA00000025 /* TreeSitterHighlighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSitterHighlighting.swift; sourceTree = "<group>"; };
 		A2000016AAAAAAAA00000016 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A2000017AAAAAAAA00000017 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A2000019AAAAAAAA00000019 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +90,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3000001CCCCCCCC00000001 /* Neon in Frameworks */,
+				C3000002CCCCCCCC00000002 /* SwiftTreeSitter in Frameworks */,
+				C3000003CCCCCCCC00000003 /* SwiftTreeSitterLayer in Frameworks */,
+				D3000001DDDDDDDD00000001 /* TamgaGrammars in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +174,7 @@
 				A2000013AAAAAAAA00000013 /* FileService.swift */,
 				A2000014AAAAAAAA00000014 /* SessionService.swift */,
 				A2000015AAAAAAAA00000015 /* SyntaxHighlighter.swift */,
+				A2000025AAAAAAAA00000025 /* TreeSitterHighlighting.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -201,6 +212,12 @@
 			dependencies = (
 			);
 			name = Tamga;
+			packageProductDependencies = (
+				C2000001CCCCCCCC00000001 /* Neon */,
+				C2000002CCCCCCCC00000002 /* SwiftTreeSitter */,
+				C2000003CCCCCCCC00000003 /* SwiftTreeSitterLayer */,
+				D2000001DDDDDDDD00000001 /* TamgaGrammars */,
+			);
 			productName = Tamga;
 			productReference = A2000000AAAAAAAA00000000 /* Tamga.app */;
 			productType = "com.apple.product-type.application";
@@ -249,6 +266,11 @@
 			);
 			mainGroup = A4000001AAAAAAAA00000001;
 			productRefGroup = A4000003AAAAAAAA00000003 /* Products */;
+			packageReferences = (
+				D1000001DDDDDDDD00000001 /* XCLocalSwiftPackageReference "Vendor/TamgaGrammars" */,
+				C1000001CCCCCCCC00000001 /* XCRemoteSwiftPackageReference "Neon" */,
+				C1000002CCCCCCCC00000002 /* XCRemoteSwiftPackageReference "SwiftTreeSitter" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -295,6 +317,7 @@
 				A1000021AAAAAAAA00000021 /* SidebarView.swift in Sources */,
 				A1000022AAAAAAAA00000022 /* MarkdownPreviewView.swift in Sources */,
 				A1000023AAAAAAAA00000023 /* CompareView.swift in Sources */,
+				A1000025AAAAAAAA00000025 /* TreeSitterHighlighting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +548,55 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		D1000001DDDDDDDD00000001 /* XCLocalSwiftPackageReference "Vendor/TamgaGrammars" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Vendor/TamgaGrammars";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C1000001CCCCCCCC00000001 /* XCRemoteSwiftPackageReference "Neon" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChimeHQ/Neon";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		C1000002CCCCCCCC00000002 /* XCRemoteSwiftPackageReference "SwiftTreeSitter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChimeHQ/SwiftTreeSitter";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C2000001CCCCCCCC00000001 /* Neon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1000001CCCCCCCC00000001 /* XCRemoteSwiftPackageReference "Neon" */;
+			productName = Neon;
+		};
+		C2000002CCCCCCCC00000002 /* SwiftTreeSitter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1000002CCCCCCCC00000002 /* XCRemoteSwiftPackageReference "SwiftTreeSitter" */;
+			productName = SwiftTreeSitter;
+		};
+		C2000003CCCCCCCC00000003 /* SwiftTreeSitterLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1000002CCCCCCCC00000002 /* XCRemoteSwiftPackageReference "SwiftTreeSitter" */;
+			productName = SwiftTreeSitterLayer;
+		};
+		D2000001DDDDDDDD00000001 /* TamgaGrammars */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1000001DDDDDDDD00000001 /* XCLocalSwiftPackageReference "Vendor/TamgaGrammars" */;
+			productName = TamgaGrammars;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A7000001AAAAAAAA00000001 /* Project object */;
 }

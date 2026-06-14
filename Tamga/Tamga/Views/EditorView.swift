@@ -227,6 +227,7 @@ struct HighlightedTextEditor: NSViewRepresentable {
         Coordinator(self)
     }
 
+    @MainActor
     class Coordinator: NSObject, NSTextViewDelegate {
         var parent: HighlightedTextEditor
         weak var textView: NSTextView?
@@ -234,6 +235,7 @@ struct HighlightedTextEditor: NSViewRepresentable {
         var lastGoToPosition: Int?
 
         private let highlighter = SyntaxHighlighter.shared
+        private let treeSitterController = TreeSitterHighlightController()
         private var isUpdating = false
 
         init(_ parent: HighlightedTextEditor) {
@@ -257,7 +259,20 @@ struct HighlightedTextEditor: NSViewRepresentable {
         }
 
         func applySyntaxHighlighting(language: SyntaxLanguage, isDarkMode: Bool) {
-            guard let textView = textView, !textView.string.isEmpty else { return }
+            guard let textView = textView else { return }
+
+            let font = NSFont(name: parent.fontName, size: parent.fontSize)
+                ?? NSFont.monospacedSystemFont(ofSize: parent.fontSize, weight: .regular)
+
+            // Tree-sitter path for migrated languages: Neon styles incrementally via
+            // temporary attributes and resolves embedded (injected) languages. When it
+            // takes over, skip the regex pass entirely.
+            if treeSitterController.configure(textView: textView, language: language, isDarkMode: isDarkMode, font: font) {
+                return
+            }
+
+            // Regex fallback for non-migrated languages.
+            guard !textView.string.isEmpty else { return }
 
             isUpdating = true
             defer { isUpdating = false }
